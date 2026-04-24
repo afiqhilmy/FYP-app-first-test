@@ -442,5 +442,3 @@ with st.sidebar:
     )
 
 pg.run()
-    
-pg.run()
