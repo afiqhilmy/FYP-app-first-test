@@ -427,7 +427,7 @@ pg = st.navigation({
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
-    st.markdown("<br>" * 3, unsafe_allow_html=True) # Creates flexible space
+    st.markdown("<br>" * 1, unsafe_allow_html=True) # Creates flexible space
     st.divider()
     st.markdown(
         """
