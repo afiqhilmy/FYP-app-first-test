@@ -85,7 +85,7 @@ df_raw, df_clean = load_all_data()
 # --- PAGE 0: HOME ---
 def page_home():
     render_header()
-    st.title("OPTIMIZING EV CHARGING PLACEMENT AND SCHEDULING USING INTELLIGENT SYSTEM")
+    st.title("⚡OPTIMIZING EV CHARGING PLACEMENT AND SCHEDULING USING INTELLIGENT SYSTEM🚗")
     st.subheader("Project Overview")
     st.write("""This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling. With the rapid growth of EV adoption, existing charging infrastructure often faces challenges such as uneven distribution, limited accessibility, and increased pressure on power grids. To address these issues, this system integrates data from sources such as OpenDOSM, Suruhanjaya Tenaga, and Google Maps to analyze spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal locations for new charging stations. Additionally, scheduling optimization techniques, including Mixed Integer Linear Programming (MILP) and predictive regression models, 
     are used to manage charging demand and reduce congestion during peak hours. The platform provides data-driven insights to improve accessibility, enhance grid efficiency, and support sustainable urban planning.
