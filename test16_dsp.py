@@ -38,7 +38,7 @@ st.markdown("""
 
 def render_header():
     # Define filenames (make sure these exist in your GitHub root)
-    logo1_filename = "logo-umpsa-full-color2.png" 
+    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" 
     logo2_filename = "strateq.png"
     
     # Create 5 columns to force the middle two to be centered
