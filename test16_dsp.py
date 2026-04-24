@@ -45,7 +45,7 @@ def render_header():
     # The [1, 1, 1, 1, 1] creates equal spacing; we use the middle ones (index 1 and 3)
     # or [2, 2, 2, 2, 2] for better control.
     
-    col1, col2, col3, col4, col5 = st.columns([2, 1, 0.5, 1, 2])
+    col1, col2, col3, col4, col5 = st.columns([2, 1, 0.1, 1, 2])
     
     with col2:
         if os.path.exists(logo1_filename):
