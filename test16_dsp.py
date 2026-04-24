@@ -425,8 +425,22 @@ pg = st.navigation({
                          st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
 })
 
+# This keeps the footer clean and separated from the navigation links
 with st.sidebar:
+    st.markdown("<br>" * 10, unsafe_allow_html=True) # Creates flexible space
     st.divider()
-    st.caption("Ahmad Afiq Hilmy | SD23009 | Data Engineer Intern")
+    st.markdown(
+        """
+        <div style='text-align: center;'>
+            <p style='font-size: 0.85rem; color: #808495;'>
+                <b>Ahmad Afiq Hilmy</b><br>
+                SD23009 | Data Engineer Intern
+            </p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+
+pg.run()
     
 pg.run()
