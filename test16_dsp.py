@@ -36,27 +36,30 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- GLOBAL HEADER & FOOTER ---
 def render_header():
-    base_path = r"c:\Users\LENOVO\Documents\SEM 6\BSD3722 DATA SCIENCE PROJECT II\App"
+    # Define filenames (make sure these exist in your GitHub root)
+    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" 
+    logo2_filename = "strateq.png"
     
-    # Centered Logos
-    st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-    logo1_path = os.path.join(base_path, "Screenshot 2023-08-04 at 9.42.54 AM.png")
-    logo2_path = os.path.join(base_path, "strateq.png")
+    # Create 5 columns to force the middle two to be centered
+    # The [1, 1, 1, 1, 1] creates equal spacing; we use the middle ones (index 1 and 3)
+    # or [2, 2, 2, 2, 2] for better control.
     
-    if os.path.exists(logo1_path) and os.path.exists(logo2_path):
-        st.markdown(f"""
-            <div class="logo-item">
-                <img src="data:image/png;base64,{base64.b64encode(open(logo1_path, "rb").read()).decode()}" width="150" height="auto" alt="UMPSA Logo">
-            </div>
-            <div class="logo-item">
-                <img src="data:image/png;base64,{base64.b64encode(open(logo2_path, "rb").read()).decode()}" width="150" height="auto" alt="Strateq Logo">
-            </div>
-        """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown("---")
+    col1, col2, col3, col4, col5 = st.columns([2, 1, 0.5, 1, 2])
+    
+    with col2:
+        if os.path.exists(logo1_filename):
+            st.image(logo1_filename, width=150)
+        else:
+            st.write("UMPSA Logo") # Fallback text
 
+    with col4:
+        if os.path.exists(logo2_filename):
+            st.image(logo2_filename, width=150)
+        else:
+            st.write("Strateq Logo") # Fallback text
+            
+    st.markdown("---")
 def render_footer():
     st.markdown("""
         <div class="footer-text">
