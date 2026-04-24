@@ -21,29 +21,49 @@ st.markdown("""
     [data-testid="stMetricValue"] { font-size: 32px !important; font-weight: 800 !important; color: #1E3A8A !important; }
     .stMetric { background-color: #ffffff; padding: 15px; border-radius: 10px; border-left: 5px solid #1E3A8A; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .footer-text { text-align: center; color: #666; padding-top: 20px; font-size: 14px; border-top: 1px solid #eee; margin-top: 50px; }
-    .logo-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 10px; }
+    .logo-container { 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 50px; 
+        margin-bottom: 10px;
+        flex-wrap: nowrap;
+    }
+    .logo-item {
+        display: inline-block;
+        text-align: center;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 # --- GLOBAL HEADER & FOOTER ---
 def render_header():
-    # Use relative paths for deployment
-    logo1 = "logo-umpsa-full-color2.png"
-    logo2 = "strateq.png"
+    base_path = r"c:\Users\LENOVO\Documents\SEM 6\BSD3722 DATA SCIENCE PROJECT II\App"
     
+    # Centered Logos
     st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-    c1, c2 = st.columns([1, 1])
-    with c1:
-        if os.path.exists(logo1): st.image(logo1, width=200)
-        else: st.info("UMPSA Logo")
-    with c2:
-        if os.path.exists(logo2): st.image(logo2, width=200)
-        else: st.info("Strateq Logo")
+    logo1_path = os.path.join(base_path, "Screenshot 2023-08-04 at 9.42.54 AM.png")
+    logo2_path = os.path.join(base_path, "strateq.png")
+    
+    if os.path.exists(logo1_path) and os.path.exists(logo2_path):
+        st.markdown(f"""
+            <div class="logo-item">
+                <img src="data:image/png;base64,{base64.b64encode(open(logo1_path, "rb").read()).decode()}" width="150" height="auto" alt="UMPSA Logo">
+            </div>
+            <div class="logo-item">
+                <img src="data:image/png;base64,{base64.b64encode(open(logo2_path, "rb").read()).decode()}" width="150" height="auto" alt="Strateq Logo">
+            </div>
+        """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown("---")
 
 def render_footer():
-    st.markdown('<div class="footer-text"><b>Ahmad Afiq Hilmy | SD23009 | Data Engineer Intern</b></div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div class="footer-text">
+            <b>Ahmad Afiq Hilmy | SD23009 | Data Engineer Intern</b>
+        </div>
+    """, unsafe_allow_html=True)
+
 
 # --- DATA ENGINE (FIXED FOR DEPLOYMENT) ---
 @st.cache_data
