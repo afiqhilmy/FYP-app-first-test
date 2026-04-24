@@ -424,4 +424,9 @@ pg = st.navigation({
     "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
                          st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
 })
+
+with st.sidebar:
+    st.divider()
+    st.caption("Ahmad Afiq Hilmy | SD23009 | Data Engineer Intern")
+    
 pg.run()
