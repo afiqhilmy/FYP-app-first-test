@@ -97,7 +97,7 @@ def page_home():
     with cols[0]:
         st.markdown("- Synthetic Data Generation\n- Spatially Aware ML (SAML)\n- MILP\n- Log Transformation")
     with cols[1]:
-        st.markdown("- Hyperparameter Tuning\n- Normalization\n- Rate Calculations")
+        st.markdown("- Hyperparameter Tuning\n- Normalization\n- Multi-Criteria Decision Making (MCDM)")
     render_footer()
 
 # --- PAGE 1: OVERVIEW ---
