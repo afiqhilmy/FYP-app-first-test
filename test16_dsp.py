@@ -221,28 +221,25 @@ def page_optimal():
 
         # --- THE MODIFIED SCORING LOGIC ---
 
+        # FIX: Define the missing columns first
+        candidates['predicted_cars'] = (candidates['predicted_revenue_rm'] / 25).astype(int)
+        
+        # FIX: Calculate distance for accessibility (requires existing station coords)
+        from scipy.spatial.distance import cdist
+        candidates['dist_nearest_station_km'] = cdist(candidates[['Latitude', 'Longitude']], df_clean[['Latitude', 'Longitude']]).min(axis=1) * 111
+
         # 1. Normalize Predicted Revenue (Financial Goal)
         rev_min, rev_max = candidates['predicted_revenue_rm'].min(), candidates['predicted_revenue_rm'].max()
         candidates["norm_revenue"] = (candidates["predicted_revenue_rm"] - rev_min) / (rev_max - rev_min) if rev_max > rev_min else 0.5
 
-        # 2. Normalize Predicted Cars (Demand Satisfaction Goal - from your SVR)
+        # 2. Normalize Predicted Cars (Demand Satisfaction Goal)
         car_min, car_max = candidates['predicted_cars'].min(), candidates['predicted_cars'].max()
         candidates["norm_demand"] = (candidates["predicted_cars"] - car_min) / (car_max - car_min) if car_max > car_min else 0.5
 
         # 3. Normalize Distance (Accessibility/Coverage Goal)
-        # We use the distance to the nearest existing station calculated during candidate generation
         dist_min, dist_max = candidates['dist_nearest_station_km'].min(), candidates['dist_nearest_station_km'].max()
         candidates["norm_accessibility"] = (candidates["dist_nearest_station_km"] - dist_min) / (dist_max - dist_min) if dist_max > dist_min else 0.5
-
-        # 4. Calculate the Multi-Criteria Final Score
-        # Weights: 30% Revenue, 40% Demand (Cars), 30% Accessibility (Distance)
-        candidates["final_score"] = (
-        (candidates["norm_revenue"] * 0.3) + 
-        (candidates["norm_demand"] * 0.4) + 
-        (candidates["norm_accessibility"] * 0.3))
-
-        # Re-derive utilization rate based on the new balanced score
-        candidates['utilisation_rate'] = (candidates['final_score'] * 0.85).clip(0.1, 0.85)
+        
 
 
         
