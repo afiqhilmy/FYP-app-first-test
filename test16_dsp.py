@@ -178,7 +178,7 @@ def page_optimal():
         X_scaled = scaler.fit_transform(X)
         
         if model_type == "Random Forest":
-            model = RandomForestRegressor(n_estimators=100, random_state=42).fit(X_scaled, y)
+            model = RandomForestRegressor(n_estimators=100, random_state=42, max_depth=2, max_features='sqrt').fit(X_scaled, y)
             y_pred = model.predict(X_scaled)
         else:
             y_log = np.log1p(y)
