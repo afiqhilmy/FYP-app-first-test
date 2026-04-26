@@ -239,9 +239,26 @@ def page_optimal():
         # 3. Normalize Distance (Accessibility/Coverage Goal)
         dist_min, dist_max = candidates['dist_nearest_station_km'].min(), candidates['dist_nearest_station_km'].max()
         candidates["norm_accessibility"] = (candidates["dist_nearest_station_km"] - dist_min) / (dist_max - dist_min) if dist_max > dist_min else 0.5
+
+        # ... (keep your previous scoring logic here) ...
+
+        # 4. Calculate the Multi-Criteria Final Score
+        candidates["final_score"] = (
+            (candidates["norm_revenue"] * 0.3) + 
+            (candidates["norm_demand"] * 0.4) + 
+            (candidates["norm_accessibility"] * 0.3)
+        )
+
+        candidates['utilisation_rate'] = (candidates['final_score'] * 0.85).clip(0.1, 0.85)
+
+        # --- CRITICAL FIX: Save the UPDATED dataframe back to session state ---
+        st.session_state.candidates = candidates 
+        st.session_state.training_results = {
+            'model_type': model_type, 'mae': mae, 'rmse': rmse, 'r2': r2,
+            'model': model, 'scaler': scaler
+        }
         
-
-
+        st.success(f"✅ {model_type} training completed!")
         
         st.session_state.candidates = candidates
         st.success(f"✅ {model_type} training completed! Candidate locations identified.")
