@@ -219,18 +219,30 @@ def page_optimal():
         
         candidates['predicted_revenue_rm'] = candidates['predicted_revenue_rm'].clip(lower=0)
 
-        # Min-Max Scaling ensures scores spread from 0 to 1
-        rev_min = candidates['predicted_revenue_rm'].min()
-        rev_max = candidates['predicted_revenue_rm'].max()
-        if rev_max > rev_min:
-            candidates['final_score'] = (candidates['predicted_revenue_rm'] - rev_min) / (rev_max - rev_min)
-        else:
-            candidates['final_score'] = 0.5
-        
-        # Derived Metrics
+        # 1. Derived Metrics & Utilisation (Calculated first, Colab style)
         candidates['predicted_cars'] = (candidates['predicted_revenue_rm'] / 25).astype(int)
         candidates['daily_ev_arrivals'] = (candidates['predicted_cars'] * 1.2).astype(int)
-        candidates['utilisation_rate'] = (candidates['final_score'] * 0.85).clip(0.1, 0.85)
+        # Using a fixed capacity logic for utilization
+        max_rev = candidates['predicted_revenue_rm'].max() if candidates['predicted_revenue_rm'].max() > 0 else 1
+        candidates['utilisation_rate'] = (candidates['predicted_revenue_rm'] / max_rev * 0.85).clip(0.1, 0.85)
+
+        # 2. Accessibility Distance Calculation
+        from scipy.spatial.distance import cdist
+        existing_coords = df_clean[['Latitude', 'Longitude']].values
+        candidate_coords = candidates[['Latitude', 'Longitude']].values
+        candidates['dist_nearest_km'] = cdist(candidate_coords, existing_coords).min(axis=1) * 111
+
+        # 3. Normalization Helper
+        def normalize(col):
+            return (col - col.min()) / (col.max() - col.min()) if col.max() > col.min() else 0.5
+
+        # 4. Final Weighted Score (Utilisation is now an input)
+        norm_rev = normalize(candidates['predicted_revenue_rm'])
+        norm_acc = normalize(candidates['dist_nearest_km'])
+        norm_util = normalize(candidates['utilisation_rate'])
+
+        # Multi-Criteria Weightage: 40% Revenue, 30% Accessibility, 30% Utilisation
+        candidates['final_score'] = (norm_rev * 0.4) + (norm_acc * 0.3) + (norm_util * 0.3)
         
         st.session_state.candidates = candidates
         st.success(f"✅ {model_type} training completed! Candidate locations identified.")
