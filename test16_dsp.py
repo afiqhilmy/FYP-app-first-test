@@ -152,6 +152,30 @@ st.markdown("""
         letter-spacing: 1px;
         line-height: 1.4;
     }
+
+    /* This applies a burgundy/gold tint to the dark map tiles */
+    .folium-map {
+        filter: sepia(0.4) hue-rotate(300deg) brightness(0.8) contrast(1.2) !important;
+        border: 2px solid #D4AF37 !important; /* Gold border around the map */
+        border-radius: 15px;
+    }
+
+    /* Ensure the map container doesn't have a white background while loading */
+    div[data-testid="stFolium"] {
+        background-color: #2D0000 !important; 
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    /* Change the slider track and handle to Gold */
+    div[data-baseweb="slider"] > div > div {
+        background: linear-gradient(to right, #D4AF37 0%, #D4AF37 var(--slider-value), #4A0000 var(--slider-value), #4A0000 100%) !important;
+    }
+
+    div[role="slider"] {
+        background-color: #D4AF37 !important;
+        border: 2px solid #F5E6BE !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -311,7 +335,8 @@ def page_existing():
     m = folium.Map(
         location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], 
         zoom_start=12, 
-        tiles="CartoDB dark_matter" # This is the magic line
+        tiles="tiles='https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", # This is the magic line
+        attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     )
     if not df_clean.empty:
         m = folium.Map(location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], zoom_start=12)
