@@ -17,16 +17,6 @@ st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide
 import streamlit as st
 import os
 
-# 1. Define your navigation first
-pg = st.navigation({
-    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
-    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
-    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
-                  st.Page(page_existing, title="Existing Locations", icon="📍")],
-    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
-                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
-})
-
 # 2. Add content to the sidebar BEFORE running the page
 with st.sidebar:
     # --- LOGOS ---
@@ -659,7 +649,15 @@ def page_scheduling():
         - **Peak Hours:** 10:00 AM - 4:00 PM, 7:00 PM - 10:00 PM
         - **Incentive:** 15% discount for Off-peak charging
         """)
-
+# 1. Define your navigation first
+pg = st.navigation({
+    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
+    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
+    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
+                  st.Page(page_existing, title="Existing Locations", icon="📍")],
+    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
+                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
+})
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
