@@ -23,7 +23,7 @@ with st.sidebar:
     col_l, col_r = st.columns(2)
     with col_l:
         if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
-            st.image("UMPSA_Logo.png", use_container_width=True)
+            st.image("Screenshot 2023-08-04 at 9.42.54 AM.png", use_container_width=True)
     with col_r:
         if os.path.exists("strateq.png"):
             st.image("strateq.png", use_container_width=True)
