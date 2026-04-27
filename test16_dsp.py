@@ -356,8 +356,25 @@ def page_optimal():
     m = folium.Map(
         location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], 
         zoom_start=12, 
-        tiles="CartoDB dark_matter" # This is the magic line
+        tiles="cartodbdark_matter" # This is the magic line
     )
+
+    # Add this bit of code right before you display the map
+    map_style = """
+    <style>
+        .leaflet-container {
+            background: #2D0000 !important; /* Matches your Burgundy background */
+        }
+        .leaflet-tile-pane {
+            filter: sepia(0.5) hue-rotate(300deg) brightness(0.7) contrast(1.2);
+        }
+    </style>
+    """
+m.get_root().header.add_child(folium.Element(map_style))
+
+# Then display the map
+from streamlit_folium import st_folium
+st_folium(m, width=700, height=500)
     
     # Initialize session state for training results
     if 'training_results' not in st.session_state:
