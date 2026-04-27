@@ -31,16 +31,19 @@ with st.sidebar:
     st.markdown("---") # Thin gold divider
 
     # 2. Mentor Info (Vertical stack for sidebar readability)
-    st.markdown("""
-        <div class="sidebar-mentor-container">
-            <p class="s-label">Academic Tutor</p>
-            <p class="s-name">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
-            
-            <p class="s-label" style="margin-top: 15px;">Industry Coach</p>
-            <p class="s-name">MR. JAMES LIM CHEE KEON</p>
-        </div>
-    """, unsafe_allow_html=True) # This is the critical part!
+    # We use a single large triple-quoted string to hold ALL the HTML
+    sidebar_content = """
+    <div class="sidebar-mentor-container">
+        <p class="s-label">Academic Tutor</p>
+        <p class="s-name">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
+        
+        <p class="s-label" style="margin-top: 15px;">Industry Coach</p>
+        <p class="s-name">MR. JAMES LIM CHEE KEON</p>
+    </div>
+    """
     
+    # This is the line that actually turns the code into the gold/white text
+    st.sidebar.markdown(sidebar_content, unsafe_allow_html=True)
     st.markdown("---")
 
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
