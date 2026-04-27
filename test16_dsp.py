@@ -31,7 +31,7 @@ st.markdown("""
         font-family: 'Orbitron', sans-serif !important;
         color: #F3B3FF !important;
         text-shadow: 0 0 15px rgba(168, 85, 247, 0.8), 
-                     0 0 30px rgba(168, 85, 247, 0.4);
+                     0 0 10px rgba(168, 85, 247, 0.4);
         letter-spacing: 2px;
     }
 
@@ -41,7 +41,7 @@ st.markdown("""
         border: 1px solid #A855F7 !important;
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
         backdrop-filter: blur(10px);
     }
     
