@@ -156,69 +156,53 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def render_header():
-    # Placeholder paths based on your previous script (image_4.png)
-    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" # <--- REPLACE WITH YOUR EXACT FILE
+    # Logo filenames (ensure these match your local files)
+    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png"
     logo2_filename = "strateq.png"
 
-    # Precise Name strings
-    tutor_name_full = "DR. KU MUHAMMAD NA'IM BIN KU KHALIF"
-    coach_name_full = "MR. JAMES LIM CHEE KEON"
+    # --- MAIN CONTAINER ---
+    # We use a wide middle column [1, 8, 1] to keep everything away from the screen edges
+    _, main_col, _ = st.columns([1, 8, 1])
 
-    # --- ROW 1: THE CORE CONTAINER (Simplified to 3 Columns) ---
-    # Col 1 is empty, Col 2 contains ALL elements (logos and names), Col 3 is empty.
-    # The [2, 6, 2] ratio centers that middle column perfectly.
-    outer_left, outer_mid, outer_right = st.columns([2, 6, 2])
-    
-    with outer_mid:
-        # We are now strictly inside the middle of the screen.
+    with main_col:
+        # --- LOGO CLUSTER ---
+        # We create a small sub-grid for the logos to keep them side-by-side in the center
+        st.markdown('<div class="logo-cluster-container">', unsafe_allow_html=True)
+        l_col1, l_col2, l_col3, l_col4 = st.columns([2, 1, 1, 2])
         
-        # --- INNER ROW A: THE LOGOS (Equal 1:1 Grid) ---
-        # This creates a perfect inner row, splitting the logos 50/50.
-        col_a, col_b = st.columns(2)
-        
-        with col_a:
-            # Force UMPSA logo to align to its own right-side, centering it between the two logos
-            st.markdown('<div class="aligned-logo-right">', unsafe_allow_html=True)
+        with l_col2:
             if os.path.exists(logo1_filename):
-                st.image(logo1_filename, width=150)
-            else:
-                st.write("UMPSA Logo")
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        with col_b:
-            # Force Strateq logo to align to its own left-side, centering it between the two logos
-            st.markdown('<div class="aligned-logo-left">', unsafe_allow_html=True)
+                st.image(logo1_filename, width=120)
+        with l_col3:
             if os.path.exists(logo2_filename):
-                st.image(logo2_filename, width=150)
-            else:
-                st.write("Strateq Logo")
-            st.markdown('</div>', unsafe_allow_html=True)
+                # Wrapped in a div for vertical centering alignment
+                st.markdown('<div style="padding-top: 25px;">', unsafe_allow_html=True)
+                st.image(logo2_filename, width=120)
+                st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-        # --- Minor gap to separate logos from the name boxes ---
-        st.markdown("<br>", unsafe_allow_html=True) 
+        st.markdown("<br>", unsafe_allow_html=True)
 
-        # --- INNER ROW B: THE NAMES (Equal 1:1 Grid) ---
-        # We recreate the exact same inner grid for the name boxes.
-        text_col_a, text_col_b = st.columns(2)
+        # --- NAMES ALIGNMENT ---
+        # Align left for Tutor, Align right for Coach
+        n_col1, n_col2 = st.columns(2)
         
-        with text_col_a:
-            # Recreate the precise HTML box from image_4.png
-            st.markdown(f"""
-                <div class="aligned-name-container">
-                    <p class="role-title">Academic Tutor:</p>
-                    <p class="name-text">{tutor_name_full}</p>
+        with n_col1:
+            st.markdown("""
+                <div class="mentor-box align-left">
+                    <p class="mentor-label">Academic Tutor:</p>
+                    <p class="mentor-name">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
                 </div>
-                """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-        with text_col_b:
-            st.markdown(f"""
-                <div class="aligned-name-container">
-                    <p class="role-title">Industry Coach:</p>
-                    <p class="name-text">{coach_name_full}</p>
+        with n_col2:
+            st.markdown("""
+                <div class="mentor-box align-right">
+                    <p class="mentor-label">Industry Coach:</p>
+                    <p class="mentor-name">MR. JAMES LIM CHEE KEON</p>
                 </div>
-                """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
 
-    # Standard final divider
     st.markdown("---")
     
 def render_footer():
