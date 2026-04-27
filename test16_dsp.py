@@ -676,15 +676,6 @@ def page_scheduling():
         - **Incentive:** 15% discount for Off-peak charging
         """)
 
-# --- NAVIGATION ---
-pg = st.navigation({
-    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
-    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
-    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
-                  st.Page(page_existing, title="Existing Locations", icon="📍")],
-    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
-                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
-})
 
 # --- SIDEBAR BRANDING SECTION ---
 with st.sidebar:
@@ -710,6 +701,16 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     st.markdown("---")
+
+# --- NAVIGATION ---
+pg = st.navigation({
+    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
+    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
+    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
+                  st.Page(page_existing, title="Existing Locations", icon="📍")],
+    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
+                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
+})
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
