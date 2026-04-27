@@ -92,6 +92,25 @@ st.markdown("""
         border: 1px solid rgba(168, 85, 247, 0.2);
         border-radius: 10px;
     }
+
+    /* Change Slider Color to Lavender */
+    div[data-baseweb="slider"] > div > div {
+        background: #F3B3FF !important;
+    }
+
+    /* Change Slider Thumb (The Circle) */
+    div[role="slider"] {
+        background-color: #F3B3FF !important;
+        border: 2px solid #FFFFFF !important;
+        box-shadow: 0 0 10px #F3B3FF, 0 0 20px #A855F7 !important;
+    }
+
+    /* Change the number above the slider */
+    div[data-testid="stThumbValue"] {
+        color: #F3B3FF !important;
+        font-family: 'Orbitron', sans-serif !important;
+        text-shadow: 0 0 5px #A855F7;
+    }
     </style>
     """, unsafe_allow_html=True)
 
