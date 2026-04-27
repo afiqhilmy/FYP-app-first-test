@@ -176,6 +176,21 @@ st.markdown("""
         background-color: #D4AF37 !important;
         border: 2px solid #F5E6BE !important;
     }
+
+    /* This forces both logos to align along their middle axis */
+    [data-testid="stHorizontalBlock"] div[style*="flex-direction: column"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+/* Specifically target the logo containers to remove any default top padding */
+    .logo-cluster-container img {
+        margin-top: auto;
+        margin-bottom: auto;
+        max-height: 120px; /* Limits the height so the UMPSA logo doesn't get too giant */
+        object-fit: contain;
+    }
     </style>
     """, unsafe_allow_html=True)
 
