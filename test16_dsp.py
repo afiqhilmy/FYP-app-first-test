@@ -226,20 +226,20 @@ def page_eda():
         col1, col2 = st.columns(2)
         with col1:
             target_col = 'JUMLAH BILANGAN UNIT PENGECAS' if mode == "Raw Data" else 'Total Number of Chargers'
-            fig1 = px.histogram(df, x=target_col, nbins=10, title="Charger Distribution", color_discrete_sequence=['#F3B3FF'])
+            fig1 = px.histogram(df, x=target_col, nbins=10, title="Charger Distribution", color_discrete_sequence=['#D4AF37'])
             st.plotly_chart(fig1, width='stretch')
             ac_col = 'AC BAY' if mode == "Raw Data" else 'AC'
             dc_col = 'DC BAY' if mode == "Raw Data" else 'DC'
             total_ac = df[ac_col].sum()
             total_dc = df[dc_col].sum()
-            fig2 = px.pie(values=[total_ac, total_dc], names=['AC Bays', 'DC Bays'], title="Overall Infrastructure Mix",color_discrete_sequence=['#A855F7', '#F3B3FF'], template="plotly_dark")
+            fig2 = px.pie(values=[total_ac, total_dc], names=['AC Bays', 'DC Bays'], title="Overall Infrastructure Mix",color_discrete_sequence=['#B58A00', '#D4AF37'], template="plotly_dark")
             st.plotly_chart(fig2, width='stretch')
         with col2:
             if 'Total_revenue (RM)' in df.columns:
                 fig3 = px.scatter(df, x='population', y='Total_revenue (RM)', color='Total Charger Bays',
-                                  title="Revenue Correlation with Population & Bays", color_continuous_scale='Purples', template="plotly_dark", trendline="ols")
+                                  title="Revenue Correlation with Population & Bays", color_continuous_scale='Oranges', template="plotly_dark", trendline="ols")
                 st.plotly_chart(fig3, width='stretch')
-                fig4 = px.box(df, y='Total_revenue (RM)', title="Revenue Variance & Outliers", color_discrete_sequence=['#F3B3FF'], template="plotly_dark" )
+                fig4 = px.box(df, y='Total_revenue (RM)', title="Revenue Variance & Outliers", color_discrete_sequence=['#D4AF37'], template="plotly_dark" )
                 st.plotly_chart(fig4, width='stretch')
     render_footer()
 
