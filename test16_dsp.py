@@ -228,7 +228,7 @@ def render_header():
             # Force Strateq logo to align to its own left-side, centering it between the two logos
             st.markdown('<div class="aligned-logo-left">', unsafe_allow_html=True)
             if os.path.exists(logo2_filename):
-                st.image(logo2_filename, width=150)
+                st.image(logo2_filename, width=160)
             else:
                 st.write("Strateq Logo")
             st.markdown('</div>', unsafe_allow_html=True)
