@@ -109,6 +109,32 @@ st.markdown("""
         padding: 20px;
         font-family: 'Orbitron', sans-serif;
     }
+
+    /* 1. Change the background and text color of the st.info box */
+    [data-testid="stAlert"] {
+        background-color: rgba(45, 0, 0, 0.7) !important; /* Deep Burgundy Red with opacity */
+        color: #D4AF37 !important; /* Metallic Gold Text */
+        border: 1px solid #D4AF37 !important; /* Thin Gold Border for definition */
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        font-family: 'Orbitron', sans-serif !important; /* Keep the tech font */
+    }
+
+    /* 2. Change the color of the "Note:" text specifically */
+    [data-testid="stAlert"] strong {
+        color: #F5E6BE !important; /* Soft Creamy Gold for the strong text */
+        font-weight: 700;
+    }
+
+    /* 3. Ensure the rest of the text is also gold */
+    [data-testid="stAlert"] div {
+        color: #D4AF37 !important;
+    }
+    
+    /* Optional: Customize the icon if needed, but it should adapt */
+    [data-testid="stAlert"] svg {
+        fill: #D4AF37 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
