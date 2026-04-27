@@ -111,6 +111,30 @@ st.markdown("""
         font-family: 'Orbitron', sans-serif !important;
         text-shadow: 0 0 5px #A855F7;
     }
+    /* 1. The track (the line itself) */
+div[data-baseweb="slider"] > div > div {
+    background: linear-gradient(90deg, #F3B3FF 0%, #A855F7 100%) !important;
+}
+
+/* 2. The handle (the circle/thumb) */
+div[role="slider"] {
+    background-color: #F3B3FF !important;
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 0 15px #F3B3FF !important;
+}
+
+/* 3. The value label (the number "10") */
+div[data-testid="stThumbValue"] {
+    color: #F3B3FF !important;
+    font-family: 'Orbitron', sans-serif !important;
+    text-shadow: 0 0 8px #A855F7 !important;
+}
+
+/* 4. The label text (the question) */
+[data-testid="stWidgetLabel"] p {
+    color: #F3B3FF !important;
+    font-family: 'Orbitron', sans-serif !important;
+}
     </style>
     """, unsafe_allow_html=True)
 
