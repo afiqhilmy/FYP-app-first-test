@@ -17,6 +17,41 @@ st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide
 import streamlit as st
 import os
 
+# 1. Define your navigation first
+pg = st.navigation({
+    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
+    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
+    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
+                  st.Page(page_existing, title="Existing Locations", icon="📍")],
+    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
+                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
+})
+
+# 2. Add content to the sidebar BEFORE running the page
+with st.sidebar:
+    # --- LOGOS ---
+    col_l, col_r = st.columns(2)
+    with col_l:
+        if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
+            st.image("Screenshot 2023-08-04 at 9.42.54 AM.png", use_container_width=True)
+    with col_r:
+        if os.path.exists("strateq.png"):
+            st.image("strateq.png", use_container_width=True)
+    
+    st.markdown("---")
+
+    # --- MENTOR INFO ---
+    st.markdown("""
+        <div style="padding: 5px; border-left: 2px solid #D4AF37; padding-left: 15px;">
+            <p style="font-family: sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; font-weight: bold;">Academic Tutor</p>
+            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px;">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
+            <p style="font-family: sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; font-weight: bold;">Industry Coach</p>
+            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold;">MR. JAMES LIM CHEE KEON</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
@@ -625,43 +660,6 @@ def page_scheduling():
         - **Incentive:** 15% discount for Off-peak charging
         """)
 
-# 1. Define your navigation first
-pg = st.navigation({
-    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
-    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
-    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
-                  st.Page(page_existing, title="Existing Locations", icon="📍")],
-    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
-                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
-})
-
-# 2. Add content to the sidebar BEFORE running the page
-with st.sidebar:
-    # --- LOGOS ---
-    col_l, col_r = st.columns(2)
-    with col_l:
-        if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
-            st.image("Screenshot 2023-08-04 at 9.42.54 AM.png", use_container_width=True)
-    with col_r:
-        if os.path.exists("strateq.png"):
-            st.image("strateq.png", use_container_width=True)
-    
-    st.markdown("---")
-
-    # --- MENTOR INFO ---
-    st.markdown("""
-        <div style="padding: 5px; border-left: 2px solid #D4AF37; padding-left: 15px;">
-            <p style="font-family: sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; font-weight: bold;">Academic Tutor</p>
-            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px;">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
-            <p style="font-family: sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; font-weight: bold;">Industry Coach</p>
-            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold;">MR. JAMES LIM CHEE KEON</p>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # Optional: Add a "Project Name" label here before the nav starts
-    st.write("**EV Infrastructure Optimization**")
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
