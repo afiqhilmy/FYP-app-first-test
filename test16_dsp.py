@@ -204,6 +204,13 @@ def page_eda():
 def page_existing():
     render_header()
     st.title("📍 Existing Locations")
+
+    # Apply this in your map functions (page_existing and page_optimal)
+    m = folium.Map(
+        location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], 
+        zoom_start=12, 
+        tiles="CartoDB dark_matter" # This is the magic line
+    )
     if not df_clean.empty:
         m = folium.Map(location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], zoom_start=12)
         for _, row in df_clean.iterrows():
@@ -217,6 +224,13 @@ def page_existing():
 def page_optimal():
     render_header()
     st.title("🎯 Optimal Placement Analysis")
+
+    # Apply this in your map functions (page_existing and page_optimal)
+    m = folium.Map(
+        location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], 
+        zoom_start=12, 
+        tiles="CartoDB dark_matter" # This is the magic line
+    )
     
     # Initialize session state for training results
     if 'training_results' not in st.session_state:
