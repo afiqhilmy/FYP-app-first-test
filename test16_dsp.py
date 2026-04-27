@@ -14,51 +14,54 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
-# --- CUSTOM CSS ---
-# --- UPDATED CUSTOM CSS FOR FUTURISTIC DARK THEME ---
+# --- UPDATED CSS FOR FUTURISTIC ROYAL GREEN THEME ---
 st.markdown("""
     <style>
-    /* Main background and text */
+    /* Main background with a Royal Green Gradient */
     .stApp {
-        background: linear-gradient(135deg, #0a192f 0%, #020c1b 100%);
+        background: linear-gradient(135deg, #052010 0%, #000000 100%);
     }
     
-    /* Metric Cards */
+    /* Metric Cards - Glassmorphism with Green Glow */
     [data-testid="stMetric"] {
-        background-color: rgba(23, 42, 69, 0.7);
-        border: 1px solid #00d4ff;
+        background-color: rgba(10, 48, 24, 0.6);
+        border: 1px solid #00FF41;
         padding: 15px;
         border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+        box-shadow: 0 4px 15px rgba(0, 255, 65, 0.2);
     }
     
     [data-testid="stMetricLabel"] {
-        color: #00d4ff !important;
-        font-weight: 600 !important;
+        color: #00FF41 !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
     [data-testid="stMetricValue"] {
         color: #ffffff !important;
+        text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
     }
 
-    /* Sidebar styling */
+    /* Sidebar Styling */
     [data-testid="stSidebar"] {
-        background-color: #020c1b !important;
-        border-right: 1px solid #172a45;
+        background-color: #041a0d !important;
+        border-right: 1px solid #00FF41;
     }
 
-    /* Headlines */
+    /* Headlines with Neon Effect */
     h1, h2, h3 {
-        color: #00d4ff !important;
-        text-shadow: 0px 0px 10px rgba(0, 212, 255, 0.5);
+        color: #00FF41 !important;
+        text-shadow: 0px 0px 12px rgba(0, 255, 65, 0.6);
     }
 
+    /* Footer styling */
     .footer-text {
         text-align: center;
-        color: #8892b0;
+        color: #7DCEA0;
         padding-top: 20px;
         font-size: 14px;
-        border-top: 1px solid #172a45;
+        border-top: 1px solid #0a3018;
         margin-top: 50px;
     }
     </style>
