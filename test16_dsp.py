@@ -153,14 +153,6 @@ st.markdown("""
         line-height: 1.4;
     }
 
-    .glass-logo img {
-    background-color: rgba(255, 255, 255, 0.05) !important; /* Extremely faint white */
-    border-radius: 15px;
-    padding: 10px;
-    backdrop-filter: blur(5px); /* Softens the background behind the logo */
-    border: 1px solid rgba(212, 175, 55, 0.2); /* Faint gold border */
-}
-
     </style>
     """, unsafe_allow_html=True)
 
