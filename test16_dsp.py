@@ -157,7 +157,7 @@ st.markdown("""
 
 def render_header():
     # Placeholder paths based on your previous script (image_4.png)
-    logo1_filename = "logo-umpsa-full-color2.png" # <--- REPLACE WITH YOUR EXACT FILE
+    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" # <--- REPLACE WITH YOUR EXACT FILE
     logo2_filename = "strateq.png"
 
     # Precise Name strings
