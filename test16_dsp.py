@@ -153,64 +153,6 @@ st.markdown("""
         line-height: 1.4;
     }
 
-    /* --- NEW CLASSES FOR LOGO/NAME ALIGNMENT --- */
-
-    /* Force Logos into precise vertical alignment */
-    .aligned-logo-right img {
-        display: block;
-        margin-left: auto !important; /* Centered in inner column */
-        margin-right: 25px !important; /* Visual spacing against next logo */
-    }
-
-    .aligned-logo-left img {
-        display: block;
-        margin-right: auto !important; /* Centered in inner column */
-        margin-left: 25px !important; /* Visual spacing against previous logo */
-    }
-
-    /* Recreating the precise Name Container box from image_4.png */
-    .aligned-name-container {
-        border: 1px solid rgba(212, 175, 55, 0.4); /* Gold Border */
-        background-color: rgba(45, 0, 0, 0.7); /* Deep Burgundy */
-        border-radius: 12px;
-        padding: 15px;
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-        
-        /* THE ALIGNMENT MAGIC: Centered content only */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        
-        /* Ensure boxes are equal height for stability */
-        min-height: 110px;
-    }
-
-    /* Font styling to match image_4.png precisely */
-    .role-title {
-        font-family: 'Orbitron', sans-serif;
-        font-weight: 700;
-        color: #F5E6BE; /* Soft Gold */
-        font-size: 0.95rem;
-        margin: 0 0 8px 0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .name-text {
-        font-family: 'monospace'; /* Better readability for long strings */
-        color: #FFFFFF;
-        font-size: 0.95rem;
-        margin: 0;
-        line-height: 1.4;
-        word-wrap: break-word; /* Ensure super long names don't break box */
-    }
-    
-    /* Pull the whole name row slightly closer to the logos */
-    div[data-testid="stVerticalBlock"] > div > div > .stHorizontalBlock {
-        margin-top: -15px !important;
-    }
     </style>
     """, unsafe_allow_html=True)
 
