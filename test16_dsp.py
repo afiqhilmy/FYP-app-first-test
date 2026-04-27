@@ -168,7 +168,7 @@ def render_header():
         # --- LOGO CLUSTER ---
         # We create a small sub-grid for the logos to keep them side-by-side in the center
         st.markdown('<div class="logo-cluster-container">', unsafe_allow_html=True)
-        l_col1, l_col2, l_col3, l_col4 = st.columns([2, 1, 1, 2])
+        l_col1, l_col2, l_col3, l_col4 = st.columns([2, 0, 0, 2])
         
         with l_col2:
             if os.path.exists(logo1_filename):
