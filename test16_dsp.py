@@ -92,49 +92,7 @@ st.markdown("""
         border: 1px solid rgba(168, 85, 247, 0.2);
         border-radius: 10px;
     }
-
-    /* Change Slider Color to Lavender */
-    div[data-baseweb="slider"] > div > div {
-        background: #F3B3FF !important;
-    }
-
-    /* Change Slider Thumb (The Circle) */
-    div[role="slider"] {
-        background-color: #F3B3FF !important;
-        border: 2px solid #FFFFFF !important;
-        box-shadow: 0 0 10px #F3B3FF, 0 0 20px #A855F7 !important;
-    }
-
-    /* Change the number above the slider */
-    div[data-testid="stThumbValue"] {
-        color: #F3B3FF !important;
-        font-family: 'Orbitron', sans-serif !important;
-        text-shadow: 0 0 5px #A855F7;
-    }
-    /* 1. The track (the line itself) */
-div[data-baseweb="slider"] > div > div {
-    background: linear-gradient(90deg, #F3B3FF 0%, #A855F7 100%) !important;
-}
-
-/* 2. The handle (the circle/thumb) */
-div[role="slider"] {
-    background-color: #F3B3FF !important;
-    border: 2px solid #FFFFFF !important;
-    box-shadow: 0 0 15px #F3B3FF !important;
-}
-
-/* 3. The value label (the number "10") */
-div[data-testid="stThumbValue"] {
-    color: #F3B3FF !important;
-    font-family: 'Orbitron', sans-serif !important;
-    text-shadow: 0 0 8px #A855F7 !important;
-}
-
-/* 4. The label text (the question) */
-[data-testid="stWidgetLabel"] p {
-    color: #F3B3FF !important;
-    font-family: 'Orbitron', sans-serif !important;
-}
+    
     </style>
     """, unsafe_allow_html=True)
 
