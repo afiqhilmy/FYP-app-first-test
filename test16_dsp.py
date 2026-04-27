@@ -267,7 +267,7 @@ st.markdown("""
 def render_header():
     # 1. Small Project ID Header (Left-aligned)
     st.markdown("""
-        <p style='font-family: "Orbitron", sans-serif; font-size: 0.65rem; color: #808495; letter-spacing: 2px; margin-bottom: -15px;'>
+        <p style='font-family: "Orbitron", sans-serif; font-size: 0.65rem; color: #D4AF37; letter-spacing: 2px; margin-bottom: -15px;'>
             SD23009 DATA SCIENCE PROJECT II
         </p>
     """, unsafe_allow_html=True)
