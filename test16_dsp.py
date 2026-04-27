@@ -27,15 +27,6 @@ with st.sidebar:
     with col_r:
         if os.path.exists("strateq.png"):
             st.image("strateq.png", use_container_width=True)
-    st.markdown("""
-        <div class="sidebar-mentor-container">
-            <p class="s-label">Academic Tutor</p>
-            <p class="s-name">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
-            
-            <p class="s-label" style="margin-top: 15px;">Industry Coach</p>
-            <p class="s-name">MR. JAMES LIM CHEE KEON</p>
-        </div>
-    """, unsafe_allow_html=True) # This is the critical part!
     
     st.markdown("---") # Thin gold divider
 
@@ -48,7 +39,7 @@ with st.sidebar:
             <p class="s-label" style="margin-top: 15px;">Industry Coach</p>
             <p class="s-name">MR. JAMES LIM CHEE KEON</p>
         </div>
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True) # This is the critical part!
     
     st.markdown("---")
 
