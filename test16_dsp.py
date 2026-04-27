@@ -14,10 +14,7 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
-import streamlit as st
-import os
-
-# 2. Add content to the sidebar BEFORE running the page
+# --- 2. SIDEBAR TOP CONTENT (Logos & Mentors) ---
 with st.sidebar:
     # --- LOGOS ---
     col_l, col_r = st.columns(2)
@@ -656,7 +653,8 @@ def page_scheduling():
         - **Peak Hours:** 10:00 AM - 4:00 PM, 7:00 PM - 10:00 PM
         - **Incentive:** 15% discount for Off-peak charging
         """)
-# 1. Define your navigation first
+
+# --- 4. NAVIGATION ---
 pg = st.navigation({
     "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
     "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
