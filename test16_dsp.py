@@ -216,7 +216,7 @@ def page_existing():
         for _, row in df_clean.iterrows():
             popup_text = f"<b>Address:</b> {row['Station Address']}<br><b>Total Chargers:</b> {row['Total Number of Chargers']}<br><b>AC Bays:</b> {row['AC']}<br><b>DC Bays:</b> {row['DC']}"
             folium.Marker([row['Latitude'], row['Longitude']], popup=folium.Popup(popup_text, max_width=300),
-                          icon=folium.Icon(color='purple', icon='charging-station', prefix='fa')).add_to(m)
+                          icon=folium.Icon(color='#F3B3FF', icon='charging-station', prefix='fa')).add_to(m)
         st_folium(m, width="100%", height=500)
     render_footer()
 
