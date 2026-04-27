@@ -15,62 +15,67 @@ from sklearn.cluster import KMeans
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
 # --- UPDATED CSS FOR FUTURISTIC DEEP VIOLET ---
+# --- THE TRUE VIOLET FUTURISTIC CSS ---
 st.markdown("""
     <style>
-    /* Main background with a Deep Space Violet Gradient */
+    /* Gradient Background: Darkest at edges, Purple glow in center */
     .stApp {
-        background: radial-gradient(circle at top, #1a1025 0%, #0b0118 100%);
+        background: radial-gradient(circle, #1a1025 0%, #0b0118 70%, #05010a 100%);
     }
     
-    /* Metric Cards - Glassmorphism with Purple Glow */
-    [data-testid="stMetric"] {
-        background-color: rgba(26, 16, 37, 0.7);
-        border: 1px solid rgba(168, 85, 247, 0.4);
-        padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(168, 85, 247, 0.15);
-        transition: all 0.3s ease-in-out;
+    /* Headlines with soft Purple Neon glow */
+    h1, h2, h3 {
+        color: #FAF5FF !important;
+        text-shadow: 0 0 10px rgba(168, 85, 247, 0.7), 
+                     0 0 20px rgba(168, 85, 247, 0.3);
+        letter-spacing: 1px;
     }
 
-    /* Hover effect for metrics */
-    [data-testid="stMetric"]:hover {
-        border: 1px solid #A855F7;
-        box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
-        transform: translateY(-2px);
+    /* Metric Cards: Semi-transparent Violet "Glass" */
+    [data-testid="stMetric"] {
+        background: rgba(43, 22, 69, 0.3) !important;
+        border: 1px solid rgba(168, 85, 247, 0.5) !important;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(4px); /* Blur effect like frosted glass */
     }
     
     [data-testid="stMetricLabel"] {
-        color: #D8B4FE !important; /* Soft Lavender */
-        font-weight: 600 !important;
-        letter-spacing: 1px;
+        color: #D8B4FE !important; /* Soft Amethyst */
+        font-weight: 700 !important;
+        text-transform: uppercase;
     }
     
     [data-testid="stMetricValue"] {
         color: #FFFFFF !important;
-        text-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+        text-shadow: 0 0 10px rgba(168, 85, 247, 1);
     }
 
-    /* Sidebar styling */
+    /* Sidebar: Solid Dark Violet */
     [data-testid="stSidebar"] {
         background-color: #080112 !important;
-        border-right: 1px solid rgba(168, 85, 247, 0.2);
+        border-right: 1px solid rgba(168, 85, 247, 0.3);
     }
 
-    /* Headlines with Amethyst Glow */
-    h1, h2, h3 {
-        color: #FAF5FF !important;
-        text-shadow: 0px 0px 15px rgba(168, 85, 247, 0.5);
+    /* Buttons: Neon Violet styling */
+    .stButton>button {
+        background-color: #A855F7 !important;
+        color: white !important;
+        border-radius: 10px !important;
+        border: none !important;
+        box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
     }
 
-    /* Footer styling */
-    .footer-text {
-        text-align: center;
-        color: #A855F7;
-        padding-top: 20px;
-        font-size: 14px;
-        border-top: 1px solid #1A1025;
-        margin-top: 50px;
-        opacity: 0.8;
+    .stButton>button:hover {
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
+        transform: scale(1.02);
+    }
+
+    /* Dataframe/Table Backgrounds */
+    .stDataFrame {
+        background-color: rgba(26, 16, 37, 0.5);
+        border-radius: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
