@@ -78,6 +78,9 @@ with st.sidebar:
     st.markdown(mentor_html, unsafe_allow_html=True)
     st.markdown("---")
 
+# Place this at the end of your sidebar section
+st.sidebar.markdown(mentor_html, unsafe_allow_html=True)
+
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
