@@ -225,6 +225,17 @@ st.markdown("""
         background-color: #1A0000 !important; /* Slightly darker burgundy */
         border-right: 1px solid rgba(212, 175, 55, 0.2);
     }
+
+    /* Styling the sidebar radio buttons to match the gold theme */
+    div[data-testid="stSidebarNav"] {
+        padding-top: 0rem !important;
+    }
+
+    div[role="radiogroup"] label {
+        color: #F5E6BE !important; /* Soft Gold text for nav options */
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.9rem;
+    }
     </style>
     """, unsafe_allow_html=True)
 
