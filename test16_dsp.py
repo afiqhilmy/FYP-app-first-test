@@ -265,7 +265,14 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def render_header():
-    # Standard final divider
+    # 1. Small Project ID Header (Left-aligned)
+    st.markdown("""
+        <p style='font-family: "Orbitron", sans-serif; font-size: 0.65rem; color: #808495; letter-spacing: 2px; margin-bottom: -15px;'>
+            SD23009 DATA SCIENCE PROJECT II
+        </p>
+    """, unsafe_allow_html=True)
+    
+    # 2. The Standard Divider
     st.markdown("---")
     
 def render_footer():
