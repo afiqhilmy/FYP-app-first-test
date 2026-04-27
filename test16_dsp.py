@@ -152,12 +152,10 @@ st.markdown("""
         letter-spacing: 1px;
         line-height: 1.4;
     }
-
     </style>
     """, unsafe_allow_html=True)
 
 def render_header():
-
     # Placeholder paths based on your previous script (image_4.png)
     logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" # <--- REPLACE WITH YOUR EXACT FILE
     logo2_filename = "strateq.png"
@@ -195,6 +193,13 @@ def render_header():
             else:
                 st.write("Strateq Logo")
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # --- Minor gap to separate logos from the name boxes ---
+        st.markdown("<br>", unsafe_allow_html=True) 
+
+        # --- INNER ROW B: THE NAMES (Equal 1:1 Grid) ---
+        # We recreate the exact same inner grid for the name boxes.
+        text_col_a, text_col_b = st.columns(2)
         
         with text_col_a:
             # Recreate the precise HTML box from image_4.png
@@ -212,10 +217,6 @@ def render_header():
                     <p class="name-text">{coach_name_full}</p>
                 </div>
                 """, unsafe_allow_html=True)
-
-        # --- INNER ROW B: THE NAMES (Equal 1:1 Grid) ---
-        # We recreate the exact same inner grid for the name boxes.
-        text_col_a, text_col_b = st.columns(2)
 
     # Standard final divider
     st.markdown("---")
