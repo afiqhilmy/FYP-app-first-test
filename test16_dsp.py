@@ -14,59 +14,66 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
-# --- UPDATED CSS FOR FUTURISTIC ROYAL GREEN THEME ---
+# --- UPDATED CSS FOR PITCH BLACK & GLOWING WHITE ---
 st.markdown("""
     <style>
-    /* Main background with a Royal Green Gradient */
+    /* Global Background */
     .stApp {
-        background: linear-gradient(135deg, #052010 0%, #000000 100%);
-    }
-    
-    /* Metric Cards - Glassmorphism with Green Glow */
-    [data-testid="stMetric"] {
-        background-color: rgba(10, 48, 24, 0.6);
-        border: 1px solid #00FF41;
-        padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 255, 65, 0.2);
-    }
-    
-    [data-testid="stMetricLabel"] {
-        color: #00FF41 !important;
-        font-weight: 700 !important;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    
-    [data-testid="stMetricValue"] {
-        color: #ffffff !important;
-        text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        background-color: #000000;
     }
 
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #041a0d !important;
-        border-right: 1px solid #00FF41;
-    }
-
-    /* Headlines with Neon Effect */
+    /* White Glow Effect for Headers */
     h1, h2, h3 {
-        color: #00FF41 !important;
-        text-shadow: 0px 0px 12px rgba(0, 255, 65, 0.6);
+        color: #FFFFFF !important;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                     0 0 20px rgba(255, 255, 255, 0.4);
+        font-weight: 700;
     }
 
-    /* Footer styling */
+    /* Glowing Metric Cards */
+    [data-testid="stMetric"] {
+        background-color: #000000;
+        border: 1px solid #333333;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    [data-testid="stMetric"]:hover {
+        transform: translateY(-5px);
+        border-color: #FFFFFF;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    [data-testid="stMetricLabel"] {
+        color: #AAAAAA !important;
+        font-size: 14px !important;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    [data-testid="stMetricValue"] {
+        color: #FFFFFF !important;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    }
+
+    /* Sidebar - Deep Black */
+    [data-testid="stSidebar"] {
+        background-color: #000000 !important;
+        border-right: 1px solid #222222;
+    }
+
+    /* Footer Customization */
     .footer-text {
         text-align: center;
-        color: #7DCEA0;
-        padding-top: 20px;
-        font-size: 14px;
-        border-top: 1px solid #0a3018;
-        margin-top: 50px;
+        color: #555555;
+        padding-top: 30px;
+        border-top: 1px solid #222222;
+        text-shadow: none;
     }
     </style>
     """, unsafe_allow_html=True)
-
 def render_header():
     # Define filenames (make sure these exist in your GitHub root)
     logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" 
