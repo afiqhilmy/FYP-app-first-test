@@ -240,68 +240,6 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def render_header():
-    # Placeholder paths based on your previous script (image_4.png)
-    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" # <--- REPLACE WITH YOUR EXACT FILE
-    logo2_filename = "strateq.png"
-
-    # Precise Name strings
-    tutor_name_full = "DR. KU MUHAMMAD NA'IM BIN KU KHALIF"
-    coach_name_full = "MR. JAMES LIM CHEE KEON"
-
-    # --- ROW 1: THE CORE CONTAINER (Simplified to 3 Columns) ---
-    # Col 1 is empty, Col 2 contains ALL elements (logos and names), Col 3 is empty.
-    # The [2, 6, 2] ratio centers that middle column perfectly.
-    outer_left, outer_mid, outer_right = st.columns([2, 6, 2])
-    
-    with outer_mid:
-        # We are now strictly inside the middle of the screen.
-        
-        # --- INNER ROW A: THE LOGOS (Equal 1:1 Grid) ---
-        # This creates a perfect inner row, splitting the logos 50/50.
-        col_a, col_b = st.columns(2)
-        
-        with col_a:
-            # Force UMPSA logo to align to its own right-side, centering it between the two logos
-            st.markdown('<div class="aligned-logo-right">', unsafe_allow_html=True)
-            if os.path.exists(logo1_filename):
-                st.image(logo1_filename, width=200)
-            else:
-                st.write("UMPSA Logo")
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        with col_b:
-            # Force Strateq logo to align to its own left-side, centering it between the two logos
-            st.markdown('<div class="aligned-logo-left">', unsafe_allow_html=True)
-            if os.path.exists(logo2_filename):
-                st.image(logo2_filename, width=160)
-            else:
-                st.write("Strateq Logo")
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        # --- Minor gap to separate logos from the name boxes ---
-        st.markdown("<br>", unsafe_allow_html=True) 
-
-        # --- INNER ROW B: THE NAMES (Equal 1:1 Grid) ---
-        # We recreate the exact same inner grid for the name boxes.
-        text_col_a, text_col_b = st.columns(2)
-        
-        with text_col_a:
-            # Recreate the precise HTML box from image_4.png
-            st.markdown(f"""
-                <div class="aligned-name-container">
-                    <p class="role-title">Academic Tutor:</p>
-                    <p class="name-text">{tutor_name_full}</p>
-                </div>
-                """, unsafe_allow_html=True)
-
-        with text_col_b:
-            st.markdown(f"""
-                <div class="aligned-name-container">
-                    <p class="role-title">Industry Coach:</p>
-                    <p class="name-text">{coach_name_full}</p>
-                </div>
-                """, unsafe_allow_html=True)
-
     # Standard final divider
     st.markdown("---")
     
@@ -713,15 +651,15 @@ with st.sidebar:
 
     st.markdown("---")
 
-# --- NAVIGATION ---
-pg = st.navigation({
-    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
-    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
-    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
-                  st.Page(page_existing, title="Existing Locations", icon="📍")],
-    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
-                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
-})
+    # --- NAVIGATION ---
+    pg = st.navigation({
+        "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
+        "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
+        "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
+                      st.Page(page_existing, title="Existing Locations", icon="📍")],
+        "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
+                             st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
+    })
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
