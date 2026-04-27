@@ -18,64 +18,24 @@ st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide
 # --- THE TRUE VIOLET FUTURISTIC CSS ---
 st.markdown("""
     <style>
-    /* Gradient Background: Darkest at edges, Purple glow in center */
-    .stApp {
-        background: radial-gradient(circle, #1a1025 0%, #0b0118 70%, #05010a 100%);
-    }
-    
-    /* Headlines with soft Purple Neon glow */
-    h1, h2, h3 {
-        color: #FAF5FF !important;
-        text-shadow: 0 0 10px rgba(168, 85, 247, 0.7), 
-                     0 0 20px rgba(168, 85, 247, 0.3);
-        letter-spacing: 1px;
-    }
+    /* Import a futuristic Google Font (Optional) */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-    /* Metric Cards: Semi-transparent Violet "Glass" */
-    [data-testid="stMetric"] {
-        background: rgba(43, 22, 69, 0.3) !important;
-        border: 1px solid rgba(168, 85, 247, 0.5) !important;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(4px); /* Blur effect like frosted glass */
-    }
-    
     [data-testid="stMetricLabel"] {
-        color: #D8B4FE !important; /* Soft Amethyst */
+        color: #D8B4FE !important;
         font-weight: 700 !important;
         text-transform: uppercase;
+        /* CHANGE LABEL FONT HERE */
+        font-family: 'Orbitron', sans-serif !important; 
+        letter-spacing: 2px;
     }
     
     [data-testid="stMetricValue"] {
         color: #FFFFFF !important;
         text-shadow: 0 0 10px rgba(168, 85, 247, 1);
-    }
-
-    /* Sidebar: Solid Dark Violet */
-    [data-testid="stSidebar"] {
-        background-color: #080112 !important;
-        border-right: 1px solid rgba(168, 85, 247, 0.3);
-    }
-
-    /* Buttons: Neon Violet styling */
-    .stButton>button {
-        background-color: #A855F7 !important;
-        color: white !important;
-        border-radius: 10px !important;
-        border: none !important;
-        box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-    }
-
-    .stButton>button:hover {
-        box-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
-        transform: scale(1.02);
-    }
-
-    /* Dataframe/Table Backgrounds */
-    .stDataFrame {
-        background-color: rgba(26, 16, 37, 0.5);
-        border-radius: 10px;
+        /* CHANGE NUMBER FONT HERE */
+        font-family: 'monospace' !important;
+        font-size: 36px !important;
     }
     </style>
     """, unsafe_allow_html=True)
