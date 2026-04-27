@@ -135,33 +135,69 @@ st.markdown("""
     [data-testid="stAlert"] svg {
         fill: #D4AF37 !important;
     }
+
+    /* Add this specifically to handle the caption row */
+    div[data-testid="stCaptionContainer"] {
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid rgba(212, 175, 55, 0.3); /* Subtle gold border */
+        margin-top: -10px; /* Pull the caption closer to the logo */
+    }
+    
+    div[data-testid="stCaptionContainer"] p {
+        font-family: 'Orbitron', sans-serif !important;
+        color: #F5E6BE !important; /* Soft Creamy Gold */
+        font-weight: 700;
+        letter-spacing: 1px;
+        line-height: 1.4;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 def render_header():
-    # Define filenames (make sure these exist in your GitHub root)
-    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" 
+    # --- Part A: Define filenames (unchanged from original) ---
+    # logo1_filename = "UMPSA_Logo.png" # Example filename
+    # logo2_filename = "strateq.png" # Unchanged from your script
+    
+    # Placeholder paths if filenames aren't exact, based on image_3.png
+    logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png"
     logo2_filename = "strateq.png"
     
-    # Create 5 columns to force the middle two to be centered
-    # The [1, 1, 1, 1, 1] creates equal spacing; we use the middle ones (index 1 and 3)
-    # or [2, 2, 2, 2, 2] for better control.
-    
+    # --- Part B: Define the Names ---
+    academic_tutor_name = "DR. KU MUHAMMAD NA'IM BIN KU KHALIF" # <--- REPLACE WITH ACTUAL NAME
+    industry_coach_name = "MR. JAMES LIM CHEE KEON" # <--- REPLACE WITH ACTUAL NAME
+
+    # --- ROW 1: THE LOGOS (Existing Logic) ---
     col1, col2, col3, col4, col5 = st.columns([2, 1, 0.1, 1, 2])
     
     with col2:
         if os.path.exists(logo1_filename):
             st.image(logo1_filename, width=150)
         else:
-            st.write("UMPSA Logo") # Fallback text
+            st.write("UMPSA Logo")
 
     with col4:
         if os.path.exists(logo2_filename):
             st.image(logo2_filename, width=150)
         else:
-            st.write("Strateq Logo") # Fallback text
+            st.write("Strateq Logo")
             
+    # --- ROW 2: THE NAMES (NEW SECTION) ---
+    # We use the same column configuration to ensure perfect alignment
+    st.markdown("<br>", unsafe_allow_html=True) # Minor visual gap control
+    c1, c2, c3, c4, c5 = st.columns([2, 1, 0.1, 1, 2])
+    
+    with c2:
+        # Use st.caption for themed text, centered beneath the logo
+        st.caption(f"<div style='text-align: center;'>Academic Tutor:<br>{academic_tutor_name}</div>", unsafe_allow_html=True)
+
+    with c4:
+        # Use st.caption for themed text, centered beneath the logo
+        st.caption(f"<div style='text-align: center;'>Industry Coach:<br>{industry_coach_name}</div>", unsafe_allow_html=True)
+
     st.markdown("---")
+    
 def render_footer():
     st.markdown("""
         <div class="footer-text">
