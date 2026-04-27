@@ -204,7 +204,7 @@ def render_header():
             # Force UMPSA logo to align to its own right-side, centering it between the two logos
             st.markdown('<div class="aligned-logo-right">', unsafe_allow_html=True)
             if os.path.exists(logo1_filename):
-                st.image(logo1_filename, width=150)
+                st.image(logo1_filename, width=180)
             else:
                 st.write("UMPSA Logo")
             st.markdown('</div>', unsafe_allow_html=True)
