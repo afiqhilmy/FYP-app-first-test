@@ -14,7 +14,6 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
-# --- THE MODIFIED VIOLET-PITCH NEON CSS ---
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
