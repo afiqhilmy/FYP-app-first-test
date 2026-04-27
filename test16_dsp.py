@@ -17,63 +17,21 @@ st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide
 # --- UPDATED CSS FOR PITCH BLACK & GLOWING WHITE ---
 st.markdown("""
     <style>
-    /* Global Background */
     .stApp {
-        background-color: #000000;
+        background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
     }
-
-    /* White Glow Effect for Headers */
     h1, h2, h3 {
-        color: #FFFFFF !important;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
-                     0 0 20px rgba(255, 255, 255, 0.4);
-        font-weight: 700;
+        color: #38bdf8 !important;
+        text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
     }
-
-    /* Glowing Metric Cards */
     [data-testid="stMetric"] {
-        background-color: #000000;
-        border: 1px solid #333333;
-        padding: 20px;
+        background-color: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(56, 189, 248, 0.3);
         border-radius: 12px;
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-        transition: transform 0.3s ease;
-    }
-    
-    [data-testid="stMetric"]:hover {
-        transform: translateY(-5px);
-        border-color: #FFFFFF;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    }
-
-    [data-testid="stMetricLabel"] {
-        color: #AAAAAA !important;
-        font-size: 14px !important;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    [data-testid="stMetricValue"] {
-        color: #FFFFFF !important;
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-    }
-
-    /* Sidebar - Deep Black */
-    [data-testid="stSidebar"] {
-        background-color: #000000 !important;
-        border-right: 1px solid #222222;
-    }
-
-    /* Footer Customization */
-    .footer-text {
-        text-align: center;
-        color: #555555;
-        padding-top: 30px;
-        border-top: 1px solid #222222;
-        text-shadow: none;
     }
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
+
 def render_header():
     # Define filenames (make sure these exist in your GitHub root)
     logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" 
