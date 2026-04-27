@@ -14,6 +14,35 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
+import streamlit as st
+import os
+
+# --- SIDEBAR BRANDING SECTION ---
+with st.sidebar:
+    # 1. Logo Container (Using a tighter side-by-side layout)
+    col_l, col_r = st.columns(2)
+    with col_l:
+        if os.path.exists("UMPSA_Logo.png"):
+            st.image("UMPSA_Logo.png", use_container_width=True)
+    with col_r:
+        if os.path.exists("strateq.png"):
+            st.image("strateq.png", use_container_width=True)
+
+    st.markdown("---") # Thin gold divider
+
+    # 2. Mentor Info (Vertical stack for sidebar readability)
+    st.markdown("""
+        <div class="sidebar-mentor-container">
+            <p class="s-label">Academic Tutor</p>
+            <p class="s-name">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
+            
+            <p class="s-label" style="margin-top: 15px;">Industry Coach</p>
+            <p class="s-name">MR. JAMES LIM CHEE KEON</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
@@ -190,6 +219,37 @@ st.markdown("""
         margin-bottom: auto;
         max-height: 120px; /* Limits the height so the UMPSA logo doesn't get too giant */
         object-fit: contain;
+    }
+
+    /* --- SIDEBAR MENTOR STYLING --- */
+    .sidebar-mentor-container {
+        padding: 5px;
+        border-left: 2px solid #D4AF37; /* Vertical gold accent line */
+        padding-left: 15px;
+    }
+
+    .s-label {
+        font-family: 'Orbitron', sans-serif;
+        color: #F5E6BE; /* Soft Gold */
+        font-size: 0.75rem !important;
+        text-transform: uppercase;
+        margin-bottom: 2px !important;
+        letter-spacing: 1px;
+    }
+
+    .s-name {
+        font-family: 'monospace';
+        color: #FFFFFF;
+        font-size: 0.8rem !important;
+        font-weight: bold;
+        line-height: 1.2;
+        margin-bottom: 0px !important;
+    }
+
+/* Ensure the sidebar background matches your Burgundy theme */
+    [data-testid="stSidebar"] {
+        background-color: #1A0000 !important; /* Slightly darker burgundy */
+        border-right: 1px solid rgba(212, 175, 55, 0.2);
     }
     </style>
     """, unsafe_allow_html=True)
