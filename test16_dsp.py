@@ -14,28 +14,83 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
-# --- UPDATED CSS FOR FUTURISTIC DEEP VIOLET ---
-# --- THE TRUE VIOLET FUTURISTIC CSS ---
+# --- THE MODIFIED VIOLET-PITCH NEON CSS ---
 st.markdown("""
     <style>
-    /* Import a futuristic Google Font (Optional) */
+    /* Import Orbitron for that tech-heavy look */
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-    [data-testid="stMetricLabel"] {
-        color: #D8B4FE !important;
-        font-weight: 700 !important;
-        text-transform: uppercase;
-        /* CHANGE LABEL FONT HERE */
-        font-family: 'Orbitron', sans-serif !important; 
-        letter-spacing: 2px;
+    /* Background: Glows from Royal Purple (#30006F) out to Pitch Black (#000000) */
+    .stApp {
+        background: radial-gradient(circle at center, #30006f 0%, #0b0118 40%, #000000 100%);
+        background-attachment: fixed;
     }
     
+    /* Headlines: Orbitron font with white glow */
+    h1, h2, h3 {
+        font-family: 'Orbitron', sans-serif !important;
+        color: #F3B3FF !important;
+        text-shadow: 0 0 15px rgba(168, 85, 247, 0.8), 
+                     0 0 30px rgba(168, 85, 247, 0.4);
+        letter-spacing: 2px;
+    }
+
+    /* Metric Cards: Transparent "Obsidian Glass" style */
+    [data-testid="stMetric"] {
+        background: rgba(10, 1, 20, 0.6) !important;
+        border: 1px solid #A855F7 !important;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Metric Labels: Futuristic soft lavender */
+    [data-testid="stMetricLabel"] {
+        font-family: 'Orbitron', sans-serif !important;
+        color: #F3B3FF !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+    
+    /* Metric Values: Pure white with intense neon glow */
     [data-testid="stMetricValue"] {
+        font-family: 'monospace' !important; /* Monospace is better for reading numbers */
         color: #FFFFFF !important;
-        text-shadow: 0 0 10px rgba(168, 85, 247, 1);
-        /* CHANGE NUMBER FONT HERE */
-        font-family: 'monospace' !important;
-        font-size: 36px !important;
+        text-shadow: 0 0 12px rgba(168, 85, 247, 1),
+                     0 0 25px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Sidebar: Deep Pitch Black */
+    [data-testid="stSidebar"] {
+        background-color: #000000 !important;
+        border-right: 1px solid rgba(168, 85, 247, 0.4);
+    }
+
+    /* Buttons: Neon Pulse effect */
+    .stButton>button {
+        background-color: #A855F7 !important;
+        color: white !important;
+        font-family: 'Orbitron', sans-serif !important;
+        border-radius: 8px !important;
+        border: none !important;
+        box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+        transition: 0.3s;
+    }
+
+    .stButton>button:hover {
+        box-shadow: 0 0 30px rgba(168, 85, 247, 1);
+        transform: scale(1.05);
+        background-color: #F3B3FF !important;
+        color: #30006F !important;
+    }
+
+    /* Tables: Dark glass style */
+    .stDataFrame {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 10px;
     }
     </style>
     """, unsafe_allow_html=True)
