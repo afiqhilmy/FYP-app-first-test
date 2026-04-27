@@ -17,39 +17,6 @@ st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide
 import streamlit as st
 import os
 
-# --- SIDEBAR BRANDING SECTION ---
-with st.sidebar:
-    # 1. Logo Container
-    col_l, col_r = st.columns(2)
-    with col_l:
-        if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
-            st.image("Screenshot 2023-08-04 at 9.42.54 AM.png", use_container_width=True)
-    with col_r:
-        if os.path.exists("strateq.png"):
-            st.image("strateq.png", use_container_width=True)
-    
-    st.markdown("---") # Thin gold divider
-
-    # 2. Define the HTML content INSIDE the 'with' block or right before it
-    mentor_html = f"""
-        <div style="
-            padding: 5px;
-            border-left: 2px solid #D4AF37;
-            padding-left: 15px;
-            margin-top: 20px;
-        ">
-            <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px;">Academic Tutor</p>
-            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px;">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
-            
-            <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px;">Industry Coach</p>
-            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold;">MR. JAMES LIM CHEE KEON</p>
-        </div>
-    """
-
-    # 3. Render it ONCE
-    st.markdown(mentor_html, unsafe_allow_html=True)
-    st.markdown("---")
-
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
@@ -718,6 +685,39 @@ pg = st.navigation({
     "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
                          st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
 })
+
+# --- SIDEBAR BRANDING SECTION ---
+with st.sidebar:
+    # 1. Logo Container
+    col_l, col_r = st.columns(2)
+    with col_l:
+        if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
+            st.image("Screenshot 2023-08-04 at 9.42.54 AM.png", use_container_width=True)
+    with col_r:
+        if os.path.exists("strateq.png"):
+            st.image("strateq.png", use_container_width=True)
+    
+    st.markdown("---") # Thin gold divider
+
+    # 2. Define the HTML content INSIDE the 'with' block or right before it
+    mentor_html = f"""
+        <div style="
+            padding: 5px;
+            border-left: 2px solid #D4AF37;
+            padding-left: 15px;
+            margin-top: 20px;
+        ">
+            <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px;">Academic Tutor</p>
+            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px;">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
+            
+            <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px;">Industry Coach</p>
+            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold;">MR. JAMES LIM CHEE KEON</p>
+        </div>
+    """
+
+    # 3. Render it ONCE
+    st.markdown(mentor_html, unsafe_allow_html=True)
+    st.markdown("---")
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
