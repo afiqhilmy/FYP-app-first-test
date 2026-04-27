@@ -223,12 +223,12 @@ def render_header():
 
         with l_col2:
         # Adding a 'glass-logo' class wrapper
-        st.markdown('<div class="glass-logo">', unsafe_allow_html=True)
-        st.image(logo1_filename, width=120)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        # --- Minor gap to separate logos from the name boxes ---
-        st.markdown("<br>", unsafe_allow_html=True) 
+            st.markdown('<div class="glass-logo">', unsafe_allow_html=True)
+            st.image(logo1_filename, width=120)
+            st.markdown('</div>', unsafe_allow_html=True)
+    
+            # --- Minor gap to separate logos from the name boxes ---
+            st.markdown("<br>", unsafe_allow_html=True) 
 
         # --- INNER ROW B: THE NAMES (Equal 1:1 Grid) ---
         # We recreate the exact same inner grid for the name boxes.
