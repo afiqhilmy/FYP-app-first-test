@@ -15,84 +15,101 @@ from sklearn.cluster import KMeans
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
 # --- THE MODIFIED VIOLET-PITCH NEON CSS ---
+# --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
-    /* Import Orbitron for that tech-heavy look */
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
-    /* Background: Glows from Royal Purple (#30006F) out to Pitch Black (#000000) */
+    /* Background: Glows from Deep Burgundy (#4A0404) out to Pitch Black (#000000) */
     .stApp {
-        background: radial-gradient(circle at center, #30006f 0%, #0b0118 40%, #000000 100%);
+        background: radial-gradient(circle at center, #4a0404 0%, #1a0000 40%, #000000 100%);
         background-attachment: fixed;
     }
     
-    /* Headlines: Orbitron font with white glow */
+    /* Headlines: Orbitron font with Gold Neon glow */
     h1, h2, h3 {
         font-family: 'Orbitron', sans-serif !important;
-        color: #F3B3FF !important;
-        text-shadow: 0 0 15px rgba(168, 85, 247, 0.8), 
-                     0 0 10px rgba(168, 85, 247, 0.4);
+        color: #D4AF37 !important; /* Gold */
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 
+                     0 0 5px rgba(255, 255, 255, 0.2);
         letter-spacing: 2px;
     }
 
-    /* Metric Cards: Transparent "Obsidian Glass" style */
+    /* Metric Cards: Transparent "Blood Glass" style with Gold Border */
     [data-testid="stMetric"] {
-        background: rgba(10, 1, 20, 0.6) !important;
-        border: 1px solid #A855F7 !important;
+        background: rgba(45, 0, 0, 0.6) !important;
+        border: 1px solid #D4AF37 !important; /* Gold Border */
         padding: 20px;
         border-radius: 15px;
-        box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+        box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
         backdrop-filter: blur(10px);
     }
     
-    /* Metric Labels: Futuristic soft lavender */
+    /* Metric Labels: Soft Cream/Gold */
     [data-testid="stMetricLabel"] {
         font-family: 'Orbitron', sans-serif !important;
-        color: #F3B3FF !important;
+        color: #F5E6BE !important;
         font-weight: 700 !important;
         text-transform: uppercase;
         letter-spacing: 1.5px;
     }
     
-    /* Metric Values: Pure white with intense neon glow */
+    /* Metric Values: Pure white with intense Gold/Red glow */
     [data-testid="stMetricValue"] {
-        font-family: 'monospace' !important; /* Monospace is better for reading numbers */
+        font-family: 'monospace' !important;
         color: #FFFFFF !important;
-        text-shadow: 0 0 12px rgba(168, 85, 247, 1),
-                     0 0 25px rgba(255, 255, 255, 0.3);
+        text-shadow: 0 0 12px rgba(212, 175, 55, 0.8),
+                     0 0 20px rgba(139, 0, 0, 0.5);
     }
 
-    /* Sidebar: Deep Pitch Black */
+    /* Sidebar: Solid Pitch Black with Gold Edge */
     [data-testid="stSidebar"] {
         background-color: #000000 !important;
-        border-right: 1px solid rgba(168, 85, 247, 0.4);
+        border-right: 1px solid #D4AF37;
     }
 
-    /* Buttons: Neon Pulse effect */
+    /* Buttons: Gold Metallic styling */
     .stButton>button {
-        background-color: #A855F7 !important;
-        color: white !important;
+        background-color: #D4AF37 !important;
+        color: #1A0000 !important; /* Dark text on gold button */
         font-family: 'Orbitron', sans-serif !important;
+        font-weight: bold !important;
         border-radius: 8px !important;
-        border: none !important;
-        box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+        border: 1px solid #F5E6BE !important;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
         transition: 0.3s;
     }
 
     .stButton>button:hover {
-        box-shadow: 0 0 30px rgba(168, 85, 247, 1);
+        box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
         transform: scale(1.05);
-        background-color: #F3B3FF !important;
-        color: #30006F !important;
+        background-color: #F5E6BE !important;
     }
 
-    /* Tables: Dark glass style */
+    /* Slider Color (Lavender to Gold/Red) */
+    div[data-baseweb="slider"] > div > div {
+        background: linear-gradient(90deg, #D4AF37 0%, #8B0000 100%) !important;
+    }
+    div[role="slider"] {
+        background-color: #D4AF37 !important;
+        box-shadow: 0 0 10px #D4AF37 !important;
+    }
+
+    /* Dataframe/Table: Dark Crimson styling */
     .stDataFrame {
-        background-color: rgba(0, 0, 0, 0.7);
-        border: 1px solid rgba(168, 85, 247, 0.2);
+        background-color: rgba(26, 0, 0, 0.8);
+        border: 1px solid rgba(212, 175, 55, 0.3);
         border-radius: 10px;
     }
-    
+
+    /* Footer Text */
+    .footer-text {
+        text-align: center;
+        color: #F5E6BE;
+        opacity: 0.8;
+        padding: 20px;
+        font-family: 'Orbitron', sans-serif;
+    }
     </style>
     """, unsafe_allow_html=True)
 
