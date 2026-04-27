@@ -626,9 +626,19 @@ def page_scheduling():
         """)
 
 
-# --- SIDEBAR BRANDING SECTION ---
+# 1. First, define the navigation
+pg = st.navigation({
+    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
+    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
+    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
+                  st.Page(page_existing, title="Existing Locations", icon="📍")],
+    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
+                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
+})
+
+# 2. Inject the branding into the sidebar BEFORE running the navigation
 with st.sidebar:
-    # 1. Logos
+    # Logos
     col_l, col_r = st.columns(2)
     with col_l:
         if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
@@ -639,7 +649,7 @@ with st.sidebar:
     
     st.markdown("---")
 
-    # 2. THE DIRECT RENDER (No variables, no extra lines at the bottom)
+    # Mentor Names
     st.markdown("""
         <div style="padding: 5px; border-left: 2px solid #D4AF37; padding-left: 15px;">
             <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px;">Academic Tutor</p>
@@ -648,18 +658,8 @@ with st.sidebar:
             <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold;">MR. JAMES LIM CHEE KEON</p>
         </div>
     """, unsafe_allow_html=True)
-
+    
     st.markdown("---")
-
-    # --- NAVIGATION ---
-    pg = st.navigation({
-        "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
-        "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
-        "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
-                      st.Page(page_existing, title="Existing Locations", icon="📍")],
-        "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
-                             st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
-    })
 
 # This keeps the footer clean and separated from the navigation links
 with st.sidebar:
