@@ -153,10 +153,19 @@ st.markdown("""
         line-height: 1.4;
     }
 
+    .glass-logo img {
+    background-color: rgba(255, 255, 255, 0.05) !important; /* Extremely faint white */
+    border-radius: 15px;
+    padding: 10px;
+    backdrop-filter: blur(5px); /* Softens the background behind the logo */
+    border: 1px solid rgba(212, 175, 55, 0.2); /* Faint gold border */
+}
+
     </style>
     """, unsafe_allow_html=True)
 
 def render_header():
+
     # Placeholder paths based on your previous script (image_4.png)
     logo1_filename = "Screenshot 2023-08-04 at 9.42.54 AM.png" # <--- REPLACE WITH YOUR EXACT FILE
     logo2_filename = "strateq.png"
@@ -194,6 +203,12 @@ def render_header():
             else:
                 st.write("Strateq Logo")
             st.markdown('</div>', unsafe_allow_html=True)
+
+        with l_col2:
+        # Adding a 'glass-logo' class wrapper
+        st.markdown('<div class="glass-logo">', unsafe_allow_html=True)
+        st.image(logo1_filename, width=120)
+        st.markdown('</div>', unsafe_allow_html=True)
 
         # --- Minor gap to separate logos from the name boxes ---
         st.markdown("<br>", unsafe_allow_html=True) 
