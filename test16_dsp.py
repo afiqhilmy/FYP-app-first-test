@@ -15,23 +15,51 @@ from sklearn.cluster import KMeans
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
 # --- CUSTOM CSS ---
+# --- UPDATED CUSTOM CSS FOR FUTURISTIC DARK THEME ---
 st.markdown("""
     <style>
-    [data-testid="stMetricLabel"] { font-size: 16px !important; font-weight: 700 !important; color: #555 !important; }
-    [data-testid="stMetricValue"] { font-size: 32px !important; font-weight: 800 !important; color: #1E3A8A !important; }
-    .stMetric { background-color: #ffffff; padding: 15px; border-radius: 10px; border-left: 5px solid #1E3A8A; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .footer-text { text-align: center; color: #666; padding-top: 20px; font-size: 14px; border-top: 1px solid #eee; margin-top: 50px; }
-    .logo-container { 
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-        gap: 10px; 
-        margin-bottom: 10px;
-        flex-wrap: nowrap;
+    /* Main background and text */
+    .stApp {
+        background: linear-gradient(135deg, #0a192f 0%, #020c1b 100%);
     }
-    .logo-item {
-        display: inline-block;
+    
+    /* Metric Cards */
+    [data-testid="stMetric"] {
+        background-color: rgba(23, 42, 69, 0.7);
+        border: 1px solid #00d4ff;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+    }
+    
+    [data-testid="stMetricLabel"] {
+        color: #00d4ff !important;
+        font-weight: 600 !important;
+    }
+    
+    [data-testid="stMetricValue"] {
+        color: #ffffff !important;
+    }
+
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #020c1b !important;
+        border-right: 1px solid #172a45;
+    }
+
+    /* Headlines */
+    h1, h2, h3 {
+        color: #00d4ff !important;
+        text-shadow: 0px 0px 10px rgba(0, 212, 255, 0.5);
+    }
+
+    .footer-text {
         text-align: center;
+        color: #8892b0;
+        padding-top: 20px;
+        font-size: 14px;
+        border-top: 1px solid #172a45;
+        margin-top: 50px;
     }
     </style>
     """, unsafe_allow_html=True)
