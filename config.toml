@@ -1,6 +1,6 @@
 [theme]
-primaryColor = "#F3B3FF"
-backgroundColor = "30006F"
-secondaryBackgroundColor = "#1A1025"
-textColor = "F3B3FF"
-font = "orbitron"
+primaryColor = "#D4AF37" # Metallic Gold
+backgroundColor = "#1A0000" # Deepest Burgundy Black
+secondaryBackgroundColor = "#2D0000" # Dark Wine Red
+textColor = "#F5E6BE" # Soft Cream/Gold Text
+font = "monospace"
