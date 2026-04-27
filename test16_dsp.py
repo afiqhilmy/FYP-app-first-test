@@ -19,7 +19,7 @@ import os
 
 # --- SIDEBAR BRANDING SECTION ---
 with st.sidebar:
-    # 1. Logo Container (Using a tighter side-by-side layout)
+    # 1. Logo Container
     col_l, col_r = st.columns(2)
     with col_l:
         if os.path.exists("Screenshot 2023-08-04 at 9.42.54 AM.png"):
@@ -30,56 +30,25 @@ with st.sidebar:
     
     st.markdown("---") # Thin gold divider
 
-    # 1. Define the HTML content as a clean variable first
-mentor_html = f"""
-    <div style="
-        padding: 5px;
-        border-left: 2px solid #D4AF37;
-        padding-left: 15px;
-        margin-top: 20px;
-    ">
-        <p style="
-            font-family: 'Orbitron', sans-serif;
-            color: #F5E6BE;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-            letter-spacing: 1px;
-        ">Academic Tutor</p>
-        <p style="
-            font-family: monospace;
-            color: #FFFFFF;
-            font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        ">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
-        
-        <p style="
-            font-family: 'Orbitron', sans-serif;
-            color: #F5E6BE;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-            letter-spacing: 1px;
-        ">Industry Coach</p>
-        <p style="
-            font-family: monospace;
-            color: #FFFFFF;
-            font-size: 0.85rem;
-            font-weight: bold;
-        ">MR. JAMES LIM CHEE KEON</p>
-    </div>
-"""
+    # 2. Define the HTML content INSIDE the 'with' block or right before it
+    mentor_html = f"""
+        <div style="
+            padding: 5px;
+            border-left: 2px solid #D4AF37;
+            padding-left: 15px;
+            margin-top: 20px;
+        ">
+            <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px;">Academic Tutor</p>
+            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; margin-bottom: 15px;">DR. KU MUHAMMAD NA'IM BIN KU KHALIF</p>
+            
+            <p style="font-family: 'Orbitron', sans-serif; color: #F5E6BE; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 2px; letter-spacing: 1px;">Industry Coach</p>
+            <p style="font-family: monospace; color: #FFFFFF; font-size: 0.85rem; font-weight: bold;">MR. JAMES LIM CHEE KEON</p>
+        </div>
+    """
 
-# 2. Use st.sidebar.markdown specifically
-with st.sidebar:
-    # (Your logo code stays here)
-    st.markdown("---")
+    # 3. Render it ONCE
     st.markdown(mentor_html, unsafe_allow_html=True)
     st.markdown("---")
-
-# Place this at the end of your sidebar section
-st.sidebar.markdown(mentor_html, unsafe_allow_html=True)
 
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
