@@ -513,7 +513,7 @@ def page_optimal():
         st.subheader(f"📍 Optimal Location Map ({results['model_type']} Predictions)")
         st.markdown("**Legend:**")
         l1, l2, l3, l4 = st.columns(4)
-        l1.markdown("⚪ **Existing Stations** (Gray)")
+        l1.markdown("🟠 **Existing Stations** (Gray)")
         l2.markdown("🟢 **HIGH PRIORITY** (Top Tier)")
         l3.markdown("🔵 **STRATEGIC** (Mid Tier)")
         l4.markdown("🔴 **LOW PRIORITY** (Bottom Tier)")
@@ -549,7 +549,7 @@ def page_optimal():
         
         # Existing stations
         for _, row in df_clean.iterrows():
-            folium.CircleMarker([row['Latitude'], row['Longitude']], radius=6, color='gray', fill=True, fillColor='gray', fillOpacity=0.6, tooltip="⚪ Existing EV Station").add_to(m_opt)
+            folium.CircleMarker([row['Latitude'], row['Longitude']], radius=6, color='orange', fill=True, fillColor='orange', fillOpacity=0.6, tooltip="⚪ Existing EV Station").add_to(m_opt)
         
         # Candidate markers
         for i, row in candidates.iterrows():
