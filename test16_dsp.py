@@ -513,7 +513,7 @@ def page_optimal():
         with filter_col3:
             radius_val = 1.5
             if show_radius:
-                radius_val = st.slider("Radius Range Buffer (km):", 0.5, 5.0, 1.5, step=0.5)
+                radius_val = st.slider("Radius Range Buffer (km):", 0.1, 3.0, 1.0, step=0.1)
 
         # Map Indicators / Legend
         st.markdown("**Legend:**")
