@@ -538,7 +538,7 @@ def page_optimal():
                 </h4>
                 <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                     <tr><td style="padding: 5px 0; color: #666; font-weight: bold;">Coordinates:</td>
-                        <td style="padding: 5px 0; text-align: right; font-family: monospace; font-size: 11px; color: #555;">
+                        <td style="padding: 5px 0; text-align: right; font-weight: bold; color: #333;">
                             {row['Latitude']:.5f}, {row['Longitude']:.5f}
                         </td></tr>
                     <tr style="border-top: 1px solid #eee;"><td style="padding: 5px 0; color: #666; font-weight: bold;">Final Score:</td>
@@ -553,7 +553,7 @@ def page_optimal():
                         <td style="padding: 5px 0; text-align: right; font-weight: bold; color: #e74c3c;">{row['utilisation_rate']:.1%}</td></tr>
                 </table>
             </div>"""
-            
+
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
         
         # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
