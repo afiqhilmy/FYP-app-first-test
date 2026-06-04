@@ -646,21 +646,29 @@ def page_scheduling():
             
             # Simulate the specific MILP logic columns
             milp_df['predicted_demand'] = np.random.uniform(2.5, 6.0, len(milp_df))
-            # Binary logic for peak/off-peak scheduling
-            milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
-            milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            milp_df['scheduling_decision'] = milp_df['scheduled_peak'].apply(
-                lambda x: "Restricted operation" if x == 1 else "Off-peak only (Load shifting)"
+            # --- START OF MODIFICATION REQUESTED BY MR JAMES ---
+            # Define specific AC and DC tactical allocation directives for peak periods
+            milp_df['dc_operation'] = "Prioritized (100% Capacity)"
+            
+            # Determine AC operational adjustments based on simulated grid load stress
+            milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
+                lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
+            )
+            
+            # Direct System Action Output Matrix
+            milp_df['scheduling_decision'] = milp_df['predicted_demand'].apply(
+                lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
             st.dataframe(
                 milp_df[[
-                    "Station Address", "predicted_demand", "scheduled_peak", 
-                    "scheduled_off_peak", "scheduling_decision"
+                    "Station Address", "predicted_demand", "dc_operation", 
+                    "ac_operation", "scheduling_decision"
                 ]], 
                 width='stretch'
             )
+            # --- END OF MODIFICATION REQUESTED BY MR JAMES ---
             
             st.info("💡 **MILP Strategy:** Shifting high-demand sessions to off-peak hours to ensure 100% station satisfaction.")
 
