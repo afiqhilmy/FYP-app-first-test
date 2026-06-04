@@ -586,7 +586,7 @@ def page_optimal():
                 [row['Latitude'], row['Longitude']],
                 popup=folium.Popup(popup_content, max_width=350),
                 tooltip=f"Site #{i+1} - {status}",
-                icon=folium.Icon(color=color, icon='map-pin', prefix='fa')
+                icon=folium.Icon(color=color, icon='info-sign')
             ).add_to(m_opt)
  
             st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
