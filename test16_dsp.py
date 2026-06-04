@@ -551,7 +551,7 @@ def page_optimal():
             </div>"""
 
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
-
+        
         # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
         if show_existing and not df_clean.empty:
             for _, row in df_clean.iterrows():
@@ -586,10 +586,10 @@ def page_optimal():
                 [row['Latitude'], row['Longitude']],
                 popup=folium.Popup(popup_content, max_width=350),
                 tooltip=f"Site #{i+1} - {status}",
-                icon=folium.Icon(color=color, icon='info-sign')
+                icon=folium.Icon(color=color, icon='map-pin', prefix='fa')
             ).add_to(m_opt)
- 
-            st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
+        
+        st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
         
         # Final table
         st.subheader("📋 Final Candidate Summary")
