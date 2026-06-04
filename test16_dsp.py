@@ -731,10 +731,10 @@ def page_scheduling():
                         border: 1px solid #ffcc00;
                         margin-top: 8px;
                     ">
-                        <span style="font-size: 20px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                        <span style="font-size: 24px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
                             🤖 MILP Scheduling Decision:
                         </span>
-                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                        <span style="font-size: 26px; font-weight: bold; color: #ffffff;">
                             {search_row_milp['scheduling_decision']}
                         </span>
                     </div>
