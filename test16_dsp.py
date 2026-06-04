@@ -511,6 +511,18 @@ def page_optimal():
         
         # Map Indicators / Legend
         st.subheader(f"📍 Optimal Location Map ({results['model_type']} Predictions)")
+
+        # --- MR JAMES' ADDITIONS: DIRECTLY ABOVE THE MAP LAYOUT CONTROL ROW ---
+        filter_col1, filter_col2, filter_col3 = st.columns([1, 1, 2])
+        with filter_col1:
+            show_existing = st.checkbox("Show Existing Locations", value=True, help="Toggle mapping of baseline operational nodes")
+        with filter_col2:
+            show_radius = st.checkbox("Show Catchment Radius", value=False, help="Toggle visual buffer zone surrounding candidates")
+        with filter_col3:
+            radius_val = 1.5
+            if show_radius:
+                radius_val = st.slider("Radius Range Buffer (km):", 0.5, 5.0, 1.5, step=0.5)
+                
         st.markdown("**Legend:**")
         l1, l2, l3, l4 = st.columns(4)
         l1.markdown("🟠 **Existing Stations** (Gray)")
