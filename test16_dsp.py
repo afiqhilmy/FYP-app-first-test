@@ -588,11 +588,8 @@ def page_optimal():
                 tooltip=f"Site #{i+1} - {status}",
                 icon=folium.Icon(color=color, icon='map-pin', prefix='fa')
             ).add_to(m_opt)
-
-       
-          
-                
-                st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
+ 
+            st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
         
         # Final table
         st.subheader("📋 Final Candidate Summary")
