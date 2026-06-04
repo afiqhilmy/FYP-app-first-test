@@ -564,7 +564,10 @@ def page_optimal():
                     radius=6, 
                     color='orange', 
                     fill=True, 
-                    fillColor='orange', 
+                    icon=folium.Icon(
+                        color='orange', 
+                        icon='info-sign'  # This gives it a classic location pin structure
+                    ),
                     fillOpacity=0.6, 
                     tooltip="Existing Station"
                 ).add_to(m_opt)
