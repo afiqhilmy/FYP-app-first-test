@@ -557,7 +557,7 @@ def page_optimal():
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
         
         # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
-       if show_existing and not df_clean.empty:
+        if show_existing and not df_clean.empty:
             for _, row in df_clean.iterrows():
                 folium.CircleMarker(
                     location=[row['Latitude'], row['Longitude']], 
