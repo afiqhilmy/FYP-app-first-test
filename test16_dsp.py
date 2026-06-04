@@ -809,11 +809,36 @@ def page_scheduling():
 
             # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
             st.subheader("🔍 Quick Station Search Shortcut")
-            search_address_rf = st.selectbox(
-                "Type or Select Station Address to inspect predictive action:",
-                options=rf_df["Station Address"].unique(),
-                key="search_rf"
+            # --- UPDATED: INCREASED FONT SIZE FOR SUBHEADER AND SELECTBOX ---
+            st.markdown("""
+                <div style="margin-top: 25px; margin-bottom: 10px;">
+                    <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                        🔍 Quick Station Search Shortcut
+                    </span>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            # Custom CSS to increase the font size of the selectbox label and its internal selection text
+            st.markdown("""
+                <style>
+                    /* Target the label of the selectbox */
+                    div[data-testid="stSelectbox"] label p {
+                        font-size: 18px !important;
+                        font-weight: 600 !important;
+                    }
+                    /* Target the actual selected text option inside the dropdown box */
+                    div[data-baseweb="select"] div {
+                        font-size: 18px !important;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+
+            search_address_milp = st.selectbox(
+                "Type or Select Station Address to inspect operational parameters:",
+                options=milp_df["Station Address"].unique(),
+                key="search_milp"
             )
+            # --- END OF UPDATED FONT SIZE SECTION ---
             
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
