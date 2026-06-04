@@ -673,7 +673,7 @@ def page_scheduling():
                 # 1) Station name: Clean HTML header with absolute control over font and zero glowing overrides
                 st.markdown(f"""
                     <div style="margin-bottom: 15px;">
-                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
                             📍 Operational Status: {search_address_milp}
                         </span>
                     </div>
