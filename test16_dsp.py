@@ -651,15 +651,35 @@ def page_scheduling():
             milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
             milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            # --- ADDING MR JAMES' AC/DC OPERATIONS WITHOUT REMOVING ORIGINAL COLUMNS ---
-            milp_df['dc_operation'] = "Prioritized (100% Capacity)"
-            milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
-                lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
-            )
-            
-            milp_df['scheduling_decision'] = milp_df['predicted_demand'].apply(
-                lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
-            )
+            # --- HARDWARE-AWARE OPERATIONS AND DIRECTIVES (0 DC CHECK) ---
+            def determine_dc_op(row):
+                # Checks if 'DC' column exists in your dataset and equals 0
+                if 'DC' in row and row['DC'] == 0:
+                    return "N/A (No DC Hardware)"
+                return "Prioritized (100% Capacity)"
+
+            def determine_ac_op(row):
+                if row['predicted_demand'] > 4.5:
+                    return "Restricted / Delayed"
+                elif row['predicted_demand'] > 3.5:
+                    return "Throttled (50% Output)"
+                else:
+                    return "Normal Operation"
+
+            def determine_decision(row):
+                has_no_dc = 'DC' in row and row['DC'] == 0
+                
+                if row['predicted_demand'] > 4.5:
+                    return "Off-peak only for AC" if has_no_dc else "Prioritize DC, Off-peak only for AC"
+                elif row['predicted_demand'] > 3.5:
+                    return "Limit AC charging output" if has_no_dc else "Prioritize DC, Limit AC charging"
+                else:
+                    return "Normal operation"
+
+            # Execute dynamic calculations row-by-row
+            milp_df['dc_operation'] = milp_df.apply(determine_dc_op, axis=1)
+            milp_df['ac_operation'] = milp_df.apply(determine_ac_op, axis=1)
+            milp_df['scheduling_decision'] = milp_df.apply(determine_decision, axis=1)
 
             # ALL ORIGINAL COLUMNS ARE PRESERVED HERE + THE NEW AC/DC COLUMNS ADDED
             st.dataframe(
@@ -712,6 +732,7 @@ def page_scheduling():
         - **Peak Hours:** 10:00 AM - 4:00 PM, 7:00 PM - 10:00 PM
         - **Incentive:** 15% discount for Off-peak charging
         """)
+        
 # --- 4. NAVIGATION ---
 pg = st.navigation({
     "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
