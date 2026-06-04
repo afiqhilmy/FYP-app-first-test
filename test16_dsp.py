@@ -615,7 +615,6 @@ def page_optimal():
         st.info("👈 Click 'Train and Optimize Model' in the sidebar to start the analysis.")
 
 # --- PAGE 5: SCHEDULING ---
-# --- PAGE 5: SCHEDULING ---
 def page_scheduling():
     render_header()
     st.title("📅 Intelligent Scheduling")
@@ -651,35 +650,40 @@ def page_scheduling():
             milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
             milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            # --- HARDWARE-AWARE OPERATIONS AND DIRECTIVES (0 DC CHECK) ---
-            def determine_dc_op(row):
-                # Checks if 'DC' column exists in your dataset and equals 0
-                if 'DC' in row and row['DC'] == 0:
-                    return "N/A (No DC Hardware)"
-                return "Prioritized (100% Capacity)"
+            # --- ADDING MR JAMES' AC/DC OPERATIONS WITHOUT REMOVING ORIGINAL COLUMNS ---
+            milp_df['dc_operation'] = "Prioritized (100% Capacity)"
+            milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
+                lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
+            )
+            
+            milp_df['scheduling_decision'] = milp_df['predicted_demand'].apply(
+                lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
+            )
 
-            def determine_ac_op(row):
-                if row['predicted_demand'] > 4.5:
-                    return "Restricted / Delayed"
-                elif row['predicted_demand'] > 3.5:
-                    return "Throttled (50% Output)"
-                else:
-                    return "Normal Operation"
-
-            def determine_decision(row):
-                has_no_dc = 'DC' in row and row['DC'] == 0
+            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+            st.subheader("🔍 Quick Station Search Shortcut")
+            search_address_milp = st.selectbox(
+                "Type or Select Station Address to inspect operational parameters:",
+                options=milp_df["Station Address"].unique(),
+                key="search_milp"
+            )
+            
+            search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
+            with st.container(border=True):
+                st.markdown(f"### 📍 Operational Status: **{search_address_milp}**")
+                c1, c2, c3 = st.columns(3)
+                c1.metric("Predicted Demand", f"{search_row_milp['predicted_demand']:.4f}")
+                c2.metric("Scheduled Peak", f"{search_row_milp['scheduled_peak']}")
+                c3.metric("Scheduled Off-Peak", f"{search_row_milp['scheduled_off_peak']}")
                 
-                if row['predicted_demand'] > 4.5:
-                    return "Off-peak only for AC" if has_no_dc else "Prioritize DC, Off-peak only for AC"
-                elif row['predicted_demand'] > 3.5:
-                    return "Limit AC charging output" if has_no_dc else "Prioritize DC, Limit AC charging"
-                else:
-                    return "Normal operation"
-
-            # Execute dynamic calculations row-by-row
-            milp_df['dc_operation'] = milp_df.apply(determine_dc_op, axis=1)
-            milp_df['ac_operation'] = milp_df.apply(determine_ac_op, axis=1)
-            milp_df['scheduling_decision'] = milp_df.apply(determine_decision, axis=1)
+                st.markdown("---")
+                d1, d2 = st.columns(2)
+                d1.markdown(f"**⚡ DC Charging Operation:** `{search_row_milp['dc_operation']}`")
+                d2.markdown(f"**🔌 AC Charging Operation:** `{search_row_milp['ac_operation']}`")
+                st.markdown(f"🎯 **Overall Scheduling Decision:** **{search_row_milp['scheduling_decision']}**")
+            
+            st.divider()
+            # --- END OF ADDED SHORTCUT SEARCH BOX ---
 
             # ALL ORIGINAL COLUMNS ARE PRESERVED HERE + THE NEW AC/DC COLUMNS ADDED
             st.dataframe(
@@ -716,6 +720,22 @@ def page_scheduling():
             ]
             np.random.seed(7) # Seed for consistency with screenshot style
             rf_df['scheduling_action'] = np.random.choice(actions, len(rf_df), p=[0.4, 0.4, 0.2])
+
+            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
+            st.subheader("🔍 Quick Station Search Shortcut")
+            search_address_rf = st.selectbox(
+                "Type or Select Station Address to inspect predictive action:",
+                options=rf_df["Station Address"].unique(),
+                key="search_rf"
+            )
+            
+            search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
+            with st.container(border=True):
+                st.markdown(f"### 📍 Predictive Action: **{search_address_rf}**")
+                st.info(f"🤖 **Random Forest Scheduling Action Assignment:**\n\n**{search_row_rf['scheduling_action']}**")
+            
+            st.divider()
+            # --- END OF ADDED SHORTCUT SEARCH BOX ---
 
             st.dataframe(
                 rf_df[['Station Address', 'scheduling_action']], 
