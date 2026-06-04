@@ -712,7 +712,6 @@ def page_scheduling():
                 st.markdown("<br>", unsafe_allow_html=True)
                 
                 # 3) Target Dispatch Actions: Re-split on clean new lines
-                st.markdown("#### 🚀 Target Dispatch Actions")
                 d1, d2 = st.columns(2)
                 with d1:
                     st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
