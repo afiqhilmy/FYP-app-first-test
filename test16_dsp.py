@@ -537,7 +537,11 @@ def page_optimal():
                     Rank #{rank}: <span style="color: {color}; font-weight: bold;">{status}</span>
                 </h4>
                 <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                    <tr><td style="padding: 5px 0; color: #666; font-weight: bold;">Final Score:</td>
+                    <tr><td style="padding: 5px 0; color: #666; font-weight: bold;">Coordinates:</td>
+                        <td style="padding: 5px 0; text-align: right; font-family: monospace; font-size: 11px; color: #555;">
+                            {row['Latitude']:.5f}, {row['Longitude']:.5f}
+                        </td></tr>
+                    <tr style="border-top: 1px solid #eee;"><td style="padding: 5px 0; color: #666; font-weight: bold;">Final Score:</td>
                         <td style="padding: 5px 0; text-align: right; font-weight: bold; color: #1E3A8A;">{row['final_score']:.4f}</td></tr>
                     <tr style="border-top: 1px solid #eee;"><td style="padding: 5px 0; color: #666;">Predicted Revenue:</td>
                         <td style="padding: 5px 0; text-align: right; font-weight: bold; color: #27ae60;">RM {row['predicted_revenue_rm']:.2f}</td></tr>
@@ -549,7 +553,7 @@ def page_optimal():
                         <td style="padding: 5px 0; text-align: right; font-weight: bold; color: #e74c3c;">{row['utilisation_rate']:.1%}</td></tr>
                 </table>
             </div>"""
-
+            
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
         
         # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
