@@ -671,7 +671,13 @@ def page_scheduling():
             search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                st.markdown(f"### 📍 Operational Status: {search_address_milp}")
+                st.markdown(f"""
+    <div style="margin-bottom: 15px;">
+        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+            📍 Operational Status: {search_address_milp}
+        </span>
+    </div>
+""", unsafe_allow_html=True)
                 
                 # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
                 st.markdown("#### 📊 Demand & Grid Timing Profile")
