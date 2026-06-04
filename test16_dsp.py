@@ -552,20 +552,33 @@ def page_optimal():
 
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
 
+        # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
+        if show_existing and not df_clean.empty:
+            for _, row in df_clean.iterrows():
+                folium.CircleMarker(
+                    location=[row['Latitude'], row['Longitude']], 
+                    radius=6, 
+                    color='orange', 
+                    fill=True, 
+                    fillColor='orange', 
+                    fillOpacity=0.6, 
+                    tooltip="Base Station: Existing Operational Node"
+                ).add_to(m_opt)
+        
         # Candidate markers layer loop
         for i, row in candidates.iterrows():
             color, status = get_location_status(row['final_score'], candidates)
             popup_content = create_popup_html(row, i+1, results['model_type'], status, color)
-    
+            
             # --- CONDITIONAL RENDERING FOR CATCHMENT RADIUS ---
             if show_radius:
                 folium.Circle(
                     location=[row['Latitude'], row['Longitude']],
-                    radius=int(radius_val * 1000), 
+                    radius=int(radius_val * 1000), # Converts km to meters
                     color=color,
                     fill=True,
                     fillColor=color,
-                    fillOpacity=0.2,            
+                    fillOpacity=0.2,            # Adjusted visibility opacity matching your attachment style
                     weight=2
                 ).add_to(m_opt)
                 
@@ -573,9 +586,10 @@ def page_optimal():
                 [row['Latitude'], row['Longitude']],
                 popup=folium.Popup(popup_content, max_width=350),
                 tooltip=f"Site #{i+1} - {status}",
-                icon=folium.Icon(color=color, icon='map-pin', prefix='fa') # <-- ADJUST THIS LINE
+                icon=folium.Icon(color=color, icon='map-pin', prefix='fa')
             ).add_to(m_opt)
-                
+
+       
           
                 
                 st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
