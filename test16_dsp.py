@@ -660,7 +660,7 @@ def page_scheduling():
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
-          # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -673,7 +673,7 @@ def page_scheduling():
                 # 1) Station name: Clean, normal white text header with no glow effect
                 st.markdown(f"### 📍 Operational Status: {search_address_milp}")
                 
-                # 2) Demand & Grid Timing Profile: Restored to original metrics layout structure but matching your size preferences
+                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
                 st.markdown("#### 📊 Demand & Grid Timing Profile")
                 s1, s2, s3 = st.columns(3)
                 s1.metric(label="PREDICTED DEMAND", value=f"{search_row_milp['predicted_demand']:.4f} kW")
@@ -682,7 +682,7 @@ def page_scheduling():
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # 3) Target Dispatch Actions: Split so the status value sits clean on a fresh line below the label
+                # 3) Target Dispatch Actions: Split onto separate lines for readability
                 st.markdown("#### 🚀 Target Dispatch Actions")
                 d1, d2 = st.columns(2)
                 with d1:
@@ -693,24 +693,22 @@ def page_scheduling():
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # 4) Overall Scheduling Decision: Beautified showcase card to maximize presentation impact
+                # 4) Overall Scheduling Decision: Styled exactly like the Random Forest card style from your screenshot
                 st.markdown(
                     f"""
                     <div style="
-                        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-                        padding: 24px;
-                        border-radius: 12px;
-                        border: 1px solid #38bdf8;
-                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                        background-color: #1e1015; 
+                        padding: 16px; 
+                        border-radius: 8px; 
+                        border: 1px solid #ffcc00;
                         margin-top: 10px;
                     ">
-                        <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                            <span style="font-size: 24px; margin-right: 8px;">🎯</span>
-                            <span style="font-size: 16px; font-weight: 600; color: #38bdf8; letter-spacing: 0.05em; text-transform: uppercase;">Overall Optimization Master Directive</span>
-                        </div>
-                        <div style="font-size: 26px; font-weight: 800; color: #ffffff; padding-left: 32px; letter-spacing: -0.02em;">
+                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                            🎯 Overall Optimisation Master Directive:
+                        </span>
+                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
                             {search_row_milp['scheduling_decision']}
-                        </div>
+                        </span>
                     </div>
                     """, 
                     unsafe_allow_html=True
@@ -718,6 +716,8 @@ def page_scheduling():
             
             st.divider()
             # --- END OF ADDED SHORTCUT SEARCH BOX ---
+
+
 
             # ALL ORIGINAL COLUMNS ARE PRESERVED HERE + THE NEW AC/DC COLUMNS ADDED
             st.dataframe(
