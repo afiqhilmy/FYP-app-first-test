@@ -566,7 +566,7 @@ def page_optimal():
                     fill=True, 
                     icon=folium.Icon(
                         color='orange', 
-                        icon='info-sign'  # This gives it a classic location pin structure
+                        icon='charging-station'  # This gives it a classic location pin structure
                     ),
                     fillOpacity=0.6, 
                     tooltip="Existing Station"
