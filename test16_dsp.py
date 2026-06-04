@@ -660,7 +660,7 @@ def page_scheduling():
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
-            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+           # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -670,17 +670,33 @@ def page_scheduling():
             
             search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
             with st.container(border=True):
-                st.markdown(f"### 📍 Operational Status: **{search_address_milp}**")
-                c1, c2, c3 = st.columns(3)
-                c1.metric("Predicted Demand", f"{search_row_milp['predicted_demand']:.4f}")
-                c2.metric("Scheduled Peak", f"{search_row_milp['scheduled_peak']}")
-                c3.metric("Scheduled Off-Peak", f"{search_row_milp['scheduled_off_peak']}")
+                # 1) Station name at the top: Normal crisp white heading style with no custom glow
+                st.markdown(f"### 📍 Operational Status: {search_address_milp}")
                 
-                st.markdown("---")
+                # 2) Simpler, cleaner key-value display boxes distinct from the top evaluation metrics
+                st.markdown("#### **📊 Demand & Grid Timing Profile**")
+                s1, s2, s3 = st.columns(3)
+                with s1:
+                    st.markdown(f"<div style='background-color: #1e1e24; padding: 12px; border-radius: 6px; border: 1px solid #333;'><p style='margin:0; font-size:12px; color:#aaa; font-weight:bold;'>PREDICTED DEMAND</p><p style='margin:0; font-size:20px; font-weight:bold; color:#fff;'>{search_row_milp['predicted_demand']:.4f} kW</p></div>", unsafe_allow_html=True)
+                with s2:
+                    st.markdown(f"<div style='background-color: #1e1e24; padding: 12px; border-radius: 6px; border: 1px solid #333;'><p style='margin:0; font-size:12px; color:#aaa; font-weight:bold;'>SCHEDULED PEAK</p><p style='margin:0; font-size:20px; font-weight:bold; color:#fff;'>{search_row_milp['scheduled_peak']}</p></div>", unsafe_allow_html=True)
+                with s3:
+                    st.markdown(f"<div style='background-color: #1e1e24; padding: 12px; border-radius: 6px; border: 1px solid #333;'><p style='margin:0; font-size:12px; color:#aaa; font-weight:bold;'>SCHEDULED OFF-PEAK</p><p style='margin:0; font-size:20px; font-weight:bold; color:#fff;'>{search_row_milp['scheduled_off_peak']}</p></div>", unsafe_allow_html=True)
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 3) Highlighted Actions: Significantly upscaled font size to make these directives pop out immediately
+                st.markdown("#### **🚀 Target Dispatch Actions**")
                 d1, d2 = st.columns(2)
-                d1.markdown(f"**⚡ DC Charging Operation:** `{search_row_milp['dc_operation']}`")
-                d2.markdown(f"**🔌 AC Charging Operation:** `{search_row_milp['ac_operation']}`")
-                st.markdown(f"🎯 **Overall Scheduling Decision:** **{search_row_milp['scheduling_decision']}**")
+                with d1:
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span> <span style='font-size: 21px; font-weight: bold; color: #2ecc71;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
+                with d2:
+                    # Setting a legible color contrast for the AC output throttle label
+                    ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span> <span style='font-size: 21px; font-weight: bold; color: {ac_color};'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                st.markdown(f"<div style='background-color: #1a2536; padding: 16px; border-radius: 8px; border-left: 5px solid #3498db;'><span style='font-size: 20px;'>🎯 **Overall Scheduling Decision:**</span> <br><span style='font-size: 24px; font-weight: bold; color: #fff;'>{search_row_milp['scheduling_decision']}</span></div>", unsafe_allow_html=True)
             
             st.divider()
             # --- END OF ADDED SHORTCUT SEARCH BOX ---
