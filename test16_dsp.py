@@ -557,7 +557,22 @@ def page_optimal():
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
         
         # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
+        # 1. Initialize session state to keep track of the selected candidate index
+        if 'selected_site_idx' not in st.session_state:
+            st.session_state.selected_site_idx = None
+
+        # Add a clear selection button if a site is highlighted
+        if st.session_state.selected_site_idx is not None:
+            if st.button("🔄 Clear Selection & Show All"):
+                st.session_state.selected_site_idx = None
+                st.rerun()
+
+        # 2. Initialize the map
+        m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
+        
+        # Existing stations layer loop (faded if a specific candidate is selected)
         if show_existing and not df_clean.empty:
+            base_opacity = 0.15 if st.session_state.selected_site_idx is not None else 0.6
             for _, row in df_clean.iterrows():
                 folium.CircleMarker(
                     location=[row['Latitude'], row['Longitude']], 
@@ -565,35 +580,72 @@ def page_optimal():
                     color='orange', 
                     fill=True, 
                     fillColor='orange', 
-                    fillOpacity=0.6, 
+                    fillOpacity=base_opacity, 
+                    opacity=base_opacity,
                     tooltip="Base Station: Existing Operational Node"
                 ).add_to(m_opt)
         
-        # Candidate markers layer loop
+        # 3. Candidate markers layer loop
         for i, row in candidates.iterrows():
             color, status = get_location_status(row['final_score'], candidates)
             popup_content = create_popup_html(row, i+1, results['model_type'], status, color)
             
-            # --- CONDITIONAL RENDERING FOR CATCHMENT RADIUS ---
+            # Determine dynamic opacity based on selection state
+            if st.session_state.selected_site_idx is not None:
+                if i == st.session_state.selected_site_idx:
+                    marker_opacity = 1.0    # Fully highlighted
+                    radius_opacity = 0.3    # Crisp radius
+                else:
+                    marker_opacity = 0.15   # Faded out
+                    radius_opacity = 0.02   # Barely visible radius
+            else:
+                marker_opacity = 1.0        # Default visible state
+                radius_opacity = 0.2        # Default radius opacity
+            
+            # Conditional rendering for Catchment Radius
             if show_radius:
                 folium.Circle(
                     location=[row['Latitude'], row['Longitude']],
-                    radius=int(radius_val * 1000), # Converts km to meters
+                    radius=int(radius_val * 1000),
                     color=color,
                     fill=True,
                     fillColor=color,
-                    fillOpacity=0.2,            # Adjusted visibility opacity matching your attachment style
-                    weight=2
+                    fillOpacity=radius_opacity,            
+                    weight=1.5 if i == st.session_state.selected_site_idx else 0.5,
+                    opacity=radius_opacity
                 ).add_to(m_opt)
                 
             folium.Marker(
                 [row['Latitude'], row['Longitude']],
                 popup=folium.Popup(popup_content, max_width=350),
                 tooltip=f"Site #{i+1} - {status}",
-                icon=folium.Icon(color=color, icon='map-pin', prefix='fa')
+                icon=folium.Icon(color=color, icon='info-sign'),
+                opacity=marker_opacity # <-- This dynamically fades unselected pins
             ).add_to(m_opt)
         
-        st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
+        # 4. CAPTURE USER CLICKS USING ST_FOLIUM
+        # Giving st_folium a variable name allows us to read what the user clicks
+        map_data = st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
+        
+        # 5. CHECK IF A PIN WAS CLICKED & UPDATE STATE
+        if map_data and map_data.get("last_object_clicked"):
+            clicked_coords = map_data["last_object_clicked"]
+            lat, lng = clicked_coords.get("lat"), clicked_coords.get("lng")
+            
+            # Find which candidate index matches the clicked coordinates
+            match = candidates[
+                (np.isclose(candidates['Latitude'], lat, atol=1e-5)) & 
+                (np.isclose(candidates['Longitude'], lng, atol=1e-5))
+            ]
+            
+            if not match.empty:
+                new_idx = match.index[0]
+                # Only rerun if the selection actually changed to prevent endless loop cycles
+                if st.session_state.selected_site_idx != new_idx:
+                    st.session_state.selected_site_idx = new_idx
+                    st.rerun()
+
+
         
         # Final table
         st.subheader("📋 Final Candidate Summary")
