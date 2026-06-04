@@ -660,7 +660,7 @@ def page_scheduling():
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
-            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+           # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -670,25 +670,43 @@ def page_scheduling():
             
             search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
             with st.container(border=True):
-                # 1) Station name: Clean, normal white text header with no glow effect
+                # 1) Station name: Clean HTML header with absolute control over font and zero glowing overrides
                 st.markdown(f"""
-    <div style="margin-bottom: 15px;">
-        <span style="font-size: 22px; font-weight: 700; color: #ffffff; font-family: 'Orbitron', sans-serif;">
-            📍 Operational Status: {search_address_milp}
-        </span>
-    </div>
-""", unsafe_allow_html=True)
+                    <div style="margin-bottom: 15px;">
+                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                            📍 Operational Status: {search_address_milp}
+                        </span>
+                    </div>
+                """, unsafe_allow_html=True)
                 
-                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
+                # 2) Demand & Grid Timing Profile: Now using the exact custom HTML yellow-bordered card style
                 st.markdown("#### 📊 Demand & Grid Timing Profile")
                 s1, s2, s3 = st.columns(3)
-                s1.metric(label="PREDICTED DEMAND", value=f"{search_row_milp['predicted_demand']:.4f} kW")
-                s2.metric(label="SCHEDULED PEAK", value=str(int(search_row_milp['scheduled_peak'])))
-                s3.metric(label="SCHEDULED OFF-PEAK", value=str(int(search_row_milp['scheduled_off_peak'])))
+                with s1:
+                    st.markdown(f"""
+                        <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
+                            <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; uppercase;">PREDICTED DEMAND</span>
+                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{search_row_milp['predicted_demand']:.4f} kW</span>
+                        </div>
+                    """, unsafe_allow_html=True)
+                with s2:
+                    st.markdown(f"""
+                        <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
+                            <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; uppercase;">SCHEDULED PEAK</span>
+                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{int(search_row_milp['scheduled_peak'])}</span>
+                        </div>
+                    """, unsafe_allow_html=True)
+                with s3:
+                    st.markdown(f"""
+                        <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
+                            <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; uppercase;">SCHEDULED OFF-PEAK</span>
+                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{int(search_row_milp['scheduled_off_peak'])}</span>
+                        </div>
+                    """, unsafe_allow_html=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # 3) Target Dispatch Actions: Split onto separate lines for readability
+                # 3) Target Dispatch Actions: Re-split on clean new lines
                 st.markdown("#### 🚀 Target Dispatch Actions")
                 d1, d2 = st.columns(2)
                 with d1:
@@ -699,7 +717,7 @@ def page_scheduling():
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # 4) Overall Scheduling Decision: Styled exactly like the Random Forest card style from your screenshot
+                # 4) Overall Scheduling Decision: Matching Master Directive Box Style
                 st.markdown(
                     f"""
                     <div style="
