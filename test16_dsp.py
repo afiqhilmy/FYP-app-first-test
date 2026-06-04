@@ -566,7 +566,7 @@ def page_optimal():
                     fill=True, 
                     fillColor='orange', 
                     fillOpacity=0.6, 
-                    tooltip="Base Station: Existing Operational Node"
+                    tooltip="Existing Station"
                 ).add_to(m_opt)
         
         # Candidate markers layer loop
