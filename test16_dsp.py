@@ -390,19 +390,12 @@ def page_existing():
         st_folium(m, width="100%", height=500)
     render_footer()
 
-# --- PAGE 4: OPTIMAL PLACEMENT (Live Model Selection) ---
+# --- PAGE 4: OPTIMAL PLACEMENT (Live Model Selection with Inline Layer Toggles Above Map) ---
 def page_optimal():
     render_header()
     st.title("🎯 Optimal Placement Analysis")
 
-    # Apply this in your map functions (page_existing and page_optimal)
-    m = folium.Map(
-        location=[df_clean['Latitude'].mean(), df_clean['Longitude'].mean()], 
-        zoom_start=12, 
-        tiles="cartodbdark_matter" # This is the magic line
-    )
-    
-    # Initialize session state for training results
+    # Initialize session state for training results and candidates
     if 'training_results' not in st.session_state:
         st.session_state.training_results = None
     if 'candidates' not in st.session_state:
@@ -462,34 +455,34 @@ def page_optimal():
         
         candidates['predicted_revenue_rm'] = candidates['predicted_revenue_rm'].clip(lower=0)
 
-        # 1. Derived Metrics & Utilisation (Calculated first, Colab style)
+        # Derived Metrics & Utilisation
         candidates['predicted_cars'] = (candidates['predicted_revenue_rm'] / 25).astype(int)
         candidates['daily_ev_arrivals'] = (candidates['predicted_cars'] * 1.2).astype(int)
-        # Using a fixed capacity logic for utilization
         max_rev = candidates['predicted_revenue_rm'].max() if candidates['predicted_revenue_rm'].max() > 0 else 1
         candidates['utilisation_rate'] = (candidates['predicted_revenue_rm'] / max_rev * 0.85).clip(0.1, 0.85)
 
-        # 2. Accessibility Distance Calculation
+        # Accessibility Distance Calculation
         from scipy.spatial.distance import cdist
         existing_coords = df_clean[['Latitude', 'Longitude']].values
         candidate_coords = candidates[['Latitude', 'Longitude']].values
         candidates['dist_nearest_km'] = cdist(candidate_coords, existing_coords).min(axis=1) * 111
 
-        # 3. Normalization Helper
+        # Normalization Helper
         def normalize(col):
             return (col - col.min()) / (col.max() - col.min()) if col.max() > col.min() else 0.5
 
-        # 4. Final Weighted Score (Utilisation is now an input)
+        # Final Weighted Score
         norm_rev = normalize(candidates['predicted_revenue_rm'])
         norm_acc = normalize(candidates['dist_nearest_km'])
         norm_util = normalize(candidates['utilisation_rate'])
 
-        # Multi-Criteria Weightage: 40% Revenue, 30% Accessibility, 30% Utilisation
+        # Multi-Criteria Weightage
         candidates['final_score'] = (norm_rev * 0.4) + (norm_acc * 0.3) + (norm_util * 0.3)
         
         st.session_state.candidates = candidates
         st.success(f"✅ {model_type} training completed! Candidate locations identified.")
 
+    # --- RENDER MAP & CONTROLS OUTSIDE THE TRAIN BUTTON BLOCK ---
     if st.session_state.training_results is not None and st.session_state.candidates is not None:
         results = st.session_state.training_results
         all_candidates = st.session_state.candidates.copy()
@@ -509,10 +502,9 @@ def page_optimal():
         num_candidates = st.slider("How many candidate locations do you want to evaluate?", 1, len(all_candidates), 10)
         candidates = all_candidates.nlargest(num_candidates, 'final_score').reset_index(drop=True)
         
-        # Map Indicators / Legend
         st.subheader(f"📍 Optimal Location Map ({results['model_type']} Predictions)")
-
-        # --- MR JAMES' ADDITIONS: DIRECTLY ABOVE THE MAP LAYOUT CONTROL ROW ---
+        
+        # --- FIXED LAYER TOGGLES (Moved completely outside the button state) ---
         filter_col1, filter_col2, filter_col3 = st.columns([1, 1, 2])
         with filter_col1:
             show_existing = st.checkbox("Show Existing Locations", value=True, help="Toggle mapping of baseline operational nodes")
@@ -522,10 +514,11 @@ def page_optimal():
             radius_val = 1.5
             if show_radius:
                 radius_val = st.slider("Radius Range Buffer (km):", 0.5, 5.0, 1.5, step=0.5)
-                
+
+        # Map Indicators / Legend
         st.markdown("**Legend:**")
         l1, l2, l3, l4 = st.columns(4)
-        l1.markdown("🟠 **Existing Stations** (Gray)")
+        l1.markdown("🟠 **Existing Stations** (Orange Circles)")
         l2.markdown("🟢 **HIGH PRIORITY** (Top Tier)")
         l3.markdown("🔵 **STRATEGIC** (Mid Tier)")
         l4.markdown("🔴 **LOW PRIORITY** (Bottom Tier)")
@@ -559,14 +552,36 @@ def page_optimal():
 
         m_opt = folium.Map(location=[candidates['Latitude'].mean(), candidates['Longitude'].mean()], zoom_start=12)
         
-        # Existing stations
-        for _, row in df_clean.iterrows():
-            folium.CircleMarker([row['Latitude'], row['Longitude']], radius=6, color='orange', fill=True, fillColor='orange', fillOpacity=0.6, tooltip="⚪ Existing EV Station").add_to(m_opt)
+        # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
+        if show_existing and not df_clean.empty:
+            for _, row in df_clean.iterrows():
+                folium.CircleMarker(
+                    location=[row['Latitude'], row['Longitude']], 
+                    radius=6, 
+                    color='orange', 
+                    fill=True, 
+                    fillColor='orange', 
+                    fillOpacity=0.6, 
+                    tooltip="Base Station: Existing Operational Node"
+                ).add_to(m_opt)
         
-        # Candidate markers
+        # Candidate markers layer loop
         for i, row in candidates.iterrows():
             color, status = get_location_status(row['final_score'], candidates)
             popup_content = create_popup_html(row, i+1, results['model_type'], status, color)
+            
+            # --- CONDITIONAL RENDERING FOR CATCHMENT RADIUS ---
+            if show_radius:
+                folium.Circle(
+                    location=[row['Latitude'], row['Longitude']],
+                    radius=int(radius_val * 1000), # Converts km to meters
+                    color=color,
+                    fill=True,
+                    fillColor=color,
+                    fillOpacity=0.2,            # Adjusted visibility opacity matching your attachment style
+                    weight=2
+                ).add_to(m_opt)
+                
             folium.Marker(
                 [row['Latitude'], row['Longitude']],
                 popup=folium.Popup(popup_content, max_width=350),
@@ -574,9 +589,9 @@ def page_optimal():
                 icon=folium.Icon(color=color, icon='map-pin', prefix='fa')
             ).add_to(m_opt)
         
-        st_folium(m_opt, width="100%", height=550)
+        st_folium(m_opt, width="100%", height=550, key="optimal_placement_map")
         
-        # Final table exactly as original
+        # Final table
         st.subheader("📋 Final Candidate Summary")
         display_df = candidates[['Latitude', 'Longitude', 'predicted_revenue_rm', 'predicted_cars', 'daily_ev_arrivals', 'utilisation_rate', 'final_score']].copy()
         display_df['Priority'] = display_df['final_score'].apply(lambda x: get_location_status(x, candidates)[1])
