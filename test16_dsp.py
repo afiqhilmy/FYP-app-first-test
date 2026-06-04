@@ -660,7 +660,7 @@ def page_scheduling():
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
-           # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+          # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -670,33 +670,51 @@ def page_scheduling():
             
             search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
             with st.container(border=True):
-                # 1) Station name at the top: Normal crisp white heading style with no custom glow
+                # 1) Station name: Clean, normal white text header with no glow effect
                 st.markdown(f"### 📍 Operational Status: {search_address_milp}")
                 
-                # 2) Simpler, cleaner key-value display boxes distinct from the top evaluation metrics
-                st.markdown("#### **📊 Demand & Grid Timing Profile**")
+                # 2) Demand & Grid Timing Profile: Restored to original metrics layout structure but matching your size preferences
+                st.markdown("#### 📊 Demand & Grid Timing Profile")
                 s1, s2, s3 = st.columns(3)
-                with s1:
-                    st.markdown(f"<div style='background-color: #1e1e24; padding: 12px; border-radius: 6px; border: 1px solid #333;'><p style='margin:0; font-size:12px; color:#aaa; font-weight:bold;'>PREDICTED DEMAND</p><p style='margin:0; font-size:20px; font-weight:bold; color:#fff;'>{search_row_milp['predicted_demand']:.4f} kW</p></div>", unsafe_allow_html=True)
-                with s2:
-                    st.markdown(f"<div style='background-color: #1e1e24; padding: 12px; border-radius: 6px; border: 1px solid #333;'><p style='margin:0; font-size:12px; color:#aaa; font-weight:bold;'>SCHEDULED PEAK</p><p style='margin:0; font-size:20px; font-weight:bold; color:#fff;'>{search_row_milp['scheduled_peak']}</p></div>", unsafe_allow_html=True)
-                with s3:
-                    st.markdown(f"<div style='background-color: #1e1e24; padding: 12px; border-radius: 6px; border: 1px solid #333;'><p style='margin:0; font-size:12px; color:#aaa; font-weight:bold;'>SCHEDULED OFF-PEAK</p><p style='margin:0; font-size:20px; font-weight:bold; color:#fff;'>{search_row_milp['scheduled_off_peak']}</p></div>", unsafe_allow_html=True)
+                s1.metric(label="PREDICTED DEMAND", value=f"{search_row_milp['predicted_demand']:.4f} kW")
+                s2.metric(label="SCHEDULED PEAK", value=str(int(search_row_milp['scheduled_peak'])))
+                s3.metric(label="SCHEDULED OFF-PEAK", value=str(int(search_row_milp['scheduled_off_peak'])))
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # 3) Highlighted Actions: Significantly upscaled font size to make these directives pop out immediately
-                st.markdown("#### **🚀 Target Dispatch Actions**")
+                # 3) Target Dispatch Actions: Split so the status value sits clean on a fresh line below the label
+                st.markdown("#### 🚀 Target Dispatch Actions")
                 d1, d2 = st.columns(2)
                 with d1:
-                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span> <span style='font-size: 21px; font-weight: bold; color: #2ecc71;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
                 with d2:
-                    # Setting a legible color contrast for the AC output throttle label
                     ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
-                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span> <span style='font-size: 21px; font-weight: bold; color: {ac_color};'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
-                st.markdown(f"<div style='background-color: #1a2536; padding: 16px; border-radius: 8px; border-left: 5px solid #3498db;'><span style='font-size: 20px;'>🎯 **Overall Scheduling Decision:**</span> <br><span style='font-size: 24px; font-weight: bold; color: #fff;'>{search_row_milp['scheduling_decision']}</span></div>", unsafe_allow_html=True)
+                
+                # 4) Overall Scheduling Decision: Beautified showcase card to maximize presentation impact
+                st.markdown(
+                    f"""
+                    <div style="
+                        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+                        padding: 24px;
+                        border-radius: 12px;
+                        border: 1px solid #38bdf8;
+                        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                        margin-top: 10px;
+                    ">
+                        <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 24px; margin-right: 8px;">🎯</span>
+                            <span style="font-size: 16px; font-weight: 600; color: #38bdf8; letter-spacing: 0.05em; text-transform: uppercase;">Overall Optimization Master Directive</span>
+                        </div>
+                        <div style="font-size: 26px; font-weight: 800; color: #ffffff; padding-left: 32px; letter-spacing: -0.02em;">
+                            {search_row_milp['scheduling_decision']}
+                        </div>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
             
             st.divider()
             # --- END OF ADDED SHORTCUT SEARCH BOX ---
