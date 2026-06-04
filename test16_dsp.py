@@ -615,6 +615,7 @@ def page_optimal():
         st.info("👈 Click 'Train and Optimize Model' in the sidebar to start the analysis.")
 
 # --- PAGE 5: SCHEDULING ---
+# --- PAGE 5: SCHEDULING ---
 def page_scheduling():
     render_header()
     st.title("📅 Intelligent Scheduling")
@@ -646,29 +647,28 @@ def page_scheduling():
             
             # Simulate the specific MILP logic columns
             milp_df['predicted_demand'] = np.random.uniform(2.5, 6.0, len(milp_df))
+            # Binary logic for peak/off-peak scheduling
+            milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
+            milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            # --- START OF MODIFICATION REQUESTED BY MR JAMES ---
-            # Define specific AC and DC tactical allocation directives for peak periods
+            # --- ADDING MR JAMES' AC/DC OPERATIONS WITHOUT REMOVING ORIGINAL COLUMNS ---
             milp_df['dc_operation'] = "Prioritized (100% Capacity)"
-            
-            # Determine AC operational adjustments based on simulated grid load stress
             milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
                 lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
             )
             
-            # Direct System Action Output Matrix
             milp_df['scheduling_decision'] = milp_df['predicted_demand'].apply(
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
+            # ALL ORIGINAL COLUMNS ARE PRESERVED HERE + THE NEW AC/DC COLUMNS ADDED
             st.dataframe(
                 milp_df[[
-                    "Station Address", "predicted_demand", "dc_operation", 
-                    "ac_operation", "scheduling_decision"
+                    "Station Address", "predicted_demand", "scheduled_peak", 
+                    "scheduled_off_peak", "dc_operation", "ac_operation", "scheduling_decision"
                 ]], 
                 width='stretch'
             )
-            # --- END OF MODIFICATION REQUESTED BY MR JAMES ---
             
             st.info("💡 **MILP Strategy:** Shifting high-demand sessions to off-peak hours to ensure 100% station satisfaction.")
 
@@ -712,7 +712,6 @@ def page_scheduling():
         - **Peak Hours:** 10:00 AM - 4:00 PM, 7:00 PM - 10:00 PM
         - **Incentive:** 15% discount for Off-peak charging
         """)
-
 # --- 4. NAVIGATION ---
 pg = st.navigation({
     "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
