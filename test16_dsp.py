@@ -559,7 +559,7 @@ def page_optimal():
         # --- CONDITIONAL RENDERING FOR EXISTING STATIONS ---
         if show_existing and not df_clean.empty:
             for _, row in df_clean.iterrows():
-                folium.CircleMarker(
+                folium.Marker(
                     location=[row['Latitude'], row['Longitude']], 
                     radius=6, 
                     color='orange', 
