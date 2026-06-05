@@ -628,7 +628,7 @@ def page_scheduling():
         help="MILP focuses on load shifting, while RF predicts demand-based actions."
     )
 
-if algo_choice == "MILP (Optimization)":
+    if algo_choice == "MILP (Optimization)":
         st.subheader("⚡ Mixed-Integer Linear Programming (MILP) Results")
         
         # Scorecards for MILP
@@ -789,7 +789,7 @@ if algo_choice == "MILP (Optimization)":
             milp_display_cols = [c for c in milp_display_cols if c is not None]
             st.dataframe(milp_df[milp_display_cols], width='stretch')
             
-        elif algo_choice == "Random Forest (Alternative)":
+    elif algo_choice == "Random Forest (Alternative)":
         st.subheader("🌳 Random Forest Predictive Demand Analytics")
         st.info("Random Forest scheduling module running baseline predictive load forecast profiles.")
         
