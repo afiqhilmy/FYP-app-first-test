@@ -765,7 +765,7 @@ if algo_choice == "MILP (Optimization)":
             ]
             st.dataframe(milp_df[milp_display_cols], width='stretch')
             
-elif algo_choice == "Random Forest (Alternative)":
+    elif algo_choice == "Random Forest (Alternative)":
         st.subheader("🌳 Random Forest Predictive Demand Analytics")
         st.info("Random Forest scheduling module running baseline predictive load forecast profiles.")
         
