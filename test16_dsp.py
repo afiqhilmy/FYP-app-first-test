@@ -765,7 +765,7 @@ def page_scheduling():
             ]
             st.dataframe(milp_df[milp_display_cols], width='stretch')
             
-    elif algo_choice == "Random Forest (Alternative)":
+elif algo_choice == "Random Forest (Alternative)":
         st.subheader("🌳 Random Forest Predictive Demand Analytics")
         st.info("Random Forest scheduling module running baseline predictive load forecast profiles.")
         
@@ -806,14 +806,14 @@ def page_scheduling():
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                                st.markdown(f"""
+                st.markdown(f"""
                     <div style="margin-bottom: 15px;">
                         <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
                             📍 Location: {search_address_rf}
                         </span>
                     </div>
                 """, unsafe_allow_html=True)
-                
+
                 # 3) Target Dispatch Actions: Tailored to pure AC/DC operations without peak metrics
                 st.markdown("#### 🚀 Target Dispatch Actions")
                 rd1, rd2 = st.columns(2)
