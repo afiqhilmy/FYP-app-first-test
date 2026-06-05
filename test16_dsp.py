@@ -765,7 +765,7 @@ def page_scheduling():
             ]
             st.dataframe(milp_df[milp_display_cols], width='stretch')
             
-    elif algo_choice == "Random Forest (Alternative)":
+ elif algo_choice == "Random Forest (Alternative)":
         st.subheader("🌳 Random Forest Predictive Demand Analytics")
         st.info("Random Forest scheduling module running baseline predictive load forecast profiles.")
         
@@ -773,14 +773,26 @@ def page_scheduling():
             rf_df = df_clean.copy()
             np.random.seed(101)
             
-            # Formulating matching predictive features for Random Forest
-            rf_df['predicted_demand'] = np.random.uniform(20.0, 95.0, len(rf_df))
+            # --- ORIGINAL PREDICTIVE GENERATION & MAPPING RULES ---
+            rf_df['predicted_demand'] = np.random.uniform(2.5, 6.0, len(rf_df))
             rf_df['confidence_score'] = np.random.uniform(0.78, 0.96, len(rf_df))
-            rf_df['model_status'] = rf_df['predicted_demand'].apply(
-                lambda x: "High Demand Expected" if x > 70.0 else "Normal Operational Flow"
-            )
+            
+            # Categorize explicitly into your exact 4 original statuses based on demand thresholds
             rf_df['scheduling_decision'] = rf_df['predicted_demand'].apply(
-                lambda x: "Deploy Peak Peak Mitigation Strategy" if x > 70.0 else "Maintain Default Baseline Workflow"
+                lambda x: "Prioritise DC" if x > 5.0 else "Delay AC" if x > 4.2 else "Limited AC Charging" if x > 3.2 else "Normal Operation"
+            )
+            
+            # Map clean discrete operations out of the master scheduling decision to prevent KeyErrors
+            rf_df['dc_operation'] = rf_df.apply(
+                lambda row: "No DC Bays Available" if row.get('Total Number of Chargers', 1) == 0 
+                else "Prioritised (Full Power)" if row['scheduling_decision'] == "Prioritise DC"
+                else "Normal Operation", axis=1
+            )
+            
+            rf_df['ac_operation'] = rf_df['scheduling_decision'].apply(
+                lambda x: "Delayed / Off-Peak Only" if x == "Delay AC"
+                else "Throttled (50% Output)" if x == "Limited AC Charging"
+                else "Normal Operation"
             )
 
             # --- DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
@@ -794,22 +806,28 @@ def page_scheduling():
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                st.markdown(f"""
-                    <div style="margin-bottom: 15px;">
-                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
-                            📍 Location: {search_address_rf}
-                        </span>
-                    </div>
-                """, unsafe_allow_html=True)
+                st.markdown(f"### 📍 Operational Status: {search_address_rf}")
                 
+                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
+                st.markdown("#### 📊 Demand & Grid Timing Profile")
+                r1, r2, r3 = st.columns(3)
+                r1.metric(label="FORECASTED LOAD", value=f"{search_row_rf['predicted_demand']:.4f} kW")
+                r2.metric(label="MODEL CONFIDENCE", value=f"{search_row_rf['confidence_score']:.2%}")
                 
-                # 3) Target Dispatch Actions: Split onto separate lines for readability
+                # Map clear status category string to the general analytics state scorecard
+                r3.metric(label="ANALYTICS STATE", value=str(search_row_rf['scheduling_decision']))
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 3) Target Dispatch Actions: Tailored to pure AC/DC operations without peak metrics
                 st.markdown("#### 🚀 Target Dispatch Actions")
                 rd1, rd2 = st.columns(2)
                 with rd1:
-                    st.markdown(f"<span style='font-size: 19px;'>⚡ **Total Charger Capacity:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Number of Chargers']} Bays Loaded</span>", unsafe_allow_html=True)
+                    dc_disp_color = "#7f8c8d" if "No DC" in search_row_rf['dc_operation'] else "#2ecc71"
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_rf['dc_operation']}</span>", unsafe_allow_html=True)
                 with rd2:
-                    st.markdown(f"<span style='font-size: 19px;'>🔌 **Station Infrastructure Limit:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Station Capacity (KW)']} kW Baseline</span>", unsafe_allow_html=True)
+                    ac_color = "#e74c3c" if "Delayed" in search_row_rf['ac_operation'] else "#f39c12" if "Throttled" in search_row_rf['ac_operation'] else "#2ecc71"
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_rf['ac_operation']}</span>", unsafe_allow_html=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
@@ -823,10 +841,10 @@ def page_scheduling():
                         border: 1px solid #ffcc00;
                         margin-top: 10px;
                     ">
-                        <span style="font-size: 24px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
-                            🤖 Overall Random Forest Scheduling Decision:
+                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                            🎯 Overall Optimisation Master Directive:
                         </span>
-                        <span style="font-size: 28px; font-weight: bold; color: #ffffff;">
+                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
                             {search_row_rf['scheduling_decision']}
                         </span>
                     </div>
@@ -839,9 +857,10 @@ def page_scheduling():
             
             st.markdown("<br>", unsafe_allow_html=True)
             st.subheader("📋 Complete Random Forest Infrastructure Risk Profiles")
-            st.dataframe(rf_df, width='stretch')
-
-    render_footer()
+            
+            # Filter and show ONLY the two requested original columns
+            rf_display_cols = ["Station Address", "scheduling_decision"]
+            st.dataframe(rf_df[rf_display_cols], width='stretch')
         
 # --- 4. NAVIGATION ---
 pg = st.navigation({
