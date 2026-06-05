@@ -650,12 +650,22 @@ def page_scheduling():
             milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
             milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            # --- FIXED HARDWARE CAPACITY CHECK FOR STATIONS WITH NO DC BAYS ---
+         # --- FIX: EXACT INFRASTRUCTURE DETECTION MATCHING YOUR DATASET ---
             def evaluate_milp_dc(row):
-                # Dynamically flags out locations with 0 chargers or 0 capacity infrastructure
-                num_chargers = row.get('Total Number of Chargers', row.get('Total Station Capacity (KW)', 1))
-                if num_chargers == 0:
+                # 1. Look for common exact or partial column name matches in your dataset
+                # (e.g., 'No. of Chargers', 'Total Number of Chargers', 'DC Chargers')
+                num_chargers = None
+                
+                # Check for direct column names or partial string matches dynamically
+                for col in row.index:
+                    if 'charger' in col.lower() or 'capacity' in col.lower() or 'dc' in col.lower():
+                        num_chargers = row[col]
+                        break
+                
+                # 2. If no matching column is found, or if the value is explicitly 0, flag No DC
+                if num_chargers is None or num_chargers == 0:
                     return "No DC Bays Available"
+                    
                 return "Prioritized (100% Capacity)"
 
             milp_df['dc_operation'] = milp_df.apply(evaluate_milp_dc, axis=1)
@@ -663,6 +673,14 @@ def page_scheduling():
             milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
                 lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
             )
+            
+            # Update master scheduling decision text based on whether DC bays exist or are missing
+            def evaluate_milp_decision(row):
+                if row['dc_operation'] == "No DC Bays Available":
+                    return "Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
+                return "Prioritize DC, Off-peak only for AC" if row['predicted_demand'] > 4.5 else "Prioritize DC, Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
+
+            milp_df['scheduling_decision'] = milp_df.apply(evaluate_milp_decision, axis=1)
             
             # Update master scheduling decision text based on whether DC bays exist or are missing
             def evaluate_milp_decision(row):
