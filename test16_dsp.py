@@ -650,21 +650,29 @@ def page_scheduling():
             milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
             milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            # --- AC/DC OPERATIONS CONDITIONED ON CHARGER HARDWARE INFRASTRUCTURE ---
-            milp_df['dc_operation'] = milp_df.apply(
-                lambda row: "No DC Bays Available" if row.get('Total Number of Chargers', 1) == 0 
-                else "Prioritized (100% Capacity)", axis=1
-            )
+            # --- FIXED HARDWARE CAPACITY CHECK FOR STATIONS WITH NO DC BAYS ---
+            def evaluate_milp_dc(row):
+                # Dynamically flags out locations with 0 chargers or 0 capacity infrastructure
+                num_chargers = row.get('Total Number of Chargers', row.get('Total Station Capacity (KW)', 1))
+                if num_chargers == 0:
+                    return "No DC Bays Available"
+                return "Prioritized (100% Capacity)"
+
+            milp_df['dc_operation'] = milp_df.apply(evaluate_milp_dc, axis=1)
             
             milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
                 lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
             )
             
-            milp_df['scheduling_decision'] = milp_df['predicted_demand'].apply(
-                lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
-            )
+            # Update master scheduling decision text based on whether DC bays exist or are missing
+            def evaluate_milp_decision(row):
+                if row['dc_operation'] == "No DC Bays Available":
+                    return "Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
+                return "Prioritize DC, Off-peak only for AC" if row['predicted_demand'] > 4.5 else "Prioritize DC, Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
 
-            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+            milp_df['scheduling_decision'] = milp_df.apply(evaluate_milp_decision, axis=1)
+
+            # --- DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -750,9 +758,8 @@ def page_scheduling():
             st.divider()
             # --- END OF ADDED SHORTCUT SEARCH BOX ---
             
-            # Render full dataframe with ONLY the selected columns
             st.markdown("<br>", unsafe_allow_html=True)
-            st.subheader("📋 Complete MILP Intelligent Scheduling Table")
+            st.subheader("📋 Overall Infrastructure Scheduling Profiles")
             
             milp_display_cols = [
                 "Station Address", 
