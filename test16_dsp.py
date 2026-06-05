@@ -796,15 +796,6 @@ def page_scheduling():
                 # 1) Station name: Clean, normal white text header with no glow effect
                 st.markdown(f"### 📍 Operational Status: {search_address_rf}")
                 
-                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
-                st.markdown("#### 📊 Demand & Grid Timing Profile")
-                r1, r2, r3 = st.columns(3)
-                r1.metric(label="FORECASTED LOAD", value=f"{search_row_rf['predicted_demand']:.4f} kW")
-                r2.metric(label="MODEL CONFIDENCE", value=f"{search_row_rf['confidence_score']:.2%}")
-                r3.metric(label="ANALYTICS STATE", value=str(search_row_rf['model_status']))
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                
                 # 3) Target Dispatch Actions: Split onto separate lines for readability
                 st.markdown("#### 🚀 Target Dispatch Actions")
                 rd1, rd2 = st.columns(2)
@@ -826,7 +817,7 @@ def page_scheduling():
                         margin-top: 10px;
                     ">
                         <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
-                            🎯 Overall Optimisation Master Directive:
+                            🤖 Overall Random Forest Scheduling Decision:
                         </span>
                         <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
                             {search_row_rf['scheduling_decision']}
