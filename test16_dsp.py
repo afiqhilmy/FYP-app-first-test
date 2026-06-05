@@ -660,64 +660,62 @@ def page_scheduling():
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
-           # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
-            # --- UPDATED: INCREASED FONT SIZE FOR SUBHEADER AND SELECTBOX ---
-            st.markdown("""
-                <div style="margin-top: 25px; margin-bottom: 10px;">
-                    <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-                        🔍 Quick Station Search Shortcut
-                    </span>
-                </div>
-            """, unsafe_allow_html=True)
-            
-            # Custom CSS to increase the font size of the selectbox label and its internal selection text
-            st.markdown("""
-                <style>
-                    /* Target the label of the selectbox */
-                    div[data-testid="stSelectbox"] label p {
-                        font-size: 18px !important;
-                        font-weight: 600 !important;
-                    }
-                    /* Target the actual selected text option inside the dropdown box */
-                    div[data-baseweb="select"] div {
-                        font-size: 18px !important;
-                    }
-                </style>
-            """, unsafe_allow_html=True)
-
+            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+            st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
                 options=milp_df["Station Address"].unique(),
-                index=None,
-                placeholder="Select a station...",
                 key="search_milp"
             )
-            # --- END OF UPDATED FONT SIZE SECTION ---
             
-            if search_address_milp is not None:
-                search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
-                with st.container(border=True):
-                    # 1) Station name: Clean HTML header with absolute control over font and zero glowing overrides
-                    st.markdown(f"""
-                        <div style="margin-bottom: 15px;">
-                            <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
-                                Station: {search_address_milp}
-                            </span>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    
-                    # 2) Render Metrics
-                    col1, col2, col3 = st.columns(3)
-                    col1.metric("Predicted Demand", f"{search_row_milp['predicted_demand']:.2f} kW")
-                    col2.metric("Scheduled Peak", "Yes" if search_row_milp['scheduled_peak'] == 1 else "No")
-                    col3.metric("Scheduled Off-Peak", "Yes" if search_row_milp['scheduled_off_peak'] == 1 else "No")
-                    
-                    st.markdown("---")
-                    st.markdown(f"**DC Operation:** {search_row_milp['dc_operation']}")
-                    st.markdown(f"**AC Operation:** {search_row_milp['ac_operation']}")
-                    st.markdown(f"**Master Decision:** {search_row_milp['scheduling_decision']}")
-            else:
-                st.info("Select a station address above to view its specific MILP metrics.")
+            search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
+            with st.container(border=True):
+                # 1) Station name: Clean, normal white text header with no glow effect
+                st.markdown(f"### 📍 Operational Status: {search_address_milp}")
+                
+                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
+                st.markdown("#### 📊 Demand & Grid Timing Profile")
+                s1, s2, s3 = st.columns(3)
+                s1.metric(label="PREDICTED DEMAND", value=f"{search_row_milp['predicted_demand']:.4f} kW")
+                s2.metric(label="SCHEDULED PEAK", value=str(int(search_row_milp['scheduled_peak'])))
+                s3.metric(label="SCHEDULED OFF-PEAK", value=str(int(search_row_milp['scheduled_off_peak'])))
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 3) Target Dispatch Actions: Split onto separate lines for readability
+                st.markdown("#### 🚀 Target Dispatch Actions")
+                d1, d2 = st.columns(2)
+                with d1:
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
+                with d2:
+                    ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 4) Overall Scheduling Decision: Styled exactly like the template card
+                st.markdown(
+                    f"""
+                    <div style="
+                        background-color: #1e1015; 
+                        padding: 16px; 
+                        border-radius: 8px; 
+                        border: 1px solid #ffcc00;
+                        margin-top: 10px;
+                    ">
+                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                            🎯 Overall Optimisation Master Directive:
+                        </span>
+                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                            {search_row_milp['scheduling_decision']}
+                        </span>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+            
+            st.divider()
+            # --- END OF ADDED SHORTCUT SEARCH BOX ---
 
             # Render full dataframe underneath search tool
             st.markdown("<br>", unsafe_allow_html=True)
@@ -732,37 +730,72 @@ def page_scheduling():
             rf_df = df_clean.copy()
             np.random.seed(101)
             
-            # Generating baseline features mimicking model inference outputs
-            rf_df['Predicted_Hourly_Load'] = np.random.uniform(15.0, 120.0, len(rf_df))
-            rf_df['Confidence_Score'] = np.random.uniform(0.72, 0.94, len(rf_df))
-            rf_df['Suggested_Action'] = rf_df['Predicted_Hourly_Load'].apply(
-                lambda x: "🚨 High Risk - Trigger Load Shifting" if x > 90.0 else "⚠️ Moderate Load - Restrict AC Charging" if x > 50.0 else "✅ Normal Grid Workflow"
+            # Formulating matching predictive features for Random Forest
+            rf_df['predicted_demand'] = np.random.uniform(20.0, 95.0, len(rf_df))
+            rf_df['confidence_score'] = np.random.uniform(0.78, 0.96, len(rf_df))
+            rf_df['model_status'] = rf_df['predicted_demand'].apply(
+                lambda x: "High Demand Expected" if x > 70.0 else "Normal Operational Flow"
             )
-            
-            # Target Selector for Random Forest page
+            rf_df['scheduling_decision'] = rf_df['predicted_demand'].apply(
+                lambda x: "Deploy Peak Peak Mitigation Strategy" if x > 70.0 else "Maintain Default Baseline Workflow"
+            )
+
+            # --- DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
+            st.subheader("🔍 Quick Station Search Shortcut")
             search_address_rf = st.selectbox(
-                "Type or Select Station Address to inspect Random Forest predictions:",
+                "Type or Select Station Address to inspect operational parameters:",
                 options=rf_df["Station Address"].unique(),
-                index=None,
-                placeholder="Select a station...",
                 key="search_rf"
             )
             
-            if search_address_rf is not None:
-                search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
-                with st.container(border=True):
-                    st.markdown(f"### 📍 Operational Forecast: {search_address_rf}")
-                    
-                    rf_col1, rf_col2 = st.columns(2)
-                    rf_col1.metric("Predicted Peak Load", f"{search_row_rf['Predicted_Hourly_Load']:.2f} kW")
-                    rf_col2.metric("Prediction Confidence", f"{search_row_rf['Confidence_Score']:.2%}")
-                    
-                    st.markdown("---")
-                    st.markdown(f"🤖 **Machine Learning Smart Directive:**")
-                    st.subheader(search_row_rf['Suggested_Action'])
-            else:
-                st.info("Select a station address above to view its machine learning load predictions.")
+            search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
+            with st.container(border=True):
+                # 1) Station name: Clean, normal white text header with no glow effect
+                st.markdown(f"### 📍 Operational Status: {search_address_rf}")
                 
+                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
+                st.markdown("#### 📊 Demand & Grid Timing Profile")
+                r1, r2, r3 = st.columns(3)
+                r1.metric(label="FORECASTED LOAD", value=f"{search_row_rf['predicted_demand']:.4f} kW")
+                r2.metric(label="MODEL CONFIDENCE", value=f"{search_row_rf['confidence_score']:.2%}")
+                r3.metric(label="ANALYTICS STATE", value=str(search_row_rf['model_status']))
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 3) Target Dispatch Actions: Split onto separate lines for readability
+                st.markdown("#### 🚀 Target Dispatch Actions")
+                rd1, rd2 = st.columns(2)
+                with rd1:
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **Total Charger Capacity:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Number of Chargers']} Bays Loaded</span>", unsafe_allow_html=True)
+                with rd2:
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **Station Infrastructure Limit:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Station Capacity (KW)']} kW Baseline</span>", unsafe_allow_html=True)
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 4) Overall Scheduling Decision: Styled exactly like the template card
+                st.markdown(
+                    f"""
+                    <div style="
+                        background-color: #1e1015; 
+                        padding: 16px; 
+                        border-radius: 8px; 
+                        border: 1px solid #ffcc00;
+                        margin-top: 10px;
+                    ">
+                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                            🎯 Overall Optimisation Master Directive:
+                        </span>
+                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                            {search_row_rf['scheduling_decision']}
+                        </span>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+            
+            st.divider()
+            # --- END OF ADDED SHORTCUT SEARCH BOX ---
+            
             st.markdown("<br>", unsafe_allow_html=True)
             st.subheader("📋 Complete Random Forest Infrastructure Risk Profiles")
             st.dataframe(rf_df, width='stretch')
