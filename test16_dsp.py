@@ -650,45 +650,34 @@ def page_scheduling():
             milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
             milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-         # --- FIX: EXACT INFRASTRUCTURE DETECTION MATCHING YOUR DATASET ---
-            def evaluate_milp_dc(row):
-                # 1. Look for common exact or partial column name matches in your dataset
-                # (e.g., 'No. of Chargers', 'Total Number of Chargers', 'DC Chargers')
-                num_chargers = None
-                
-                # Check for direct column names or partial string matches dynamically
-                for col in row.index:
-                    if 'charger' in col.lower() or 'capacity' in col.lower() or 'dc' in col.lower():
-                        num_chargers = row[col]
-                        break
-                
-                # 2. If no matching column is found, or if the value is explicitly 0, flag No DC
-                if num_chargers is None or num_chargers == 0:
-                    return "No DC Bays Available"
-                    
+            # --- YESTERDAY'S EXACT HARDWARE LOGIC ---
+            def determine_dc_op(row):
+                if 'DC' in row and row['DC'] == 0:
+                    return "N/A (No DC Hardware)"
                 return "Prioritized (100% Capacity)"
 
-            milp_df['dc_operation'] = milp_df.apply(evaluate_milp_dc, axis=1)
-            
-            milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
-                lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
-            )
-            
-            # Update master scheduling decision text based on whether DC bays exist or are missing
-            def evaluate_milp_decision(row):
-                if row['dc_operation'] == "No DC Bays Available":
-                    return "Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
-                return "Prioritize DC, Off-peak only for AC" if row['predicted_demand'] > 4.5 else "Prioritize DC, Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
+            def determine_ac_op(row):
+                if row['predicted_demand'] > 4.5:
+                    return "Restricted / Delayed"
+                elif row['predicted_demand'] > 3.5:
+                    return "Throttled (50% Output)"
+                else:
+                    return "Normal Operation"
 
-            milp_df['scheduling_decision'] = milp_df.apply(evaluate_milp_decision, axis=1)
-            
-            # Update master scheduling decision text based on whether DC bays exist or are missing
-            def evaluate_milp_decision(row):
-                if row['dc_operation'] == "No DC Bays Available":
-                    return "Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
-                return "Prioritize DC, Off-peak only for AC" if row['predicted_demand'] > 4.5 else "Prioritize DC, Limit AC charging" if row['predicted_demand'] > 3.5 else "Normal operation"
+            def determine_decision(row):
+                has_no_dc = 'DC' in row and row['DC'] == 0
+                if row['predicted_demand'] > 4.5:
+                    return "Off-peak only for AC" if has_no_dc else "Prioritize DC, Off-peak only for AC"
+                elif row['predicted_demand'] > 3.5:
+                    return "Limit AC charging output" if has_no_dc else "Prioritize DC, Limit AC charging"
+                else:
+                    return "Normal operation"
 
-            milp_df['scheduling_decision'] = milp_df.apply(evaluate_milp_decision, axis=1)
+            # Apply the row-by-row hardware and demand evaluation
+            milp_df['dc_operation'] = milp_df.apply(determine_dc_op, axis=1)
+            milp_df['ac_operation'] = milp_df.apply(determine_ac_op, axis=1)
+            milp_df['scheduling_decision'] = milp_df.apply(determine_decision, axis=1)
+            # --- END OF HARDWARE LOGIC ---
 
             # --- DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
@@ -744,7 +733,7 @@ def page_scheduling():
                 # 3) Target Dispatch Actions: Split onto separate lines for readability
                 d1, d2 = st.columns(2)
                 with d1:
-                    dc_disp_color = "#7f8c8d" if "No DC" in search_row_milp['dc_operation'] else "#2ecc71"
+                    dc_disp_color = "#7f8c8d" if "No DC" in search_row_milp['dc_operation'] or "N/A" in search_row_milp['dc_operation'] else "#2ecc71"
                     st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
                 with d2:
                     ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
@@ -779,8 +768,10 @@ def page_scheduling():
             st.markdown("<br>", unsafe_allow_html=True)
             st.subheader("📋 Overall Infrastructure Scheduling Profiles")
             
+            # --- RESTORED 'DC' COLUMN TO RENDER CORRECTLY INSIDE THE APPS DATAFRAME VIEW ---
             milp_display_cols = [
-                "Station Address", 
+                "Station Address",
+                "DC" if "DC" in milp_df.columns else None, # Inline inclusion check
                 "predicted_demand", 
                 "scheduled_peak", 
                 "scheduled_off_peak", 
@@ -788,6 +779,9 @@ def page_scheduling():
                 "ac_operation", 
                 "scheduling_decision"
             ]
+            # Drop None values if 'DC' didn't exist to prevent KeyErrors
+            milp_display_cols = [c for c in milp_display_cols if c is not None]
+            
             st.dataframe(milp_df[milp_display_cols], width='stretch')
             
     elif algo_choice == "Random Forest (Alternative)":
