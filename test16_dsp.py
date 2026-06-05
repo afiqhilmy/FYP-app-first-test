@@ -791,7 +791,7 @@ def page_scheduling():
             st.divider()
             
             st.markdown("<br>", unsafe_allow_html=True)
-            st.subheader("📋 Overall Infrastructure Scheduling Profiles")
+            st.subheader("📋 Complete MILP Intelligent Scheduling Table")
             
             milp_display_cols = [
                 "Station Address",
@@ -915,7 +915,7 @@ def page_scheduling():
             st.divider()
             
             st.markdown("<br>", unsafe_allow_html=True)
-            st.subheader("📋 Complete Random Forest Infrastructure Risk Profiles")
+            st.subheader("📋 Complete Random Forest Intelligent Scheduling Table")
             
             rf_display_cols = ["Station Address", "scheduling_decision"]
             st.dataframe(rf_df[rf_display_cols], width='stretch')
