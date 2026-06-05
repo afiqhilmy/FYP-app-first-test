@@ -806,18 +806,13 @@ def page_scheduling():
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                st.markdown(f"### 📍 Operational Status: {search_address_rf}")
-                
-                # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
-                st.markdown("#### 📊 Demand & Grid Timing Profile")
-                r1, r2, r3 = st.columns(3)
-                r1.metric(label="FORECASTED LOAD", value=f"{search_row_rf['predicted_demand']:.4f} kW")
-                r2.metric(label="MODEL CONFIDENCE", value=f"{search_row_rf['confidence_score']:.2%}")
-                
-                # Map clear status category string to the general analytics state scorecard
-                r3.metric(label="ANALYTICS STATE", value=str(search_row_rf['scheduling_decision']))
-                
-                st.markdown("<br>", unsafe_allow_html=True)
+                                st.markdown(f"""
+                    <div style="margin-bottom: 15px;">
+                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
+                            📍 Location: {search_address_rf}
+                        </span>
+                    </div>
+                """, unsafe_allow_html=True)
                 
                 # 3) Target Dispatch Actions: Tailored to pure AC/DC operations without peak metrics
                 st.markdown("#### 🚀 Target Dispatch Actions")
