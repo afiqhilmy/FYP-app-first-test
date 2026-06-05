@@ -752,7 +752,7 @@ def page_scheduling():
             
             # Render full dataframe with ONLY the selected columns
             st.markdown("<br>", unsafe_allow_html=True)
-            st.subheader("📋 Overall Infrastructure Scheduling Profiles")
+            st.subheader("📋 Complete MILP Intelligent Scheduling Table")
             
             milp_display_cols = [
                 "Station Address", 
@@ -845,7 +845,7 @@ def page_scheduling():
                         margin-top: 10px;
                     ">
                         <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
-                            🎯 Overall Optimisation Master Directive:
+                            🎯 Overall RF Scheduling Decision:
                         </span>
                         <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
                             {search_row_rf['scheduling_decision']}
@@ -859,7 +859,7 @@ def page_scheduling():
             # --- END OF ADDED SHORTCUT SEARCH BOX ---
             
             st.markdown("<br>", unsafe_allow_html=True)
-            st.subheader("📋 Complete Random Forest Infrastructure Risk Profiles")
+            st.subheader("📋 Complete RF Intelligent Scheduling Table")
             
             # Filter and show ONLY the two requested original columns
             rf_display_cols = ["Station Address", "scheduling_decision"]
