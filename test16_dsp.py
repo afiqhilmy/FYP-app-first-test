@@ -806,7 +806,7 @@ def page_scheduling():
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                                st.markdown(f"""
+                st.markdown(f"""
                     <div style="margin-bottom: 15px;">
                         <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
                             📍 Location: {search_address_rf}
