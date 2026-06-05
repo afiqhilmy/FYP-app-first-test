@@ -628,7 +628,7 @@ def page_scheduling():
         help="MILP focuses on load shifting, while RF predicts demand-based actions."
     )
 
-    if algo_choice == "MILP (Optimization)":
+if algo_choice == "MILP (Optimization)":
         st.subheader("⚡ Mixed-Integer Linear Programming (MILP) Results")
         
         # Scorecards for MILP
@@ -677,101 +677,108 @@ def page_scheduling():
             milp_df['dc_operation'] = milp_df.apply(determine_dc_op, axis=1)
             milp_df['ac_operation'] = milp_df.apply(determine_ac_op, axis=1)
             milp_df['scheduling_decision'] = milp_df.apply(determine_decision, axis=1)
-            # --- END OF HARDWARE LOGIC ---
 
             # --- DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
+            
+            # Create options list with a clean blank placeholder at the top
+            milp_options = [""] + list(milp_df["Station Address"].unique())
+            
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
-                options=milp_df["Station Address"].unique(),
+                options=milp_options,
+                index=0,  # Defaults to the empty string so the user can type immediately
+                placeholder="Type to search station...",
                 key="search_milp"
             )
             
-            search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
             with st.container(border=True):
-                # 1) Station name: Clean HTML header with absolute control over font and zero glowing overrides
-                st.markdown(f"""
-                    <div style="margin-bottom: 15px;">
-                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
-                            📍 Location: {search_address_milp}
-                        </span>
-                    </div>
-                """, unsafe_allow_html=True)
-                
-                # 2) Demand & Grid Timing Profile: Updated to map 1 -> YES and 0 -> NO
-                st.markdown("#### 📊 Demand & Grid Timing Profile")
-                s1, s2, s3 = st.columns(3)
-                
-                # Format mappings for binary display flags
-                peak_status = "YES" if int(search_row_milp['scheduled_peak']) == 1 else "NO"
-                off_peak_status = "YES" if int(search_row_milp['scheduled_off_peak']) == 1 else "NO"
-                
-                with s1:
+                if search_address_milp == "":
+                    st.info("💡 Please type or select a station address above to inspect its operational parameters.")
+                else:
+                    search_row_milp = milp_df[milp_df["Station Address"] == search_address_milp].iloc[0]
+                    
+                    # 1) Station name: Clean HTML header with absolute control over font and zero glowing overrides
                     st.markdown(f"""
-                        <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
-                            <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">PREDICTED DEMAND</span>
-                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{search_row_milp['predicted_demand']:.4f} kW</span>
+                        <div style="margin-bottom: 15px;">
+                            <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
+                                📍 Location: {search_address_milp}
+                            </span>
                         </div>
                     """, unsafe_allow_html=True)
-                with s2:
-                    st.markdown(f"""
-                        <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
-                            <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">SCHEDULED PEAK</span>
-                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{peak_status}</span>
+                    
+                    # 2) Demand & Grid Timing Profile: Updated to map 1 -> YES and 0 -> NO
+                    st.markdown("#### 📊 Demand & Grid Timing Profile")
+                    s1, s2, s3 = st.columns(3)
+                    
+                    # Format mappings for binary display flags
+                    peak_status = "YES" if int(search_row_milp['scheduled_peak']) == 1 else "NO"
+                    off_peak_status = "YES" if int(search_row_milp['scheduled_off_peak']) == 1 else "NO"
+                    
+                    with s1:
+                        st.markdown(f"""
+                            <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
+                                <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">PREDICTED DEMAND</span>
+                                <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{search_row_milp['predicted_demand']:.4f} kW</span>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    with s2:
+                        st.markdown(f"""
+                            <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
+                                <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">SCHEDULED PEAK</span>
+                                <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{peak_status}</span>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    with s3:
+                        st.markdown(f"""
+                            <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
+                                <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">SCHEDULED OFF-PEAK</span>
+                                <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{off_peak_status}</span>
+                            </div>
+                        """, unsafe_allow_html=True)
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    # 3) Target Dispatch Actions: Split onto separate lines for readability
+                    d1, d2 = st.columns(2)
+                    with d1:
+                        dc_disp_color = "#7f8c8d" if "No DC" in search_row_milp['dc_operation'] or "N/A" in search_row_milp['dc_operation'] else "#2ecc71"
+                        st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
+                    with d2:
+                        ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
+                        st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    # 4) Overall Scheduling Decision: Matching Master Directive Box Style
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background-color: #1e1015; 
+                            padding: 16px; 
+                            border-radius: 8px; 
+                            border: 1px solid #ffcc00;
+                            margin-top: 10px;
+                        ">
+                            <span style="font-size: 24px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                                🤖 Overall MILP Scheduling Decision:
+                            </span>
+                            <span style="font-size: 28px; font-weight: bold; color: #ffffff;">
+                                {search_row_milp['scheduling_decision']}
+                            </span>
                         </div>
-                    """, unsafe_allow_html=True)
-                with s3:
-                    st.markdown(f"""
-                        <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
-                            <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">SCHEDULED OFF-PEAK</span>
-                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{off_peak_status}</span>
-                        </div>
-                    """, unsafe_allow_html=True)
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                
-                # 3) Target Dispatch Actions: Split onto separate lines for readability
-                d1, d2 = st.columns(2)
-                with d1:
-                    dc_disp_color = "#7f8c8d" if "No DC" in search_row_milp['dc_operation'] or "N/A" in search_row_milp['dc_operation'] else "#2ecc71"
-                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
-                with d2:
-                    ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
-                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                
-                # 4) Overall Scheduling Decision: Matching Master Directive Box Style
-                st.markdown(
-                    f"""
-                    <div style="
-                        background-color: #1e1015; 
-                        padding: 16px; 
-                        border-radius: 8px; 
-                        border: 1px solid #ffcc00;
-                        margin-top: 10px;
-                    ">
-                        <span style="font-size: 24px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
-                            🤖 Overall MILP Scheduling Decision:
-                        </span>
-                        <span style="font-size: 28px; font-weight: bold; color: #ffffff;">
-                            {search_row_milp['scheduling_decision']}
-                        </span>
-                    </div>
-                    """, 
-                    unsafe_allow_html=True
-                )
+                        """, 
+                        unsafe_allow_html=True
+                    )
             
             st.divider()
-            # --- END OF ADDED SHORTCUT SEARCH BOX ---
             
             st.markdown("<br>", unsafe_allow_html=True)
             st.subheader("📋 Overall Infrastructure Scheduling Profiles")
             
-            # --- RESTORED 'DC' COLUMN TO RENDER CORRECTLY INSIDE THE APPS DATAFRAME VIEW ---
             milp_display_cols = [
                 "Station Address",
-                "DC" if "DC" in milp_df.columns else None, # Inline inclusion check
+                "DC" if "DC" in milp_df.columns else None,
                 "predicted_demand", 
                 "scheduled_peak", 
                 "scheduled_off_peak", 
@@ -779,108 +786,120 @@ def page_scheduling():
                 "ac_operation", 
                 "scheduling_decision"
             ]
-            # Drop None values if 'DC' didn't exist to prevent KeyErrors
             milp_display_cols = [c for c in milp_display_cols if c is not None]
-            
             st.dataframe(milp_df[milp_display_cols], width='stretch')
             
     elif algo_choice == "Random Forest (Alternative)":
         st.subheader("🌳 Random Forest Predictive Demand Analytics")
         st.info("Random Forest scheduling module running baseline predictive load forecast profiles.")
-
-        # --- RESTORED EVALUATION METRICS SCORECARDS ---
+        
+        # --- EVALUATION METRICS SCORECARDS ---
         m1, m2, m3 = st.columns(3)
         m1.metric("RF MAE", "0.412")
         m2.metric("RF RMSE", "0.589")
         m3.metric("RF R² Score", "0.824")
-
+        
         st.divider()
         
         if not df_clean.empty:
             rf_df = df_clean.copy()
             np.random.seed(101)
             
-            # --- ORIGINAL PREDICTIVE GENERATION & MAPPING RULES ---
             rf_df['predicted_demand'] = np.random.uniform(2.5, 6.0, len(rf_df))
             rf_df['confidence_score'] = np.random.uniform(0.78, 0.96, len(rf_df))
             
-            # Categorize explicitly into your exact 4 original statuses based on demand thresholds
+            # Base logic categorization for the 4 original statuses
             rf_df['scheduling_decision'] = rf_df['predicted_demand'].apply(
                 lambda x: "Prioritise DC" if x > 5.0 else "Delay AC" if x > 4.2 else "Limited AC Charging" if x > 3.2 else "Normal Operation"
             )
             
-            # Map clean discrete operations out of the master scheduling decision to prevent KeyErrors
-            rf_df['dc_operation'] = rf_df.apply(
-                lambda row: "No DC Bays Available" if row.get('Total Number of Chargers', 1) == 0 
-                else "Prioritised (Full Power)" if row['scheduling_decision'] == "Prioritise DC"
-                else "Normal Operation", axis=1
-            )
+            # Hardware evaluation fallback check
+            def evaluate_rf_dc(row):
+                num_chargers = row.get('Total Number of Chargers', row.get('Total Station Capacity (KW)', 1))
+                if num_chargers == 0:
+                    return "No DC Bays Available"
+                return "Prioritised (Full Power)" if row['scheduling_decision'] == "Prioritise DC" else "Normal Operation"
+
+            rf_df['dc_operation'] = rf_df.apply(evaluate_rf_dc, axis=1)
             
             rf_df['ac_operation'] = rf_df['scheduling_decision'].apply(
                 lambda x: "Delayed / Off-Peak Only" if x == "Delay AC"
                 else "Throttled (50% Output)" if x == "Limited AC Charging"
                 else "Normal Operation"
             )
+            
+            rf_df['scheduling_decision'] = rf_df.apply(
+                lambda r: "Normal Operation" if r['dc_operation'] == "No DC Bays Available" and r['scheduling_decision'] == "Prioritise DC" else r['scheduling_decision'], 
+                axis=1
+            )
 
             # --- DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
             st.subheader("🔍 Quick Station Search Shortcut")
+            
+            # Create options list with a clean blank placeholder at the top
+            rf_options = [""] + list(rf_df["Station Address"].unique())
+            
             search_address_rf = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
-                options=rf_df["Station Address"].unique(),
+                options=rf_options,
+                index=0,  # Defaults to the empty string so the user can type immediately
+                placeholder="Type to search station...",
                 key="search_rf"
             )
             
-            search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
-                # 1) Station name: Clean, normal white text header with no glow effect
-                st.markdown(f"""
-                    <div style="margin-bottom: 15px;">
-                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
-                            📍 Location: {search_address_rf}
-                        </span>
-                    </div>
-                """, unsafe_allow_html=True)
-                
-                # 3) Target Dispatch Actions: Tailored to pure AC/DC operations without peak metrics
-                st.markdown("#### 🚀 Target Dispatch Actions")
-                rd1, rd2 = st.columns(2)
-                with rd1:
-                    dc_disp_color = "#7f8c8d" if "No DC" in search_row_rf['dc_operation'] else "#2ecc71"
-                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_rf['dc_operation']}</span>", unsafe_allow_html=True)
-                with rd2:
-                    ac_color = "#e74c3c" if "Delayed" in search_row_rf['ac_operation'] else "#f39c12" if "Throttled" in search_row_rf['ac_operation'] else "#2ecc71"
-                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_rf['ac_operation']}</span>", unsafe_allow_html=True)
-                
-                st.markdown("<br>", unsafe_allow_html=True)
-                
-                # 4) Overall Scheduling Decision: Styled exactly like the template card
-                st.markdown(
-                    f"""
-                    <div style="
-                        background-color: #1e1015; 
-                        padding: 16px; 
-                        border-radius: 8px; 
-                        border: 1px solid #ffcc00;
-                        margin-top: 10px;
-                    ">
-                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
-                            🎯 Overall RF Scheduling Decision:
-                        </span>
-                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
-                            {search_row_rf['scheduling_decision']}
-                        </span>
-                    </div>
-                    """, 
-                    unsafe_allow_html=True
-                )
+                if search_address_rf == "":
+                    st.info("💡 Please type or select a station address above to inspect its operational parameters.")
+                else:
+                    search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
+                    
+                    # 1) Station name: Clean, normal white text header with no glow effect
+                    st.markdown(f"""
+                        <div style="margin-bottom: 15px;">
+                            <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
+                                📍 Location: {search_address_rf}
+                            </span>
+                        </div>
+                    """, unsafe_allow_html=True)
+
+                    # 3) Target Dispatch Actions: Tailored to pure AC/DC operations without peak metrics
+                    st.markdown("#### 🚀 Target Dispatch Actions")
+                    rd1, rd2 = st.columns(2)
+                    with rd1:
+                        dc_disp_color = "#7f8c8d" if "No DC" in search_row_rf['dc_operation'] else "#2ecc71"
+                        st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_rf['dc_operation']}</span>", unsafe_allow_html=True)
+                    with rd2:
+                        ac_color = "#e74c3c" if "Delayed" in search_row_rf['ac_operation'] else "#f39c12" if "Throttled" in search_row_rf['ac_operation'] else "#2ecc71"
+                        st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_rf['ac_operation']}</span>", unsafe_allow_html=True)
+                    
+                    st.markdown("<br>", unsafe_allow_html=True)
+                    
+                    # 4) Overall Scheduling Decision: Styled exactly like the template card
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background-color: #1e1015; 
+                            padding: 16px; 
+                            border-radius: 8px; 
+                            border: 1px solid #ffcc00;
+                            margin-top: 10px;
+                        ">
+                            <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                                🎯 Overall Optimisation Master Directive:
+                            </span>
+                            <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                                {search_row_rf['scheduling_decision']}
+                            </span>
+                        </div>
+                        """, 
+                        unsafe_allow_html=True
+                    )
             
             st.divider()
-            # --- END OF ADDED SHORTCUT SEARCH BOX ---
             
             st.markdown("<br>", unsafe_allow_html=True)
-            st.subheader("📋 Complete RF Intelligent Scheduling Table")
+            st.subheader("📋 Complete Random Forest Infrastructure Risk Profiles")
             
-            # Filter and show ONLY the two requested original columns
             rf_display_cols = ["Station Address", "scheduling_decision"]
             st.dataframe(rf_df[rf_display_cols], width='stretch')
         
