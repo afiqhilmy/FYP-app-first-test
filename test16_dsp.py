@@ -694,7 +694,7 @@ def page_scheduling():
                     }
                     /* Changes the selected value or placeholder text size inside the box */
                     div[data-testid="stSelectbox"] div[data-testid="stWidgetLabel"] + div div {
-                        font-size: 16px !important;
+                        font-size:22px !important;
                     }
                 </style>
                 """,
