@@ -674,7 +674,7 @@ def page_scheduling():
                 st.markdown(f"""
                     <div style="margin-bottom: 15px;">
                         <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-                            📍 Operational Status: {search_address_milp}
+                            📍 Location: {search_address_milp}
                         </span>
                     </div>
                 """, unsafe_allow_html=True)
@@ -712,7 +712,6 @@ def page_scheduling():
                 st.markdown("<br>", unsafe_allow_html=True)
                 
                 # 3) Target Dispatch Actions: Split onto separate lines for readability
-                st.markdown("#### 🚀 Target Dispatch Actions")
                 d1, d2 = st.columns(2)
                 with d1:
                     st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
@@ -732,10 +731,10 @@ def page_scheduling():
                         border: 1px solid #ffcc00;
                         margin-top: 10px;
                     ">
-                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
-                            🎯 Overall Optimisation Master Directive:
+                        <span style="font-size: 24px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                            🤖 Overall MILP Scheduling Decision:
                         </span>
-                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                        <span style="font-size: 28px; font-weight: bold; color: #ffffff;">
                             {search_row_milp['scheduling_decision']}
                         </span>
                     </div>
@@ -779,7 +778,13 @@ def page_scheduling():
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                st.markdown(f"### 📍 Operational Status: {search_address_rf}")
+                st.markdown(f"""
+                    <div style="margin-bottom: 15px;">
+                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
+                            📍 Operational Status: {search_address_milp}
+                        </span>
+                    </div>
+                """, unsafe_allow_html=True)
                 
                 # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
                 st.markdown("#### 📊 Demand & Grid Timing Profile")
