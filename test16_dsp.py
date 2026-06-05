@@ -801,7 +801,49 @@ def page_scheduling():
                 r1, r2, r3 = st.columns(3)
                 r1.metric(label="FORECASTED LOAD", value=f"{search_row_rf['predicted_demand']:.4f} kW")
                 r2.metric(label="MODEL CONFIDENCE", value=f"{search_row_rf['confidence_score']:.2%}")
-                r3.metric(label="ANALYTICS STATE", value=str(search
+                r3.metric(label="ANALYTICS STATE", value=str(search_row_rf['model_status']))
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 3) Target Dispatch Actions: Split onto separate lines for readability
+                st.markdown("#### 🚀 Target Dispatch Actions")
+                rd1, rd2 = st.columns(2)
+                with rd1:
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **Total Charger Capacity:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Number of Chargers']} Bays Loaded</span>", unsafe_allow_html=True)
+                with rd2:
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **Station Infrastructure Limit:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Station Capacity (KW)']} kW Baseline</span>", unsafe_allow_html=True)
+                
+                st.markdown("<br>", unsafe_allow_html=True)
+                
+                # 4) Overall Scheduling Decision: Styled exactly like the template card
+                st.markdown(
+                    f"""
+                    <div style="
+                        background-color: #1e1015; 
+                        padding: 16px; 
+                        border-radius: 8px; 
+                        border: 1px solid #ffcc00;
+                        margin-top: 10px;
+                    ">
+                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                            🎯 Overall Optimisation Master Directive:
+                        </span>
+                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                            {search_row_rf['scheduling_decision']}
+                        </span>
+                    </div>
+                    """, 
+                    unsafe_allow_html=True
+                )
+            
+            st.divider()
+            # --- END OF ADDED SHORTCUT SEARCH BOX ---
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            st.subheader("📋 Complete Random Forest Infrastructure Risk Profiles")
+            st.dataframe(rf_df, width='stretch')
+
+    render_footer()
         
 # --- 4. NAVIGATION ---
 pg = st.navigation({
