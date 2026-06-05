@@ -797,7 +797,7 @@ def page_scheduling():
                 st.markdown(f"""
                     <div style="margin-bottom: 15px;">
                         <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
-                            📍 Location: {search_address_milp}
+                            📍 Location: {search_address_rf}
                         </span>
                     </div>
                 """, unsafe_allow_html=True)
