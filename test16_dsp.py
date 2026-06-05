@@ -628,7 +628,7 @@ def page_scheduling():
         help="MILP focuses on load shifting, while RF predicts demand-based actions."
     )
 
-    if algo_choice == "MILP (Optimization)":
+if algo_choice == "MILP (Optimization)":
         st.subheader("⚡ Mixed-Integer Linear Programming (MILP) Results")
         
         # Scorecards for MILP
@@ -650,8 +650,12 @@ def page_scheduling():
             milp_df['scheduled_peak'] = np.random.choice([0, 1], len(milp_df))
             milp_df['scheduled_off_peak'] = 1 - milp_df['scheduled_peak']
             
-            # --- ADDING MR JAMES' AC/DC OPERATIONS WITHOUT REMOVING ORIGINAL COLUMNS ---
-            milp_df['dc_operation'] = "Prioritized (100% Capacity)"
+            # --- AC/DC OPERATIONS CONDITIONED ON CHARGER HARDWARE INFRASTRUCTURE ---
+            milp_df['dc_operation'] = milp_df.apply(
+                lambda row: "No DC Bays Available" if row.get('Total Number of Chargers', 1) == 0 
+                else "Prioritized (100% Capacity)", axis=1
+            )
+            
             milp_df['ac_operation'] = milp_df['predicted_demand'].apply(
                 lambda x: "Restricted / Delayed" if x > 4.5 else "Throttled (50% Output)" if x > 3.5 else "Normal Operation"
             )
@@ -660,7 +664,7 @@ def page_scheduling():
                 lambda x: "Prioritize DC, Off-peak only for AC" if x > 4.5 else "Prioritize DC, Limit AC charging" if x > 3.5 else "Normal operation"
             )
 
-# --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
+            # --- JUST ADDED: DYNAMIC SHORTCUT SEARCH BOX (MILP) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_milp = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -714,7 +718,8 @@ def page_scheduling():
                 # 3) Target Dispatch Actions: Split onto separate lines for readability
                 d1, d2 = st.columns(2)
                 with d1:
-                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
+                    dc_disp_color = "#7f8c8d" if "No DC" in search_row_milp['dc_operation'] else "#2ecc71"
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {dc_disp_color}; line-height: 1.8;'>{search_row_milp['dc_operation']}</span>", unsafe_allow_html=True)
                 with d2:
                     ac_color = "#e74c3c" if "Restricted" in search_row_milp['ac_operation'] else "#f39c12" if "Throttled" in search_row_milp['ac_operation'] else "#2ecc71"
                     st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_milp['ac_operation']}</span>", unsafe_allow_html=True)
@@ -744,10 +749,21 @@ def page_scheduling():
             
             st.divider()
             # --- END OF ADDED SHORTCUT SEARCH BOX ---
-            # Render full dataframe underneath search tool
+            
+            # Render full dataframe with ONLY the selected columns
             st.markdown("<br>", unsafe_allow_html=True)
             st.subheader("📋 Overall Infrastructure Scheduling Profiles")
-            st.dataframe(milp_df, width='stretch')
+            
+            milp_display_cols = [
+                "Station Address", 
+                "predicted_demand", 
+                "scheduled_peak", 
+                "scheduled_off_peak", 
+                "dc_operation", 
+                "ac_operation", 
+                "scheduling_decision"
+            ]
+            st.dataframe(milp_df[milp_display_cols], width='stretch')
             
     elif algo_choice == "Random Forest (Alternative)":
         st.subheader("🌳 Random Forest Predictive Demand Analytics")
