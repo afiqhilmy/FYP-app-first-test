@@ -684,7 +684,7 @@ def page_scheduling():
             # Create options list with a clean blank placeholder at the top
             milp_options = [""] + list(milp_df["Station Address"].unique())
             
-           search_col_milp, spacer_col_milp = st.columns([2, 2])
+            search_col_milp, spacer_col_milp = st.columns([2, 2])
             
             with search_col_milp:
                 search_address_milp = st.selectbox(
