@@ -794,7 +794,14 @@ def page_scheduling():
             search_row_rf = rf_df[rf_df["Station Address"] == search_address_rf].iloc[0]
             with st.container(border=True):
                 # 1) Station name: Clean, normal white text header with no glow effect
-                st.markdown(f"### 📍 Operational Status: {search_address_rf}")
+                st.markdown(f"""
+                    <div style="margin-bottom: 15px;">
+                        <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
+                            📍 Location: {search_address_milp}
+                        </span>
+                    </div>
+                """, unsafe_allow_html=True)
+                
                 
                 # 3) Target Dispatch Actions: Split onto separate lines for readability
                 st.markdown("#### 🚀 Target Dispatch Actions")
@@ -816,10 +823,10 @@ def page_scheduling():
                         border: 1px solid #ffcc00;
                         margin-top: 10px;
                     ">
-                        <span style="font-size: 16px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
+                        <span style="font-size: 24px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 8px;">
                             🤖 Overall Random Forest Scheduling Decision:
                         </span>
-                        <span style="font-size: 22px; font-weight: bold; color: #ffffff;">
+                        <span style="font-size: 28px; font-weight: bold; color: #ffffff;">
                             {search_row_rf['scheduling_decision']}
                         </span>
                     </div>
