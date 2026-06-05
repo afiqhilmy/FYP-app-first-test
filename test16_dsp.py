@@ -767,7 +767,7 @@ def page_scheduling():
                 lambda x: "Deploy Peak Peak Mitigation Strategy" if x > 70.0 else "Maintain Default Baseline Workflow"
             )
 
-            # --- DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
+# --- DYNAMIC SHORTCUT SEARCH BOX (RANDOM FOREST) ---
             st.subheader("🔍 Quick Station Search Shortcut")
             search_address_rf = st.selectbox(
                 "Type or Select Station Address to inspect operational parameters:",
@@ -781,27 +781,28 @@ def page_scheduling():
                 st.markdown(f"""
                     <div style="margin-bottom: 15px;">
                         <span style="font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'Orbitron',sans-serif;">
-                            📍 Operational Status: {search_address_milp}
+                            📍 Operational Status: {search_address_rf}
                         </span>
                     </div>
                 """, unsafe_allow_html=True)
                 
                 # 2) Demand & Grid Timing Profile: Standard layout matching your metrics size
-                st.markdown("#### 📊 Demand & Grid Timing Profile")
+                st.markdown("#### 📊 Demand & Infrastructure Profile")
                 r1, r2, r3 = st.columns(3)
-                r1.metric(label="FORECASTED LOAD", value=f"{search_row_rf['predicted_demand']:.4f} kW")
-                r2.metric(label="MODEL CONFIDENCE", value=f"{search_row_rf['confidence_score']:.2%}")
-                r3.metric(label="ANALYTICS STATE", value=str(search_row_rf['model_status']))
+                r1.metric(label="PREDICTED DEMAND", value=f"{search_row_rf['predicted_demand']:.4f} kW")
+                r2.metric(label="TOTAL CHARGERS", value=str(int(search_row_rf['Total Number of Chargers'])))
+                r3.metric(label="STATION CAPACITY", value=f"{search_row_rf['Total Station Capacity (KW)']} kW")
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
-                # 3) Target Dispatch Actions: Split onto separate lines for readability
+                # 3) Target Dispatch Actions: Tailored to pure AC/DC operations without peak metrics
                 st.markdown("#### 🚀 Target Dispatch Actions")
                 rd1, rd2 = st.columns(2)
                 with rd1:
-                    st.markdown(f"<span style='font-size: 19px;'>⚡ **Total Charger Capacity:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Number of Chargers']} Bays Loaded</span>", unsafe_allow_html=True)
+                    st.markdown(f"<span style='font-size: 19px;'>⚡ **DC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['dc_operation']}</span>", unsafe_allow_html=True)
                 with rd2:
-                    st.markdown(f"<span style='font-size: 19px;'>🔌 **Station Infrastructure Limit:**</span><br><span style='font-size: 21px; font-weight: bold; color: #2ecc71; line-height: 1.8;'>{search_row_rf['Total Station Capacity (KW)']} kW Baseline</span>", unsafe_allow_html=True)
+                    ac_color = "#e74c3c" if "Restricted" in search_row_rf['ac_operation'] else "#f39c12" if "Throttled" in search_row_rf['ac_operation'] else "#2ecc71"
+                    st.markdown(f"<span style='font-size: 19px;'>🔌 **AC Charging Operation:**</span><br><span style='font-size: 21px; font-weight: bold; color: {ac_color}; line-height: 1.8;'>{search_row_rf['ac_operation']}</span>", unsafe_allow_html=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 
