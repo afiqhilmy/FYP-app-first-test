@@ -280,43 +280,59 @@ html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, in
         font-family: 'Orbitron', sans-serif;
         font-size: 0.9rem;
     }
-    /* --- NAVIGATION LAUNCHPAD GRID --- */
-    .launchpad-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        margin-top: 25px;
-    }
-    
-    .launchpad-card {
-        background: rgba(45, 0, 0, 0.6) !important;
-        border: 1px solid rgba(212, 175, 55, 0.4) !important;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 0 10px rgba(139, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-    }
 
-    .launchpad-title {
-        font-family: 'Orbitron', sans-serif !important;
-        color: #D4AF37 !important;
-        font-size: 1.15rem;
-        font-weight: bold;
-        margin-bottom: 8px;
-        letter-spacing: 1px;
-    }
+/* --- LAUNCHPAD CARD HOUSING FROM IMAGE --- */
+.launchpad-card {
+    background-color: #0b1519;
+    border: 1px solid #2e1d2c; /* Subtle dark magenta/green hue border */
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-    .launchpad-desc {
-        color: #F5E6BE !important;
-        font-size: 0.88rem;
-        line-height: 1.5;
-        margin-bottom: 15px;
-        opacity: 0.9;
-    }
+/* --- LARGE CENTERED HEADERS --- */
+.launchpad-title {
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    line-height: 1.3;
+    text-align: center;
+}
+
+/* --- SMALL MUTED CENTERED DESCRIPTIONS --- */
+.launchpad-desc {
+    font-family: 'Times New Roman', Times, serif !important; /* Kept your reader choice clean */
+    font-size: 0.95rem;
+    color: #8fa0a6;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* --- STYLING STREAMLIT BUTTON TO MATCH NEON GREEN --- */
+div.stButton > button {
+    background-color: #00c853 !important;
+    color: #000000 !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    transition: transform 0.2s ease;
+}
+
+div.stButton > button:hover {
+    transform: scale(1.02);
+    background-color: #00e676 !important;
+}
     </style>
     """, unsafe_allow_html=True)
 
@@ -375,26 +391,35 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
 """, unsafe_allow_html=True)
     st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
 
-    row1_col1, row1_col2 = st.columns(2)
-    row2_col1, row2_col2 = st.columns(2)
-    row3_col1, row3_col2 = st.columns(2)
+   # Reconfigured layout to match the 3-card presentation format from image_d5318a.png
+    col1, col2, col3 = st.columns(3, gap="large")
 
-    with row1_col1:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📁 DATASET OVERVIEW</div><div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div></div>', unsafe_allow_html=True)
-        if st.button("Open Dataset Repository 📂", key="btn_overview", use_container_width=True): st.switch_page(page_overview_obj)
-    with row1_col2:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📊 EXPLORATORY DATA ANALYSIS</div><div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div></div>', unsafe_allow_html=True)
-        if st.button("Open EDA Dashboard 📈", key="btn_eda", use_container_width=True): st.switch_page(page_eda_obj)
-    with row2_col1:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📍 EXISTING INFRASTRUCTURE MAP</div><div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div></div>', unsafe_allow_html=True)
-        if st.button("Explore Infrastructure Map 🗺️", key="btn_existing", use_container_width=True): st.switch_page(page_existing_obj)
-    with row2_col2:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">🎯 MACHINE LEARNING PLACEMENT</div><div class="launchpad-desc">Run live predictive regression engines to identify top-tier candidate placements.</div></div>', unsafe_allow_html=True)
-        if st.button("Launch Optimization Model 🚀", key="btn_optimal", use_container_width=True): st.switch_page(page_optimal_obj)
-    with row3_col1:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📅 INTELLIGENT GRID SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
-        if st.button("Open Intelligent Scheduler ⚙️", key="btn_scheduling", use_container_width=True): st.switch_page(page_scheduling_obj)
+    with col1:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">DATASET<br>OVERVIEW</div><div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div></div>', unsafe_allow_html=True)
+        if st.button("Open Dataset Repository →", key="btn_overview", use_container_width=True): 
+            st.switch_page(page_overview_obj)
+            
+        st.markdown('<div class="launchpad-style-spacer" style="margin-top: 30px;"></div>', unsafe_allow_html=True) # Separator gap
+        
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">OPTIMAL<br>PLACEMENT MAP</div><div class="launchpad-desc">Run predictive regression engines to identify top-tier EV charging candidate placements.</div></div>', unsafe_allow_html=True)
+        if st.button("Launch Optimization Model →", key="btn_optimal", use_container_width=True): 
+            st.switch_page(page_optimal_obj)
 
+    with col2:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXPLORATORY<br>DATA ANALYSIS</div><div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div></div>', unsafe_allow_html=True)
+        if st.button("Open EDA Dashboard →", key="btn_eda", use_container_width=True): 
+            st.switch_page(page_eda_obj)
+            
+        st.markdown('<div class="launchpad-style-spacer" style="margin-top: 30px;"></div>', unsafe_allow_html=True)
+        
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">INTELLIGENT<br>SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
+        if st.button("Open Intelligent Scheduler →", key="btn_scheduling", use_container_width=True): 
+            st.switch_page(page_scheduling_obj)
+
+    with col3:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXISTING<br>INFRASTRUCTURE</div><div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div></div>', unsafe_allow_html=True)
+        if st.button("Explore Infrastructure Map →", key="btn_existing", use_container_width=True): 
+            st.switch_page(page_existing_obj)
     st.divider()
     st.subheader("Algorithms & Methodologies Used")
     cols = st.columns(2)
