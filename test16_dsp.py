@@ -290,7 +290,7 @@ html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, in
     padding: 20px 12px; /* Slightly reduced padding for tighter column widths */
     text-align: center;
     margin-bottom: 15px;
-    min-height: 280px; /* Increased height slightly to handle text stacking in narrow columns */
+    min-height: 250px; /* Increased height slightly to handle text stacking in narrow columns */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Pushes title/desc up, and keeps buttons aligned perfectly at the bottom */
@@ -404,6 +404,8 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
 """, unsafe_allow_html=True)
     st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
 
+    st.divider()
+    
 # Reconfigured 5-column dashboard row with dedicated system icons
     col1, col2, col3, col4, col5 = st.columns(5, gap="medium")
 
