@@ -71,11 +71,6 @@ st.markdown("""
         font-family: 'Orbitron', sans-serif !important;
     }
 
-    /* --- FORCE ALL REGULAR TEXT & INPUTS TO MONOSPACE --- */
-    html, body, [class*="css"], .stApp, p, label, span, div, button, input, select, textarea, .s-label {
-        font-family: 'monospace' !important;
-    }
-
     /* Headlines: Orbitron font with Gold Neon glow */
     h1, h2, h3 {
         font-family: 'Orbitron', sans-serif !important;
