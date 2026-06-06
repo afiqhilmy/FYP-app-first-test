@@ -460,11 +460,22 @@ def page_optimal():
         st.session_state.training_results = None
     if 'candidates' not in st.session_state:
         st.session_state.candidates = None
-    
-    st.sidebar.subheader("Model Selection")
-    model_type = st.sidebar.selectbox("Choose Prediction Engine:", ["Random Forest", "SVR"])
-    train_btn = st.sidebar.button("Train and Optimize Model")
 
+    # --- IN-PAGE MODEL SELECTION PANEL ---
+    with st.container(border=True):
+        st.markdown("<h3 style='font-size: 1.2rem; margin-top:0; color: #D4AF37;'>🚀 Model Optimization Control Panel</h3>", unsafe_allow_html=True)
+        col_select, col_btn = st.columns([2, 1])
+        
+        with col_select:
+            model_type = st.selectbox(
+                "Choose Prediction Engine:", 
+                ["Random Forest", "SVR"],
+                help="Select the machine learning core to run live predictive analytics."
+            )
+        with col_btn:
+            st.markdown("<div style='padding-top: 28px;'></div>", unsafe_allow_html=True) # Align button with the selectbox
+            train_btn = st.button("Train and Optimize Model", use_container_width=True)
+            
     if train_btn:
         features = ['Total Charger Bays', 'AC', 'DC', 'Total Station Capacity (KW)', 'population']
         X = df_clean[features].fillna(0)
@@ -682,13 +693,14 @@ def page_scheduling():
     st.title("📅 Intelligent Scheduling")
     st.markdown("Optimize grid load and station operations using Mathematical Programming or Machine Learning.")
 
-    # --- ALGORITHM SELECTION ---
-    st.sidebar.subheader("Scheduling Configuration")
-    algo_choice = st.sidebar.radio(
-        "Select Scheduling Engine:",
-        ["MILP (Optimization)", "Random Forest (Alternative)"],
-        help="MILP focuses on load shifting, while RF predicts demand-based actions."
-    )
+   # --- IN-PAGE ALGORITHM SELECTION ---
+    with st.container(border=True):
+        algo_choice = st.radio(
+            "⚙️ Select Core Scheduling Engine Directive:",
+            ["MILP (Optimization)", "Random Forest (Alternative)"],
+            horizontal=True,
+            help="MILP focuses on mathematical load shifting, while Random Forest handles baseline predictive demand tracking."
+        )
 
     if algo_choice == "MILP (Optimization)":
         st.subheader("⚡ Mixed-Integer Linear Programming (MILP) Results")
