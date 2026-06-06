@@ -361,7 +361,7 @@ def page_home():
     st.subheader("Project Overview")
     st.markdown("""
 <p style="
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; 
+    font-family: 'Times New Roman', Times, serif !important; 
     color: #F5E6BE; 
     font-size: 1.05rem; 
     line-height: 1.6; 
