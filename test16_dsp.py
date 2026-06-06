@@ -66,6 +66,16 @@ st.markdown("""
         background-attachment: fixed;
     }
 
+    /* --- KEEP ORBITRON ONLY ON HEADERS & METRICS --- */
+    h1, h2, h3, h4, h5, h6, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .footer-text {
+        font-family: 'Orbitron', sans-serif !important;
+    }
+
+    /* --- FORCE ALL REGULAR TEXT & INPUTS TO MONOSPACE --- */
+    html, body, [class*="css"], .stApp, p, label, span, div, button, input, select, textarea, .s-label {
+        font-family: 'monospace' !important;
+    }
+
     /* Headlines: Orbitron font with Gold Neon glow */
     h1, h2, h3 {
         font-family: 'Orbitron', sans-serif !important;
