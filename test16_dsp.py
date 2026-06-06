@@ -71,7 +71,7 @@ st.markdown("""
     .stApp {
         background: radial-gradient(circle at center, #4a0404 0%, #1a0000 40%, #000000 100%);
         background-attachment: fixed;
-    }
+}
     
     /* Headlines: Orbitron font with Gold Neon glow */
     h1, h2, h3 {
@@ -80,7 +80,8 @@ st.markdown("""
         text-shadow: 0 0 15px rgba(212, 175, 55, 0.6), 
                      0 0 5px rgba(255, 255, 255, 0.2);
         letter-spacing: 2px;
-    }
+
+}
 
     /* Metric Cards: Transparent "Blood Glass" style with Gold Border */
     [data-testid="stMetric"] {
