@@ -281,57 +281,70 @@ html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, in
         font-size: 0.9rem;
     }
 
-/* --- LAUNCHPAD CARD HOUSING FROM IMAGE --- */
+/* --- LAUNCHPAD CARD WITH GOLD GLOW BORDER ONLY --- */
 .launchpad-card {
-    background-color: #0b1519;
-    border: 1px solid #2e1d2c; /* Subtle dark magenta/green hue border */
+    background-color: transparent !important;
+    border: 2px solid #F5E6BE;
+    box-shadow: 0 0 15px rgba(245, 230, 190, 0.3);
     border-radius: 16px;
-    padding: 30px 20px;
+    padding: 20px 12px; /* Slightly reduced padding for tighter column widths */
     text-align: center;
     margin-bottom: 15px;
-    min-height: 280px;
+    min-height: 320px; /* Increased height slightly to handle text stacking in narrow columns */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between; /* Pushes title/desc up, and keeps buttons aligned perfectly at the bottom */
 }
 
-/* --- LARGE CENTERED HEADERS --- */
 .launchpad-title {
     font-family: 'Orbitron', sans-serif !important;
-    font-size: 1.5rem;
+    font-size: 1.15rem; /* Dropped from 1.4rem so words don't awkwardly break mid-letter */
     font-weight: 700;
-    color: #FFFFFF;
+    color: #F5E6BE;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     line-height: 1.3;
     text-align: center;
 }
 
-/* --- SMALL MUTED CENTERED DESCRIPTIONS --- */
 .launchpad-desc {
-    font-family: 'Times New Roman', Times, serif !important; /* Kept your reader choice clean */
-    font-size: 0.95rem;
-    color: #8fa0a6;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-size: 1.05rem;
+    color: #E0D0A6; /* Slightly muted gold text for perfect readability */
     line-height: 1.5;
     text-align: center;
 }
 
-/* --- STYLING STREAMLIT BUTTON TO MATCH NEON GREEN --- */
+/* --- UNIVERSAL GOLD GLOW BUTTON OVERRIDE (FOR HOME & ALL SUBPAGES) --- */
 div.stButton > button {
-    background-color: #00c853 !important;
-    color: #000000 !important;
+    background-color: transparent !important;
+    color: #F5E6BE !important;
     font-family: 'Orbitron', sans-serif !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
-    border: none !important;
+    border: 2px solid #F5E6BE !important; /* Gold outline */
+    box-shadow: 0 0 10px rgba(245, 230, 190, 0.2) !important; /* Glowing aura */
     padding: 10px 20px !important;
-    transition: transform 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 div.stButton > button:hover {
     transform: scale(1.02);
-    background-color: #00e676 !important;
+    background-color: #F5E6BE !important; /* Fills button on hover */
+    color: #000000 !important; /* Text flips to black for high-contrast visibility */
+    box-shadow: 0 0 20px rgba(245, 230, 190, 0.6) !important; /* Intense glow on hover */
+}
+
+/* --- LOAD BOOTSTRAP ICONS --- */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+/* --- ICON WRAPPER STYLING TO MATCH TECH GRAPHIC STYLE --- */
+.launchpad-icon {
+    font-size: 2.5rem; /* Large and prominent like image_d62607.jpg */
+    color: #F5E6BE;    /* Matches your Imperial Gold theme */
+    margin-bottom: 15px;
+    display: inline-block;
+    filter: drop-shadow(0 0 8px rgba(245, 230, 190, 0.4)); /* Adds a matching subtle glow */
 }
     </style>
     """, unsafe_allow_html=True)
@@ -391,35 +404,34 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
 """, unsafe_allow_html=True)
     st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
 
-   # Reconfigured layout to match the 3-card presentation format from image_d5318a.png
-    col1, col2, col3 = st.columns(3, gap="large")
+# Reconfigured into a single 5-column layout to show all menu items side-by-side
+    col1, col2, col3, col4, col5 = st.columns(5, gap="medium")
 
     with col1:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">DATASET<br>OVERVIEW</div><div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">DATASET OVERVIEW</div><div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div></div>', unsafe_allow_html=True)
         if st.button("Open Dataset Repository →", key="btn_overview", use_container_width=True): 
             st.switch_page(page_overview_obj)
-            
-        st.markdown('<div class="launchpad-style-spacer" style="margin-top: 30px;"></div>', unsafe_allow_html=True) # Separator gap
-        
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">OPTIMAL<br>PLACEMENT MAP</div><div class="launchpad-desc">Run predictive regression engines to identify top-tier EV charging candidate placements.</div></div>', unsafe_allow_html=True)
+
+    with col2:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXPLORATORY DATA ANALYSIS</div><div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div></div>', unsafe_allow_html=True)
+        if st.button("Open EDA Dashboard →", key="btn_eda", use_container_width=True): 
+            st.switch_page(page_eda_obj)
+
+    with col3:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXISTING INFRASTRUCTURE</div><div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div></div>', unsafe_allow_html=True)
+        if st.button("Explore Infrastructure Map →", key="btn_existing", use_container_width=True): 
+            st.switch_page(page_existing_obj)
+
+    with col4:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">OPTIMAL PLACEMENT MAP</div><div class="launchpad-desc">Run predictive regression engines to identify top-tier EV charging candidate placements.</div></div>', unsafe_allow_html=True)
         if st.button("Launch Optimization Model →", key="btn_optimal", use_container_width=True): 
             st.switch_page(page_optimal_obj)
 
-    with col2:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXPLORATORY<br>DATA ANALYSIS</div><div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div></div>', unsafe_allow_html=True)
-        if st.button("Open EDA Dashboard →", key="btn_eda", use_container_width=True): 
-            st.switch_page(page_eda_obj)
-            
-        st.markdown('<div class="launchpad-style-spacer" style="margin-top: 30px;"></div>', unsafe_allow_html=True)
-        
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">INTELLIGENT<br>SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
+    with col5:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">INTELLIGENT SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
         if st.button("Open Intelligent Scheduler →", key="btn_scheduling", use_container_width=True): 
             st.switch_page(page_scheduling_obj)
-
-    with col3:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXISTING<br>INFRASTRUCTURE</div><div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div></div>', unsafe_allow_html=True)
-        if st.button("Explore Infrastructure Map →", key="btn_existing", use_container_width=True): 
-            st.switch_page(page_existing_obj)
+            
     st.divider()
     st.subheader("Algorithms & Methodologies Used")
     cols = st.columns(2)
@@ -427,7 +439,7 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
         st.markdown("- Synthetic Data Generation\n- Spatially Aware ML (SAML)\n- MILP\n- Log Transformation")
     with cols[1]:
         st.markdown("- Hyperparameter Tuning\n- Normalization\n- Multi-Criteria Decision Making (MCDM)")
-    render_footer()
+        
     render_footer()
 
 # --- PAGE 1: OVERVIEW ---
