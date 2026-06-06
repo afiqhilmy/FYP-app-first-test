@@ -1000,5 +1000,3 @@ pg = st.navigation({
 
 pg.run()
 
-
-pg.run()
