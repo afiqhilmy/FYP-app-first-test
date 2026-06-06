@@ -377,9 +377,6 @@ def page_home():
     with row3_col1:
         st.markdown('<div class="launchpad-card"><div class="launchpad-title">📅 INTELLIGENT GRID SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
         if st.button("Open Intelligent Scheduler ⚙️", key="btn_scheduling", use_container_width=True): st.switch_page(page_scheduling_obj)
-    with row3_col2:
-        st.markdown('<div class="launchpad-card" style="border: 1px dashed rgba(212,175,55,0.15); background: transparent !important;"><div class="launchpad-title" style="color: rgba(212,175,55,0.3) !important;">⚙️ CORE ADMINISTRATIVE ACCESS</div><div class="launchpad-desc" style="color: rgba(245,230,190,0.4) !important;">Configuration metrics, API keys, and environment variables are locked.</div></div>', unsafe_allow_html=True)
-        st.button("System Terminal Locked 🔒", key="btn_locked", disabled=True, use_container_width=True)
 
     st.divider()
     render_footer()
