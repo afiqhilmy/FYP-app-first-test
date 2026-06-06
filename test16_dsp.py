@@ -67,6 +67,9 @@ st.markdown("""
 
     /* Background: Glows from Deep Burgundy (#4A0404) out to Pitch Black (#000000) */
     .stApp {
+            background: radial-gradient(circle at center, #4a0404 0%, #1a0000 40%, #000000 100%);
+        background-attachment: fixed;
+    }
 
     /* Headlines: Orbitron font with Gold Neon glow */
     h1, h2, h3 {
