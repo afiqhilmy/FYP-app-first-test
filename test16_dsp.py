@@ -290,7 +290,7 @@ html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, in
     padding: 20px 12px; /* Slightly reduced padding for tighter column widths */
     text-align: center;
     margin-bottom: 15px;
-    min-height: 320px; /* Increased height slightly to handle text stacking in narrow columns */
+    min-height: 280px; /* Increased height slightly to handle text stacking in narrow columns */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Pushes title/desc up, and keeps buttons aligned perfectly at the bottom */
