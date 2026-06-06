@@ -60,8 +60,8 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
 
-    /* --- FORCE GLOBAL ORBITRON FONT OVERRIDE FOR ALL TEXT & NUMBERS --- */
-html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, span, div, button, input, select, textarea, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .s-label, .footer-text {
+    /* --- FORCE GLOBAL ORBITRON EXCEPT ON SYSTEM ICONS --- */
+html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, span:not([class*="icon"]), div:not([data-testid="stSidebarCollapseButton"]), button, input, select, textarea, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .s-label, .footer-text {
     font-family: 'Orbitron', sans-serif !important;
 }
 
