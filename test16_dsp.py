@@ -60,15 +60,15 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
 
-    /* --- KEEP ORBITRON ONLY ON HEADERS, METRICS, AND FOOTER --- */
-    h1, h2, h3, h4, h5, h6, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .footer-text {
-        font-family: 'Orbitron', sans-serif !important;
-    }
+ /* --- KEEP ORBITRON ONLY ON HEADERS, METRICS, AND FOOTER --- */
+h1, h2, h3, h4, h5, h6, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .footer-text {
+    font-family: 'Orbitron', sans-serif !important;
+}
 
-    /* --- ASSIGN ALL REGULAR ELEMENTS EXCLUSIVELY TO SHARE TECH MONO --- */
-    p, label, span, button, input, select, textarea, .s-label, .launchpad-desc {
-        font-family: 'Share Tech Mono', monospace !important;
-    }
+/* --- ASSIGN ALL REGULAR ELEMENTS EXCLUSIVELY TO SHARE TECH MONO --- */
+p, label, span, button, input, select, textarea, .s-label, .launchpad-desc {
+    font-family: 'Share Tech Mono', monospace !important;
+}
 
     /* Background: Glows from Deep Burgundy (#4A0404) out to Pitch Black (#000000) */
     .stApp {
