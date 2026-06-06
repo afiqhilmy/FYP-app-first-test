@@ -387,6 +387,7 @@ def page_home():
 # --- PAGE 1: OVERVIEW ---
 def page_overview():
     if st.button("⬅️ Return to Main Home Dashboard", key="back_overview"):
+        st.switch_page(page_home_obj)
     st.title("📂 Dataset Overview")
     st.subheader("Raw Data: kuantan_ev_stations.csv")
     st.dataframe(df_raw, width='stretch')
@@ -430,6 +431,7 @@ def page_eda():
 def page_existing():
     render_header()
     if st.button("⬅️ Return to Main Home Dashboard", key="back_existing"):
+        st.switch_page(page_home_obj)
     st.title("📍 Existing Locations")
 
     # Apply this in your map functions (page_existing and page_optimal)
@@ -452,6 +454,7 @@ def page_existing():
 def page_optimal():
     render_header()
     if st.button("⬅️ Return to Main Home Dashboard", key="back_optimal"):
+        st.switch_page(page_home_obj)
     st.title("🎯 Optimal Placement Analysis")
 
     # Initialize session state for training results and candidates
@@ -677,6 +680,7 @@ def page_optimal():
 def page_scheduling():
     render_header()
     if st.button("⬅️ Return to Main Home Dashboard", key="back_scheduling"):
+        st.switch_page(page_home_obj)
     st.title("📅 Intelligent Scheduling")
     st.markdown("Optimize grid load and station operations using Mathematical Programming or Machine Learning.")
 
