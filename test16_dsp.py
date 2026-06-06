@@ -359,10 +359,20 @@ def page_home():
     st.title("⚡OPTIMIZING EV CHARGING PLACEMENT AND SCHEDULING USING INTELLIGENT SYSTEM🚗")
     
     st.subheader("Project Overview")
-    st.markdown("""<p style="font-family: 'Share Tech Mono', monospace !important; color: #F5E6BE; font-size: 1.1rem; line-height: 1.6; letter-spacing: 0.5px;">This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling. With the rapid growth of EV adoption, existing charging infrastructure often faces challenges such as uneven distribution, limited accessibility, and increased pressure on power grids. To address these issues, this system integrates data from sources such as OpenDOSM, Suruhanjaya Tenaga, and Google Maps to analyze spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal locations for new charging stations. Additionally, scheduling optimization techniques, including Mixed Integer Linear Programming (MILP) and predictive regression models, 
+    st.markdown("""
+<p style="
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important; 
+    color: #F5E6BE; 
+    font-size: 1.05rem; 
+    line-height: 1.6; 
+    text-align: justify;
+    opacity: 0.95;
+">
+This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling. With the rapid growth of EV adoption, existing charging infrastructure often faces challenges such as uneven distribution, limited accessibility, and increased pressure on power grids. To address these issues, this system integrates data from sources such as OpenDOSM, Suruhanjaya Tenaga, and Google Maps to analyze spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal locations for new charging stations. Additionally, scheduling optimization techniques, including Mixed Integer Linear Programming (MILP) and predictive regression models, 
     are used to manage charging demand and reduce congestion during peak hours. The platform provides data-driven insights to improve accessibility, enhance grid efficiency, and support sustainable urban planning.
-    By combining geospatial intelligence with predictive analytics, this project contributes to smarter and more efficient EV infrastructure development.</p>""", unsafe_allow_html=True)
-    st.divider()
+    By combining geospatial intelligence with predictive analytics, this project contributes to smarter and more efficient EV infrastructure development.
+</p>
+""", unsafe_allow_html=True)
     st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
 
     row1_col1, row1_col2 = st.columns(2)
