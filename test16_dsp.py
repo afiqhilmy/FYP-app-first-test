@@ -387,6 +387,8 @@ def page_home():
 # --- PAGE 1: OVERVIEW ---
 def page_overview():
     render_header()
+    if st.button("⬅️ Return to Main Home Dashboard", key="back_overview" + st.get_page_config()["page_title"].lower().replace(" ", "_")):
+        st.switch_page(page_home_obj)
     st.title("📂 Dataset Overview")
     st.subheader("Raw Data: kuantan_ev_stations.csv")
     st.dataframe(df_raw, width='stretch')
@@ -397,6 +399,8 @@ def page_overview():
 # --- PAGE 2: EDA ---
 def page_eda():
     render_header()
+    if st.button("⬅️ Return to Main Home Dashboard", key="back_eda" + st.get_page_config()["page_title"].lower().replace(" ", "_")):
+        st.switch_page(page_home_obj)
     st.title("📊 Exploratory Data Analysis")
     mode = st.radio("Choose Dataset Version:", ["Raw Data", "Cleaned Data"], horizontal=True)
     df = df_raw if mode == "Raw Data" else df_clean
@@ -428,6 +432,8 @@ def page_eda():
 # --- PAGE 3: EXISTING LOCATIONS ---
 def page_existing():
     render_header()
+    if st.button("⬅️ Return to Main Home Dashboard", key="back_existing" + st.get_page_config()["page_title"].lower().replace(" ", "_")):
+        st.switch_page(page_home_obj)
     st.title("📍 Existing Locations")
 
     # Apply this in your map functions (page_existing and page_optimal)
@@ -449,6 +455,8 @@ def page_existing():
 # --- PAGE 4: OPTIMAL PLACEMENT (Live Model Selection with Inline Layer Toggles Above Map) ---
 def page_optimal():
     render_header()
+    if st.button("⬅️ Return to Main Home Dashboard", key="back_optimal" + st.get_page_config()["page_title"].lower().replace(" ", "_")):
+        st.switch_page(page_home_obj)
     st.title("🎯 Optimal Placement Analysis")
 
     # Initialize session state for training results and candidates
@@ -673,6 +681,8 @@ def page_optimal():
 # --- PAGE 5: SCHEDULING ---
 def page_scheduling():
     render_header()
+    if st.button("⬅️ Return to Main Home Dashboard", key="back_scheduling" + st.get_page_config()["page_title"].lower().replace(" ", "_")):
+        st.switch_page(page_home_obj)
     st.title("📅 Intelligent Scheduling")
     st.markdown("Optimize grid load and station operations using Mathematical Programming or Machine Learning.")
 
