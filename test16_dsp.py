@@ -56,15 +56,18 @@ with st.sidebar:
     )
 
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
+# --- FORCE GLOBAL ORBITRON FONT OVERRIDE FOR ALL TEXT & NUMBERS ---
 st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-    
-    # --- FORCE GLOBAL ORBITRON FONT OVERRIDE FOR ALL TEXT & NUMBERS ---
     <style>
     html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, span, div, button, input, select, textarea, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .s-label, .footer-text {
         font-family: 'Orbitron', sans-serif !important;
     }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
     /* Background: Glows from Deep Burgundy (#4A0404) out to Pitch Black (#000000) */
     .stApp {
