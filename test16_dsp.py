@@ -57,6 +57,8 @@ with st.sidebar:
 
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
+    # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
+st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
