@@ -353,88 +353,35 @@ def page_home():
     st.title("⚡OPTIMIZING EV CHARGING PLACEMENT AND SCHEDULING USING INTELLIGENT SYSTEM🚗")
     
     st.subheader("Project Overview")
-    st.write("""This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling. With the rapid growth of EV adoption, existing charging infrastructure often faces challenges such as uneven distribution, limited accessibility, and increased pressure on power grids. To address these issues, this system integrates data from sources such as OpenDOSM, Suruhanjaya Tenaga, and Google Maps to analyze spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal locations for new charging stations. Additionally, scheduling optimization techniques, including Mixed Integer Linear Programming (MILP) and predictive regression models, 
-    are used to manage charging demand and reduce congestion during peak hours. The platform provides data-driven insights to improve accessibility, enhance grid efficiency, and support sustainable urban planning.
-    By combining geospatial intelligence with predictive analytics, this project contributes to smarter and more efficient EV infrastructure development.""")
-    
+    st.write("""This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling...""")
     st.divider()
     
-    # --- PROJECT EXECUTIVE NAVIGATION LAUNCHPAD ---
-    st.markdown("""
-        <h2 style='font-size: 1.5rem; color: #D4AF37; letter-spacing: 2px; margin-bottom: 5px;'>
-            PROJECT EXECUTIVE NAVIGATION LAUNCHPAD
-        </h2>
-        <p style='color: #F5E6BE; font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8;'>
-            Click on any architectural domain module below to review live data profiles, spatial visualizations, model engines, or intelligent optimization schedules:
-        </p>
-    """, unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT EXECUTIVE NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
 
-    # 2x2 Layout Grid using Streamlit Columns
     row1_col1, row1_col2 = st.columns(2)
     row2_col1, row2_col2 = st.columns(2)
+    row3_col1, row3_col2 = st.columns(2)
 
-    # --- CARD 1: EXPLORATORY DATA ANALYSIS ---
     with row1_col1:
-        st.markdown("""
-            <div class="launchpad-card">
-                <div class="launchpad-title">📊 EXPLORATORY DATA ANALYSIS</div>
-                <div class="launchpad-desc">
-                    Investigate complete descriptive statistics, charger distribution variances, and evaluate raw vs. transformed analytics infrastructure records.
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        # Use query parameters to force change pages on click
-        if st.button("Open EDA Dashboard 📈", key="btn_eda", use_container_width=True):
-            st.info("🔄 Use the sidebar navigation menu to jump directly to **Exploratory Data Analysis**!")
-
-    # --- CARD 2: EXISTING LOCATIONS ---
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📁 DATASET OVERVIEW</div><div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div></div>', unsafe_allow_html=True)
+        if st.button("Open Dataset Repository 📂", key="btn_overview", use_container_width=True): st.switch_page(page_overview_obj)
     with row1_col2:
-        st.markdown("""
-            <div class="launchpad-card">
-                <div class="launchpad-title">📍 EXISTING INFRASTRUCTURE MAP</div>
-                <div class="launchpad-desc">
-                    Geospatial visualization map detailing current operational charging nodes across Kuantan, including real-time AC and DC bay availability indicators.
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Explore Infrastructure Map 🗺️", key="btn_existing", use_container_width=True):
-            st.info("🔄 Use the sidebar navigation menu to jump directly to **Existing Locations**!")
-
-    st.markdown("<br>", unsafe_allow_html=True) # Generates clean spacing between card rows
-
-    # --- CARD 3: OPTIMAL PLACEMENT ---
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📊 EXPLORATORY DATA ANALYSIS</div><div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div></div>', unsafe_allow_html=True)
+        if st.button("Open EDA Dashboard 📈", key="btn_eda", use_container_width=True): st.switch_page(page_eda_obj)
     with row2_col1:
-        st.markdown("""
-            <div class="launchpad-card">
-                <div class="launchpad-title">🎯 MACHINE LEARNING PLACEMENT</div>
-                <div class="launchpad-desc">
-                    Run live predictive regression engines (Random Forest / SVR) to identify top-tier high-priority candidate placements utilizing MCDM scoring matrix criteria.
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Launch Optimization Model 🚀", key="btn_optimal", use_container_width=True):
-            st.info("🔄 Use the sidebar navigation menu to jump directly to **Optimal Placement**!")
-
-    # --- CARD 4: INTELLIGENT SCHEDULING ---
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📍 EXISTING INFRASTRUCTURE MAP</div><div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div></div>', unsafe_allow_html=True)
+        if st.button("Explore Infrastructure Map 🗺️", key="btn_existing", use_container_width=True): st.switch_page(page_existing_obj)
     with row2_col2:
-        st.markdown("""
-            <div class="launchpad-card">
-                <div class="launchpad-title">📅 INTELLIGENT GRID SCHEDULING</div>
-                <div class="launchpad-desc">
-                    Deploy Mixed-Integer Linear Programming (MILP) optimization algorithms to shift peak loads, toggle operational hardware directives, and protect grid stability.
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-        if st.button("Open Intelligent Scheduler ⚙️", key="btn_scheduling", use_container_width=True):
-            st.info("🔄 Use the sidebar navigation menu to jump directly to **Intelligent Scheduling**!")
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">🎯 MACHINE LEARNING PLACEMENT</div><div class="launchpad-desc">Run live predictive regression engines to identify top-tier candidate placements.</div></div>', unsafe_allow_html=True)
+        if st.button("Launch Optimization Model 🚀", key="btn_optimal", use_container_width=True): st.switch_page(page_optimal_obj)
+    with row3_col1:
+        st.markdown('<div class="launchpad-card"><div class="launchpad-title">📅 INTELLIGENT GRID SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
+        if st.button("Open Intelligent Scheduler ⚙️", key="btn_scheduling", use_container_width=True): st.switch_page(page_scheduling_obj)
+    with row3_col2:
+        st.markdown('<div class="launchpad-card" style="border: 1px dashed rgba(212,175,55,0.15); background: transparent !important;"><div class="launchpad-title" style="color: rgba(212,175,55,0.3) !important;">⚙️ CORE ADMINISTRATIVE ACCESS</div><div class="launchpad-desc" style="color: rgba(245,230,190,0.4) !important;">Configuration metrics, API keys, and environment variables are locked.</div></div>', unsafe_allow_html=True)
+        st.button("System Terminal Locked 🔒", key="btn_locked", disabled=True, use_container_width=True)
 
     st.divider()
-    st.subheader("Algorithms & Methodologies Used")
-    cols = st.columns(2)
-    with cols[0]:
-        st.markdown("- Synthetic Data Generation\n- Spatially Aware ML (SAML)\n- MILP\n- Log Transformation")
-    with cols[1]:
-        st.markdown("- Hyperparameter Tuning\n- Normalization\n- Multi-Criteria Decision Making (MCDM)")
     render_footer()
 
 # --- PAGE 1: OVERVIEW ---
@@ -1030,14 +977,22 @@ def page_scheduling():
             st.dataframe(rf_df[rf_display_cols], width='stretch')
         
 # --- 4. NAVIGATION ---
+# --- 4. NAVIGATION DECLARATION WITH OBJECT HANDLES ---
+page_home_obj = st.Page(page_home, title="Home", icon="🏠")
+page_overview_obj = st.Page(page_overview, title="Dataset Overview", icon="📁")
+page_eda_obj = st.Page(page_eda, title="Exploratory Data Analysis", icon="📊")
+page_existing_obj = st.Page(page_existing, title="Existing Locations", icon="📍")
+page_optimal_obj = st.Page(page_optimal, title="Optimal Placement", icon="🎯")
+page_scheduling_obj = st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")
+
 pg = st.navigation({
-    "Navigation": [st.Page(page_home, title="Home", icon="🏠")],
-    "Project Info": [st.Page(page_overview, title="Dataset Overview", icon="📁")],
-    "Analytics": [st.Page(page_eda, title="Exploratory Data Analysis", icon="📊"),
-                  st.Page(page_existing, title="Existing Locations", icon="📍")],
-    "Decision Support": [st.Page(page_optimal, title="Optimal Placement", icon="🎯"),
-                         st.Page(page_scheduling, title="Intelligent Scheduling", icon="📅")]
+    "Navigation": [page_home_obj],
+    "Project Info": [page_overview_obj],
+    "Analytics": [page_eda_obj, page_existing_obj],
+    "Decision Support": [page_optimal_obj, page_scheduling_obj]
 })
+
+pg.run()
 
 
 pg.run()
