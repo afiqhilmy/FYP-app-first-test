@@ -469,7 +469,7 @@ def page_optimal():
         with col_select:
             model_type = st.selectbox(
                 "Choose Prediction Engine:", 
-                ["Random Forest", "SVR"],
+                ["SVR", "Random Forest"],
                 help="Select the machine learning core to run live predictive analytics."
             )
         with col_btn:
