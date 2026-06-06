@@ -403,7 +403,7 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
 </p>
 """, unsafe_allow_html=True)
 
-        st.divider()
+    st.divider()
 
         st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
     
