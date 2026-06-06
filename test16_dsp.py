@@ -317,7 +317,7 @@ html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, in
 
 /* --- UNIVERSAL GOLD GLOW BUTTON OVERRIDE (FOR HOME & ALL SUBPAGES) --- */
 div.stButton > button {
-    background-color: transparent !important;
+    background-color: #D4AF37  !important;
     color: #F5E6BE !important;
     font-family: 'Orbitron', sans-serif !important;
     font-weight: 700 !important;
@@ -404,31 +404,61 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
 """, unsafe_allow_html=True)
     st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
 
-# Reconfigured into a single 5-column layout to show all menu items side-by-side
+# Reconfigured 5-column dashboard row with dedicated system icons
     col1, col2, col3, col4, col5 = st.columns(5, gap="medium")
 
     with col1:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">DATASET OVERVIEW</div><div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div></div>', unsafe_allow_html=True)
+        st.markdown('''
+            <div class="launchpad-card">
+                <div class="launchpad-icon"><i class="bi bi-table"></i></div>
+                <div class="launchpad-title">DATASET OVERVIEW</div>
+                <div class="launchpad-desc">Review tabular structures of baseline logs and pipeline-processed feature sets.</div>
+            </div>
+        ''', unsafe_allow_html=True)
         if st.button("Open Dataset Repository →", key="btn_overview", use_container_width=True): 
             st.switch_page(page_overview_obj)
 
     with col2:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXPLORATORY DATA ANALYSIS</div><div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div></div>', unsafe_allow_html=True)
+        st.markdown('''
+            <div class="launchpad-card">
+                <div class="launchpad-icon"><i class="bi bi-bar-chart-line"></i></div>
+                <div class="launchpad-title">EXPLORATORY DATA ANALYSIS</div>
+                <div class="launchpad-desc">Investigate complete descriptive statistics and charger distribution variances.</div>
+            </div>
+        ''', unsafe_allow_html=True)
         if st.button("Open EDA Dashboard →", key="btn_eda", use_container_width=True): 
             st.switch_page(page_eda_obj)
 
     with col3:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">EXISTING INFRASTRUCTURE</div><div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div></div>', unsafe_allow_html=True)
+        st.markdown('''
+            <div class="launchpad-card">
+                <div class="launchpad-icon"><i class="bi bi-fuel-pump"></i></div>
+                <div class="launchpad-title">EXISTING INFRASTRUCTURE</div>
+                <div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div>
+            </div>
+        ''', unsafe_allow_html=True)
         if st.button("Explore Infrastructure Map →", key="btn_existing", use_container_width=True): 
             st.switch_page(page_existing_obj)
 
     with col4:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">OPTIMAL PLACEMENT MAP</div><div class="launchpad-desc">Run predictive regression engines to identify top-tier EV charging candidate placements.</div></div>', unsafe_allow_html=True)
+        st.markdown('''
+            <div class="launchpad-card">
+                <div class="launchpad-icon"><i class="bi bi-map"></i></div>
+                <div class="launchpad-title">OPTIMAL PLACEMENT MAP</div>
+                <div class="launchpad-desc">Run predictive regression engines to identify top-tier EV charging candidate placements.</div>
+            </div>
+        ''', unsafe_allow_html=True)
         if st.button("Launch Optimization Model →", key="btn_optimal", use_container_width=True): 
             st.switch_page(page_optimal_obj)
 
     with col5:
-        st.markdown('<div class="launchpad-card"><div class="launchpad-title">INTELLIGENT SCHEDULING</div><div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div></div>', unsafe_allow_html=True)
+        st.markdown('''
+            <div class="launchpad-card">
+                <div class="launchpad-icon"><i class="bi bi-calendar3"></i></div>
+                <div class="launchpad-title">INTELLIGENT SCHEDULING</div>
+                <div class="launchpad-desc">Deploy MILP optimization algorithms to shift peak loads and manage congestion.</div>
+            </div>
+        ''', unsafe_allow_html=True)
         if st.button("Open Intelligent Scheduler →", key="btn_scheduling", use_container_width=True): 
             st.switch_page(page_scheduling_obj)
             
