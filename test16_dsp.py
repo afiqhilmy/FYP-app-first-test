@@ -397,10 +397,10 @@ def page_home():
     text-align: justify;
     opacity: 0.95;
 ">
-This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling. With the rapid growth of EV adoption, existing charging infrastructure often faces challenges such as uneven distribution, limited accessibility, and increased pressure on power grids. To address these issues, this system integrates data from sources such as OpenDOSM, Suruhanjaya Tenaga, and Google Maps to analyze spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal locations for new charging stations. Additionally, scheduling optimization techniques, including Mixed Integer Linear Programming (MILP) and predictive regression models, 
-    are used to manage charging demand and reduce congestion during peak hours. The platform provides data-driven insights to improve accessibility, enhance grid efficiency, and support sustainable urban planning.
-    By combining geospatial intelligence with predictive analytics, this project contributes to smarter and more efficient EV infrastructure development.
-</p>
+This project optimizes Electric Vehicle (EV) charging station placement and scheduling using geospatial intelligence and predictive analytics. By integrating data from OpenDOSM, Suruhanjaya Tenaga, and Google Maps, 
+the system analyzes spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal infrastructure locations. Additionally, scheduling optimization 
+via Mixed Integer Linear Programming (MILP) and predictive regression models manages charging demand to reduce peak-hour grid congestion. Ultimately, the platform provides data-driven insights to improve accessibility,
+enhance grid efficiency, and support sustainable urban planning in Kuantan.
 """, unsafe_allow_html=True)
 
     st.divider()
