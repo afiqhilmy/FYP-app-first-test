@@ -59,6 +59,11 @@ with st.sidebar:
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
+    /* 1. Import your fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    /* 2. ADD THIS EXACT LINE RIGHT HERE TO LOAD THE ICONS */
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
     /* --- FORCE GLOBAL ORBITRON FONT OVERRIDE FOR ALL TEXT & NUMBERS --- */
 html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, input, select, textarea, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .s-label, .footer-text {
