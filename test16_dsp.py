@@ -318,7 +318,7 @@ html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, button, in
 /* --- UNIVERSAL GOLD GLOW BUTTON OVERRIDE (FOR HOME & ALL SUBPAGES) --- */
 div.stButton > button {
     background-color: #D4AF37  !important;
-    color: #F5E6BE !important;
+    color: black !important;
     font-family: 'Orbitron', sans-serif !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
@@ -433,7 +433,7 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
         st.markdown('''
             <div class="launchpad-card">
                 <div class="launchpad-icon"><i class="bi bi-fuel-pump"></i></div>
-                <div class="launchpad-title">EXISTING INFRASTRUCTURE</div>
+                <div class="launchpad-title">EXISTING STATIONS</div>
                 <div class="launchpad-desc">Geospatial visualization map detailing current operational charging nodes across Kuantan.</div>
             </div>
         ''', unsafe_allow_html=True)
