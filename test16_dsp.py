@@ -399,6 +399,7 @@ def page_overview():
 def page_eda():
     render_header()
     if st.button("⬅️ Return to Main Home Dashboard", key="back_eda"):
+        st.switch_page(page_home_obj)
     st.title("📊 Exploratory Data Analysis")
     mode = st.radio("Choose Dataset Version:", ["Raw Data", "Cleaned Data"], horizontal=True)
     df = df_raw if mode == "Raw Data" else df_clean
