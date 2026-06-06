@@ -274,6 +274,43 @@ st.markdown("""
         font-family: 'Orbitron', sans-serif;
         font-size: 0.9rem;
     }
+    /* --- NAVIGATION LAUNCHPAD GRID --- */
+    .launchpad-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 25px;
+    }
+    
+    .launchpad-card {
+        background: rgba(45, 0, 0, 0.6) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(139, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .launchpad-title {
+        font-family: 'Orbitron', sans-serif !important;
+        color: #D4AF37 !important;
+        font-size: 1.15rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        letter-spacing: 1px;
+    }
+
+    .launchpad-desc {
+        color: #F5E6BE !important;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+        opacity: 0.9;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -314,11 +351,83 @@ df_raw, df_clean = load_all_data()
 def page_home():
     render_header()
     st.title("⚡OPTIMIZING EV CHARGING PLACEMENT AND SCHEDULING USING INTELLIGENT SYSTEM🚗")
+    
     st.subheader("Project Overview")
     st.write("""This project focuses on optimizing the placement and scheduling of Electric Vehicle (EV) charging stations using geospatial data and predictive modeling. With the rapid growth of EV adoption, existing charging infrastructure often faces challenges such as uneven distribution, limited accessibility, and increased pressure on power grids. To address these issues, this system integrates data from sources such as OpenDOSM, Suruhanjaya Tenaga, and Google Maps to analyze spatial demand patterns and user behavior. Spatially Aware Machine Learning (SAML) is applied to identify high-demand areas and recommend optimal locations for new charging stations. Additionally, scheduling optimization techniques, including Mixed Integer Linear Programming (MILP) and predictive regression models, 
     are used to manage charging demand and reduce congestion during peak hours. The platform provides data-driven insights to improve accessibility, enhance grid efficiency, and support sustainable urban planning.
     By combining geospatial intelligence with predictive analytics, this project contributes to smarter and more efficient EV infrastructure development.""")
     
+    st.divider()
+    
+    # --- PROJECT EXECUTIVE NAVIGATION LAUNCHPAD ---
+    st.markdown("""
+        <h2 style='font-size: 1.5rem; color: #D4AF37; letter-spacing: 2px; margin-bottom: 5px;'>
+            PROJECT EXECUTIVE NAVIGATION LAUNCHPAD
+        </h2>
+        <p style='color: #F5E6BE; font-size: 0.9rem; margin-bottom: 20px; opacity: 0.8;'>
+            Click on any architectural domain module below to review live data profiles, spatial visualizations, model engines, or intelligent optimization schedules:
+        </p>
+    """, unsafe_allow_html=True)
+
+    # 2x2 Layout Grid using Streamlit Columns
+    row1_col1, row1_col2 = st.columns(2)
+    row2_col1, row2_col2 = st.columns(2)
+
+    # --- CARD 1: EXPLORATORY DATA ANALYSIS ---
+    with row1_col1:
+        st.markdown("""
+            <div class="launchpad-card">
+                <div class="launchpad-title">📊 EXPLORATORY DATA ANALYSIS</div>
+                <div class="launchpad-desc">
+                    Investigate complete descriptive statistics, charger distribution variances, and evaluate raw vs. transformed analytics infrastructure records.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        # Use query parameters to force change pages on click
+        if st.button("Open EDA Dashboard 📈", key="btn_eda", use_container_width=True):
+            st.info("🔄 Use the sidebar navigation menu to jump directly to **Exploratory Data Analysis**!")
+
+    # --- CARD 2: EXISTING LOCATIONS ---
+    with row1_col2:
+        st.markdown("""
+            <div class="launchpad-card">
+                <div class="launchpad-title">📍 EXISTING INFRASTRUCTURE MAP</div>
+                <div class="launchpad-desc">
+                    Geospatial visualization map detailing current operational charging nodes across Kuantan, including real-time AC and DC bay availability indicators.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("Explore Infrastructure Map 🗺️", key="btn_existing", use_container_width=True):
+            st.info("🔄 Use the sidebar navigation menu to jump directly to **Existing Locations**!")
+
+    st.markdown("<br>", unsafe_allow_html=True) # Generates clean spacing between card rows
+
+    # --- CARD 3: OPTIMAL PLACEMENT ---
+    with row2_col1:
+        st.markdown("""
+            <div class="launchpad-card">
+                <div class="launchpad-title">🎯 MACHINE LEARNING PLACEMENT</div>
+                <div class="launchpad-desc">
+                    Run live predictive regression engines (Random Forest / SVR) to identify top-tier high-priority candidate placements utilizing MCDM scoring matrix criteria.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("Launch Optimization Model 🚀", key="btn_optimal", use_container_width=True):
+            st.info("🔄 Use the sidebar navigation menu to jump directly to **Optimal Placement**!")
+
+    # --- CARD 4: INTELLIGENT SCHEDULING ---
+    with row2_col2:
+        st.markdown("""
+            <div class="launchpad-card">
+                <div class="launchpad-title">📅 INTELLIGENT GRID SCHEDULING</div>
+                <div class="launchpad-desc">
+                    Deploy Mixed-Integer Linear Programming (MILP) optimization algorithms to shift peak loads, toggle operational hardware directives, and protect grid stability.
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+        if st.button("Open Intelligent Scheduler ⚙️", key="btn_scheduling", use_container_width=True):
+            st.info("🔄 Use the sidebar navigation menu to jump directly to **Intelligent Scheduling**!")
+
     st.divider()
     st.subheader("Algorithms & Methodologies Used")
     cols = st.columns(2)
