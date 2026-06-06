@@ -60,23 +60,21 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
 
+    /* --- KEEP ORBITRON EXCLUSIVELY ON HEADERS & METRICS --- */
+    h1, h2, h3, h4, h5, h6, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .footer-text {
+        font-family: 'Orbitron', sans-serif !important;
+    }
+
+    /* --- FORCE SHARE TECH MONO ONLY ON ALL REGULAR LAYOUT TEXTS --- */
+    p, label, span, button, input, select, textarea, .s-label, .launchpad-desc {
+        font-family: 'Share Tech Mono', monospace !important;
+    }
+
     /* Background: Glows from Deep Burgundy (#4A0404) out to Pitch Black (#000000) */
     .stApp {
             background: radial-gradient(circle at center, #4a0404 0%, #1a0000 40%, #000000 100%);
         background-attachment: fixed;
     }
-
-    /* --- KEEP ORBITRON ONLY ON HEADERS & METRICS --- */
-    h1, h2, h3, h4, h5, h6, [data-testid="stMetricValue"], [data-testid="stMetricLabel"], .s-name, .footer-text {
-        font-family: 'Orbitron', sans-serif !important;
-    }
-
-    /* --- THE TECH TERMINAL MONOSPACE OVERRIDE --- */
-    html, body, [class*="css"], .stApp, p, label, span, div, button, input, select, textarea, .s-label {
-        font-family: 'Share Tech Mono', monospace !important;
-    }
-
-    
 
     /* Headlines: Orbitron font with Gold Neon glow */
     h1, h2, h3 {
