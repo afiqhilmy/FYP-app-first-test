@@ -405,7 +405,7 @@ This project focuses on optimizing the placement and scheduling of Electric Vehi
 
     st.divider()
 
-        st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size: 1.5rem; color: #D4AF37;'>PROJECT NAVIGATION LAUNCHPAD</h2>", unsafe_allow_html=True)
     
 # Reconfigured 5-column dashboard row with dedicated system icons
     col1, col2, col3, col4, col5 = st.columns(5, gap="medium")
