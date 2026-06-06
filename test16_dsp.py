@@ -58,7 +58,6 @@ with st.sidebar:
 # --- THE IMPERIAL BURGUNDY & GOLD CSS ---
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap');
 
     /* Background: Glows from Deep Burgundy (#4A0404) out to Pitch Black (#000000) */
