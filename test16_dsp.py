@@ -14,6 +14,40 @@ from sklearn.cluster import KMeans
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="Optimal EV Infrastructure Platform", layout="wide", page_icon="⚡")
 
+# Global Font Override - Apply Share Tech Mono to EV Web App
+st.markdown("""
+    <style>
+    /* 1. Import the font from Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    /* 2. Force Share Tech Mono globally on all text, headers, inputs, and components */
+    html, body, [class*="css"], .stApp, h1, h2, h3, h4, h5, h6, p, label, span, div, button, input, select, textarea {
+        font-family: 'Share Tech Mono', monospace !important;
+    }
+
+    /* 3. Clean up slider sub-labels (min/max numbers) and remove blocky backgrounds */
+    div[data-baseweb="slider"] + div {
+        margin-top: 8px !important;
+    }
+    div[data-baseweb="slider"] > div:last-child > div {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        width: auto !important;
+        height: auto !important;
+    }
+    div[data-testid="stSliderTickBar"] + div span,
+    div[data-baseweb="slider"] + div span,
+    div[data-baseweb="slider"] > div:last-child > div {
+        color: #00F0FF !important; /* Sets min/max numbers to a matching clean theme blue */
+        font-size: 0.95rem !important;
+        font-weight: bold !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- 2. SIDEBAR TOP CONTENT (Logos & Mentors) ---
 with st.sidebar:
     # --- LOGOS ---
