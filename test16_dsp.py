@@ -909,7 +909,7 @@ def page_scheduling():
                         st.markdown(f"""
                             <div style="background-color: #1e1015; padding: 16px; border-radius: 8px; border: 1px solid #ffcc00; height: 100px;">
                                 <span style="font-size: 12px; font-weight: bold; color: #ffcc00; display: block; margin-bottom: 4px; text-transform: uppercase;">PREDICTED DEMAND</span>
-                                <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{search_row_milp['predicted_demand']:.4f} kW</span>
+                                <span style="font-size: 22px; font-weight: bold; color: #ffffff;">{search_row_milp['predicted_demand']:.4f}</span>
                             </div>
                         """, unsafe_allow_html=True)
                     with s2:
